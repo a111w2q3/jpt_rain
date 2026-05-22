@@ -1,0 +1,289 @@
+﻿:root { /* =========================
+       Theme Images
+    ========================= */ --rain-bg-desktop: url('../image/angpao/bg_desktop.jpg'); --rain-bg-mobile: url('../image/angpao/bg_mobile.jpg'); --rain-packet-img: url('../image/angpao/item.png'); /* =========================
+       Main Colors
+    ========================= */ --rain-color-text: #ffffff; --rain-color-primary: #ffd66b; --rain-color-secondary: #ff9f1a; --rain-color-accent: #ff4d2d; --rain-color-dark: #4a0909; --rain-color-deep: #160202; /* =========================
+       Background
+    ========================= */ --rain-bg-fallback: radial-gradient(circle at top, rgba(255, 216, 110, 0.16), transparent 32%), linear-gradient(180deg, #7a1111 0%, #3a0707 48%, #160202 100%); --rain-stage-bg: radial-gradient(circle at 50% 18%, rgba(255, 220, 120, 0.18), transparent 30%), radial-gradient(circle at 50% 100%, rgba(0, 0, 0, 0.28), transparent 45%), rgba(0, 0, 0, 0.12); /* =========================
+       HUD / Glass Panels
+    ========================= */ --rain-panel-bg: rgba(40, 0, 0, 0.45); --rain-panel-border: rgba(255, 214, 107, 0.28); --rain-panel-blur: 8px; --rain-pill-text: #ffffff; --rain-pill-value-bg: var(--rain-color-primary); --rain-pill-value-text: #5a0909; /* =========================
+       Timer
+    ========================= */ --rain-timer-bg: rgba(0, 0, 0, 0.35); --rain-timer-border: rgba(255, 214, 107, 0.35); --rain-timer-fill: linear-gradient( 90deg, var(--rain-color-primary), var(--rain-color-secondary), var(--rain-color-accent) ); /* =========================
+       Header Layout
+    ========================= */ --rain-top-x: 18px; --rain-top-y: max(12px, env(safe-area-inset-top)); --rain-top-gap: 16px; --rain-header-width: min(360px, 42vw); --rain-header-height: 90px; --rain-top-main-width: min(360px, 70vw); --rain-timer-width: min(320px, 52vw); /* =========================
+       Falling Item
+    ========================= */ --rain-packet-w: 64px; --rain-packet-h: 86px; /* =========================
+       Button
+    ========================= */ --rain-btn-bg: linear-gradient(135deg, var(--rain-color-primary), var(--rain-color-secondary)); --rain-btn-text: var(--rain-color-dark); --rain-btn-shadow: rgba(255, 159, 26, 0.35); /* =========================
+       Click Effect
+    ========================= */ --rain-effect-flash: radial-gradient( circle, rgba(255, 244, 184, 0.95), rgba(255, 178, 26, 0.5) 35%, transparent 70% ); --rain-effect-ring: rgba(255, 214, 107, 0.75); --rain-effect-particle: var(--rain-color-primary); --rain-effect-particle-soft: #fff4b8; --rain-effect-particle-shadow: rgba(255, 214, 107, 0.85); /* =========================
+       Result Overlay
+    ========================= */ --rain-result-bg: rgba(0, 0, 0, 0.62); --rain-result-overlay-glow: radial-gradient(circle at 50% 28%, rgba(255, 214, 107, 0.2), transparent 32%); --rain-result-big-glow: radial-gradient(circle, rgba(255, 214, 107, 0.28), transparent 34%), conic-gradient( from 0deg, transparent, rgba(255, 214, 107, 0.22), transparent, rgba(255, 255, 255, 0.12), transparent ); /* Result Card */ --rain-result-content-bg: radial-gradient(circle at 50% 0%, rgba(255, 214, 107, 0.22), transparent 38%), var(--rain-result-content-bg); --rain-result-content-border: rgba(255, 214, 107, 0.38); --rain-result-inner-border: rgba(255, 214, 107, 0.22); --rain-result-top-glow: radial-gradient(circle, rgba(255, 214, 107, 0.22), transparent 66%); /* Result Normal */ --rain-result-normal-bg: radial-gradient(circle at 50% 0%, rgba(255, 214, 107, 0.18), transparent 38%), linear-gradient(180deg, rgba(125, 17, 17, 0.96), rgba(49, 6, 6, 0.98)); /* Result Big Win */ --rain-result-big-bg: radial-gradient(circle at 50% 0%, rgba(255, 230, 140, 0.34), transparent 38%), linear-gradient(180deg, rgba(165, 18, 18, 0.98), rgba(58, 5, 5, 0.98)); --rain-result-big-border: rgba(255, 214, 107, 0.6); /* Badge */ --rain-result-badge-bg: linear-gradient(135deg, #fff4b8, var(--rain-color-secondary)); --rain-result-badge-text: #670909; --rain-result-badge-shadow: rgba(255, 214, 107, 0.35); /* Text */ --rain-result-title: #fff8dc; --rain-result-desc: rgba(255, 255, 255, 0.86); /* Amount Box */ --rain-amount-box-bg: radial-gradient(circle at 50% 0%, rgba(255, 244, 184, 0.22), transparent 44%), linear-gradient(180deg, rgba(96, 5, 5, 0.94), rgba(36, 1, 1, 0.9)); --rain-amount-box-border: rgba(255, 214, 107, 0.42); --rain-amount-label: rgba(255, 244, 184, 0.82); --rain-amount-text: var(--rain-color-primary); --rain-amount-shadow: 0 0 8px rgba(255, 214, 107, 0.78), 0 3px 0 rgba(90, 9, 9, 0.45); /* Big Win Amount */ --rain-big-amount-text: #fff4b8; --rain-big-amount-shadow: 0 0 10px rgba(255, 214, 107, 0.9), 0 0 24px rgba(255, 159, 26, 0.55), 0 3px 0 rgba(90, 9, 9, 0.5); --rain-big-amount-box-border: rgba(255, 244, 184, 0.58); /* Meta */ --rain-meta-bg: rgba(255, 255, 255, 0.08); --rain-meta-border: rgba(255, 214, 107, 0.2); --rain-meta-label: rgba(255, 255, 255, 0.72); --rain-meta-value: #fff4b8; }
+
+
+
+/* =========================
+   Reset
+========================= */
+
+*,
+*::before,
+*::after { box-sizing: border-box; padding: 0; margin: 0; }
+
+html,
+body { width: 100%; height: 100%; overflow: hidden; }
+
+/* =========================
+   Game Root
+========================= */
+
+.redPacketDemo { width: 100dvw; height: 100dvh; min-height: 100dvh; position: relative; overflow: hidden; color: var(--rain-color-text); background: var(--rain-bg-fallback); background-image: var(--rain-bg-desktop); background-size: cover; background-position: center; background-repeat: no-repeat; }
+
+.rainGame { width: 100%; height: 100%; position: relative; }
+
+/* =========================
+   Top HUD / Header
+========================= */
+
+.rainGame__top { position: absolute; top: var(--rain-top-y); left: var(--rain-top-x); right: var(--rain-top-x); z-index: 20; display: flex; align-items: flex-start; justify-content: space-between; gap: var(--rain-top-gap); pointer-events: none; opacity: 0; transform: translateY(-18px); visibility: hidden; transition: opacity 0.28s ease, transform 0.28s ease, visibility 0.28s ease; }
+
+    .rainGame__top.is-show { opacity: 1; transform: translateY(0); visibility: visible; }
+
+.rainGame__topMain { width: var(--rain-top-main-width); display: grid; gap: 8px; }
+
+.rainTopHeader { display: block; width: var(--rain-header-width); max-height: var(--rain-header-height); object-fit: contain; object-position: left center; }
+
+.rainTimerBox { width: var(--rain-timer-width); padding: 10px 12px; border-radius: 16px; background: var(--rain-panel-bg); border: 1px solid var(--rain-panel-border); backdrop-filter: blur(var(--rain-panel-blur)); -webkit-backdrop-filter: blur(var(--rain-panel-blur)); }
+
+.rainGame__label { font-size: 12px; line-height: 1; opacity: 0.75; margin-bottom: 6px; }
+
+.rainTimerBar { width: 100%; height: 22px; position: relative; overflow: hidden; border-radius: 999px; background: var(--rain-timer-bg); border: 1px solid var(--rain-timer-border); }
+
+.rainTimerBar__fill { width: 100%; height: 100%; border-radius: inherit; background: var(--rain-timer-fill); transition: width 1s linear; }
+
+.rainTimerBar__text { position: absolute; inset: 0; display: grid; place-items: center; font-size: 12px; font-weight: 900; color: var(--rain-color-text); text-shadow: 0 1px 4px rgba(0, 0, 0, 0.75); pointer-events: none; }
+
+.rainHitPill { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; padding: 8px 14px; border-radius: 999px; background: var(--rain-panel-bg); border: 1px solid var(--rain-panel-border); backdrop-filter: blur(var(--rain-panel-blur)); -webkit-backdrop-filter: blur(var(--rain-panel-blur)); color: var(--rain-color-text); font-size: 13px; }
+
+    .rainHitPill b { min-width: 26px; height: 26px; display: grid; place-items: center; border-radius: 50%; background: var(--rain-color-primary); color: #5a0909; font-size: 14px; }
+
+/* =========================
+   Game Stage
+========================= */
+
+.rainGame__stage { width: 100%; height: 100%; position: relative; overflow: hidden; border: 0; border-radius: 0; background: radial-gradient(circle at 50% 18%, rgba(255, 220, 120, 0.18), transparent 30%), radial-gradient(circle at 50% 100%, rgba(0, 0, 0, 0.28), transparent 45%), rgba(0, 0, 0, 0.12); }
+
+/* =========================
+   Intro Screen
+========================= */
+
+.rainGame__intro { position: absolute; inset: 0; z-index: 15; display: block; place-content: center; text-align: center; padding: 24px; }
+
+.rainHeader { display: block; max-width: min(840px, 90vw); max-height: 250px; object-fit: contain; margin: 0 auto 24px; }
+
+.rainGame__intro h2 { font-size: 34px; margin: 0 0 10px; }
+
+.rainGame__intro p { margin: 0 0 20px; opacity: 0.8; }
+
+/* =========================
+   Buttons
+========================= */
+
+.rainGame__startBtn,
+.rainResult__btn { border: 0; border-radius: 999px; padding: 13px 26px; background: var(--rain-btn-bg); color: var(--rain-btn-text); font-weight: 900; cursor: pointer; box-shadow: 0 10px 24px var(--rain-btn-shadow); }
+
+/* =========================
+   Falling Packet
+========================= */
+
+.redPacket { width: var(--rain-packet-w); height: var(--rain-packet-h); position: absolute; top: -120px; z-index: 10; border: 0; padding: 0; cursor: pointer; background: transparent; background-image: var(--rain-packet-img); background-size: contain; background-repeat: no-repeat; background-position: center; animation-name: packetFall; animation-timing-function: linear; animation-fill-mode: forwards; user-select: none; -webkit-user-select: none; -webkit-user-drag: none; touch-action: manipulation; }
+
+    .redPacket.is-hit { pointer-events: none; animation: packetCollect 0.22s ease forwards; }
+
+/* =========================
+   Packet Click Effect
+========================= */
+
+.packetOpenEffect { position: absolute; left: 0; top: 0; z-index: 30; width: 10px; height: 10px; transform: translate(-50%, -50%); pointer-events: none; }
+
+    .packetOpenEffect::before { content: ""; position: absolute; inset: -22px; border-radius: 50%; background: radial-gradient( circle, rgba(255, 244, 184, 0.95), rgba(255, 178, 26, 0.5) 35%, transparent 70% ); animation: openFlash 0.42s ease-out forwards; }
+
+    .packetOpenEffect::after { content: ""; position: absolute; inset: -36px; border-radius: 50%; border: 2px solid rgba(255, 214, 107, 0.75); animation: openRing 0.48s ease-out forwards; }
+
+    .packetOpenEffect span { position: absolute; left: 50%; top: 50%; width: 7px; height: 7px; border-radius: 50%; background: var(--rain-color-primary); box-shadow: 0 0 8px rgba(255, 214, 107, 0.85); transform: translate(-50%, -50%); animation: openParticle 0.52s ease-out forwards; animation-delay: var(--delay); }
+
+        .packetOpenEffect span:nth-child(2n) { width: 5px; height: 5px; background: #fff4b8; }
+
+        .packetOpenEffect span:nth-child(3n) { border-radius: 2px; transform: translate(-50%, -50%) rotate(45deg); }
+
+/* =========================
+   Result Overlay
+========================= */
+
+.rainResult { position: fixed; inset: 0; z-index: 50; display: none; place-items: center; padding: 24px 14px; background: radial-gradient(circle at 50% 28%, rgba(255, 214, 107, 0.2), transparent 32%), var(--rain-result-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); overflow: hidden; }
+
+    .rainResult.is-show { display: grid; }
+
+    .rainResult.is-big-win::before { content: ""; position: absolute; inset: -20%; width: 125vw; height: 125vw; top: 0; bottom: 0; margin: auto; background: radial-gradient(circle, rgba(255, 214, 107, 0.28), transparent 34%), conic-gradient( from 0deg, transparent, rgba(255, 214, 107, 0.22), transparent, rgba(255, 255, 255, 0.12), transparent ); animation: bigWinRotate 8s linear infinite; pointer-events: none; }
+/* Whole result card wrapper */
+.rainResult__card { position: relative; z-index: 2; width: min(92vw, 420px); max-height: calc(100dvh - 32px); padding-top: 46px; text-align: center; transform: scale(0.92) translateY(12px); opacity: 0; animation: resultPopIn 0.35s ease forwards; }
+
+/* Floating header image */
+.resultHeader { position: absolute; left: 50%; top: 0; z-index: 3; width: min(390px, 88vw); max-height: 112px; object-fit: contain; transform: translate(-50%, -30%); filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.38)) drop-shadow(0 0 12px rgba(255, 214, 107, 0.28)); pointer-events: none; }
+
+/* Main red/gold panel */
+.rainResult__content { position: relative; overflow: hidden; width: 100%; padding: 48px 22px 24px; border-radius: 30px; background: var(--rain-result-content-bg); border-color: var(--rain-result-content-border); border-width: 1px; border-style: solid; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), inset 0 -18px 40px rgba(0, 0, 0, 0.22), 0 24px 70px rgba(0, 0, 0, 0.58); }
+
+    .rainResult__content::before { content: ""; position: absolute; inset: 10px; border-radius: 24px; border: 1px solid rgba(255, 214, 107, 0.22); pointer-events: none; }
+
+    .rainResult__content::after { content: ""; position: absolute; left: 50%; top: -88px; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, rgba(255, 214, 107, 0.22), transparent 66%); transform: translateX(-50%); pointer-events: none; }
+
+.rainResult__badge { width: fit-content; position: relative; z-index: 1; margin: 0 auto 10px; padding: 6px 18px; border-radius: 999px; background: linear-gradient(135deg, #fff4b8, var(--rain-color-secondary)); color: #670909; font-size: 13px; font-weight: 900; letter-spacing: 0.04em; box-shadow: 0 0 16px rgba(255, 214, 107, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.45); }
+
+.rainResult__title { position: relative; z-index: 1; margin: 0; font-size: 30px; line-height: 1.1; color: #fff8dc; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45); }
+
+.rainResult__desc { position: relative; z-index: 1; margin: 6px 0 14px; font-size: 14px; opacity: 0.86; }
+
+.rainResult__amountBox { position: relative; z-index: 1; margin: 0 auto 16px; padding: 14px 16px 16px; border-radius: 22px; background: var(--rain-amount-box-bg); border-color: var(--rain-amount-box-border); border-width: 1px; border-style: solid; box-shadow: inset 0 0 18px rgba(255, 214, 107, 0.12), 0 12px 26px rgba(0, 0, 0, 0.32); }
+
+.rainResult__amountLabel { margin-bottom: 4px; font-size: 11px; font-weight: 900; letter-spacing: 0.16em; color: rgba(255, 244, 184, 0.82); }
+
+.rainResult__amount { font-size: clamp(38px, 10vw, 54px); line-height: 1; font-weight: 900; color: var(--rain-color-primary); text-shadow: 0 0 8px rgba(255, 214, 107, 0.78), 0 3px 0 rgba(90, 9, 9, 0.45); }
+
+.rainResult__meta { position: relative; z-index: 1; display: grid; grid-template-columns: 0.75fr 1.25fr; gap: 10px; margin: 0 0 20px; }
+
+.rainResult__metaItem { min-height: 54px; display: grid; place-items: center; gap: 3px; padding: 8px 10px; border-radius: 16px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 214, 107, 0.2); }
+
+    .rainResult__metaItem span { font-size: 11px; opacity: 0.72; }
+
+    .rainResult__metaItem b { max-width: 100%; font-size: 14px; color: #fff4b8; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.rainResult__btn { position: relative; z-index: 1; min-width: 170px; min-height: 48px; border: 0; border-radius: 999px; padding: 13px 26px; background: var(--rain-btn-bg); color: var(--rain-btn-text); font-weight: 900; letter-spacing: 0.04em; cursor: pointer; box-shadow: 0 10px 24px var(--rain-btn-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.45); transition: transform 0.18s ease, filter 0.18s ease; }
+
+    .rainResult__btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
+
+    .rainResult__btn:active { transform: translateY(1px) scale(0.98); }
+
+/* Normal / Big Win variations */
+
+.rainResult__card.is-normal-win .rainResult__content { background: var(--rain-result-normal-bg); }
+
+.rainResult__card.is-big-win .rainResult__content { background: var(--rain-result-big-bg); border-color: var(--rain-result-big-border); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -18px 40px rgba(0, 0, 0, 0.2), 0 0 28px rgba(255, 214, 107, 0.34), 0 24px 78px rgba(0, 0, 0, 0.68); animation: bigWinGlow 1.2s ease-in-out infinite alternate; }
+
+.rainResult__card.is-big-win .rainResult__amountBox { border-color: rgba(255, 244, 184, 0.58); box-shadow: inset 0 0 22px rgba(255, 214, 107, 0.18), 0 0 22px rgba(255, 214, 107, 0.18), 0 12px 28px rgba(0, 0, 0, 0.38); }
+
+.rainResult__card.is-big-win .rainResult__amount { color: #fff4b8; text-shadow: 0 0 10px rgba(255, 214, 107, 0.9), 0 0 24px rgba(255, 159, 26, 0.55), 0 3px 0 rgba(90, 9, 9, 0.5); }
+
+
+/* =========================
+   Animations
+========================= */
+
+@keyframes packetFall {
+    from { transform: translateY(0) rotate(var(--rotate)); }
+
+    to { transform: translateY(calc(100dvh + 180px)) rotate(var(--rotate)); }
+}
+
+@keyframes packetCollect {
+    0% { transform: scale(1) rotate(var(--rotate)); opacity: 1; filter: brightness(1); }
+
+    45% { transform: scale(1.18) rotate(6deg); opacity: 1; filter: brightness(1.8); }
+
+    100% { transform: scale(0.2) rotate(14deg); opacity: 0; filter: brightness(2); }
+}
+
+@keyframes openFlash {
+    0% { transform: scale(0.2); opacity: 0; }
+
+    35% { opacity: 1; }
+
+    100% { transform: scale(1.35); opacity: 0; }
+}
+
+@keyframes openRing {
+    0% { transform: scale(0.2); opacity: 0.95; }
+
+    100% { transform: scale(1.25); opacity: 0; }
+}
+
+@keyframes openParticle {
+    0% { transform: translate(-50%, -50%) scale(0.6); opacity: 1; }
+
+    100% { transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(0.15); opacity: 0; }
+}
+
+@keyframes resultPopIn {
+    to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes bigWinGlow {
+    from { box-shadow: 0 0 20px rgba(255, 214, 107, 0.28), 0 24px 70px rgba(0, 0, 0, 0.62); }
+
+    to { box-shadow: 0 0 42px rgba(255, 214, 107, 0.62), 0 24px 80px rgba(0, 0, 0, 0.72); }
+}
+
+@keyframes bigWinRotate {
+    to { transform: rotate(360deg); }
+}
+
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width: 1024px) {
+    :root { --rain-bg-desktop: var(--rain-bg-mobile); }
+}
+
+@media (max-width: 640px) {
+    :root { --rain-top-x: 10px; --rain-top-y: max(10px, env(safe-area-inset-top)); --rain-top-gap: 8px; --rain-header-width: min(300px, 80vw); --rain-header-height: 78px; --rain-top-main-width: 100%; --rain-timer-width: 100%; --rain-packet-w: 56px; --rain-packet-h: 72px; }
+
+    .rainGame__top { flex-direction: column; align-items: stretch; }
+
+    .rainGame__topMain { width: 100%; gap: 6px; }
+
+    .rainTopHeader { margin: 0 auto; object-position: center; }
+
+    .rainTimerBox { padding: 8px 10px; border-radius: 14px; }
+
+    .rainGame__label { font-size: 10px; }
+
+    .rainHitPill { align-self: flex-end; margin-top: 0; padding: 7px 12px; font-size: 12px; }
+
+        .rainHitPill b { min-width: 24px; height: 24px; font-size: 13px; }
+
+    .rainHeader { max-width: min(840px, 94vw); margin-bottom: 18px; }
+
+    .rainGame__intro h2 { font-size: 28px; }
+
+    .rainResult__card { width: min(92vw, 360px); padding: 18px 18px; }
+
+    .rainResult__amount { font-size: 36px; }
+
+    .rainResult.is-big-win::before { height: 125vh; width: 125vh; margin-left: -50%; }
+    .rainTimerBar { height: 16px; }
+
+    .rainResult { padding: 14px; }
+
+    .rainResult__card { width: min(94vw, 380px); padding-top: 58px; }
+
+    .resultHeader { width: min(360px, 94vw); max-height: 108px; transform: translate(-50%, -34%); }
+
+    .rainResult__content { padding: 24px 16px 20px; border-radius: 24px; }
+
+    .rainResult__title { font-size: 26px; }
+
+    .rainResult__desc { font-size: 13px; margin-bottom: 12px; }
+
+    .rainResult__amountBox { padding: 12px 12px 14px; border-radius: 18px; }
+
+    .rainResult__amount { font-size: 38px; }
+
+    .rainResult__meta { grid-template-columns: 1fr; gap: 8px; }
+
+    .rainResult__metaItem { min-height: 48px; }
+
+    .rainResult__btn { min-width: 160px; min-height: 46px; }
+
+    .rainResult.is-big-win::before { height: 125vh; width: 125vh; margin-left: -50%; }
+}
