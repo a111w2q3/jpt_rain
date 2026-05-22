@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link href="asset/css/style.css" rel="stylesheet" />
+
+    <script src="asset/js/theme-angpao.js" defer></script>
+    <script src="asset/js/audio.js" defer></script>
+    <script src="asset/js/script.js" defer></script>
+
+</head>
+<body>
+    <section class="redPacketDemo">
+        <div class="rainGame">
+            <div class="rainGame__top">
+                <div class="rainGame__topMain">
+                    <img src="asset/image/angpao/header.png" class="rainTopHeader" alt="Angpow Rain" />
+
+                    <div class="rainTimerBox">
+                        <div class="rainGame__label">Time Left</div>
+
+                        <div class="rainTimerBar" aria-label="Time Left">
+                            <div class="rainTimerBar__fill" id="rainTimerBarFill"></div>
+                            <div class="rainTimerBar__text">
+                                <span id="rainTimer">15</span>s
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rainHitPill">
+                    <span>Hits</span>
+                    <b id="rainHits">0</b>
+                </div>
+            </div>
+
+            <div class="rainGame__stage" id="rainStage">
+                <div class="rainGame__intro" id="rainIntro">
+                    <img src="asset/image/angpao/header.png" class="rainHeader" />
+                    <button class="rainGame__startBtn" id="startRainBtn" type="button">
+                        START RAIN
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="rainResult" id="rainResult" aria-hidden="true">
+            <div class="rainResult__card" id="rainResultCard">
+                <img src="asset/image/angpao/header.png" class="resultHeader" alt="Angpow Rain" />
+
+                <div class="rainResult__content">
+                    <div class="rainResult__badge" id="resultBadge">WIN</div>
+
+                    <h2 class="rainResult__title" id="resultTitle">Congratulations!</h2>
+                    <p class="rainResult__desc" id="resultDesc">You collected</p>
+
+                    <div class="rainResult__amountBox">
+                        <div class="rainResult__amountLabel">TOTAL WIN</div>
+                        <div class="rainResult__amount">
+                            RM <span id="finalAmount">0.00</span>
+                        </div>
+                    </div>
+
+                    <div class="rainResult__meta" style="display:none;">
+                        <div class="rainResult__metaItem">
+                            <span>Hits</span>
+                            <b id="finalHits">0</b>
+                        </div>
+
+                        <div class="rainResult__metaItem">
+                            <span>Reward</span>
+                            <b id="rewardType">Demo Bonus</b>
+                        </div>
+                    </div>
+
+                    <button class="rainResult__btn" id="playAgainBtn" type="button">
+                        PLAY AGAIN
+                    </button>
+                </div>
+            </div>
+        </div>
+    
+    </section>
+</body>
+</html>
