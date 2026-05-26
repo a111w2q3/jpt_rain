@@ -1,4 +1,4 @@
-﻿window.RainTheme = {
+window.RainTheme = {
     currentTheme: "angpao",
 
     themes: {
