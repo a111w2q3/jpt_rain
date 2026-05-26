@@ -1,6 +1,6 @@
-﻿:root { /* =========================
+:root { /* =========================
        Theme Images
-    ========================= */ --rain-bg-desktop: url('../image/angpao/bg_desktop.jpg'); --rain-bg-mobile: url('../image/angpao/bg_mobile.jpg'); --rain-packet-img: url('../image/angpao/item.png'); /* =========================
+    ========================= */ --rain-bg-desktop: url('../image/angpao/bg_desktop.jpg'); --rain-bg-mobile: url('../image/angpao/bg_mobile.jpg'); --rain-packet-img-1: url('../image/angpao/item.png'); --rain-packet-img-2: url('../image/angpao/item2.png'); /* =========================
        Main Colors
     ========================= */ --rain-color-text: #ffffff; --rain-color-primary: #ffd66b; --rain-color-secondary: #ff9f1a; --rain-color-accent: #ff4d2d; --rain-color-dark: #4a0909; --rain-color-deep: #160202; /* =========================
        Background
@@ -96,7 +96,11 @@ body { width: 100%; height: 100%; overflow: hidden; }
    Falling Packet
 ========================= */
 
-.redPacket { width: var(--rain-packet-w); height: var(--rain-packet-h); position: absolute; top: -120px; z-index: 10; border: 0; padding: 0; cursor: pointer; background: transparent; background-image: var(--rain-packet-img); background-size: contain; background-repeat: no-repeat; background-position: center; animation-name: packetFall; animation-timing-function: linear; animation-fill-mode: forwards; user-select: none; -webkit-user-select: none; -webkit-user-drag: none; touch-action: manipulation; }
+.redPacket { width: var(--rain-packet-w); height: var(--rain-packet-h); position: absolute; top: -120px; z-index: 10; border: 0; padding: 0; cursor: pointer; background: transparent;  background-size: contain; background-repeat: no-repeat; background-position: center; animation-name: packetFall; animation-timing-function: linear; animation-fill-mode: forwards; user-select: none; -webkit-user-select: none; -webkit-user-drag: none; touch-action: manipulation; }
+
+.redPacket--type1 { background-image: var(--rain-packet-img-1); }
+
+.redPacket--type2 { background-image: var(--rain-packet-img-2); }
 
     .redPacket.is-hit { pointer-events: none; animation: packetCollect 0.22s ease forwards; }
 
