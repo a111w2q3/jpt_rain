@@ -1,6 +1,6 @@
-﻿:root { /* =========================
+:root { /* =========================
        Theme Images
-    ========================= */ --rain-bg-desktop: url('../image/coin/bg_desktop.jpg'); --rain-bg-mobile: url('../image/coin/bg_mobile.jpg'); --rain-packet-img: url('../image/coin/item.png'); /* =========================
+    ========================= */ --rain-bg-desktop: url('../image/coin/bg_desktop.jpg'); --rain-bg-mobile: url('../image/coin/bg_mobile.jpg'); --rain-packet-img-1: url('../image/coin/item.png'); --rain-packet-img-2: url('../image/coin/item2.png'); /* =========================
        Main Colors
     ========================= */ --rain-color-text: #ffffff; --rain-color-primary: #ffe08a; --rain-color-secondary: #f5a623; --rain-color-accent: #ff6b00; --rain-color-dark: #2b1600; --rain-color-deep: #020100; /* =========================
        Background
