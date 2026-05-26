@@ -1,4 +1,4 @@
-﻿document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
     const rainStage = document.getElementById("rainStage");
     const rainIntro = document.getElementById("rainIntro");
     const rainGameTop = document.querySelector(".rainGame__top");
@@ -21,6 +21,7 @@
     const GAME_DURATION = 15;
     const PACKET_INTERVAL = 360;
     const BIG_WIN_RATE = 0.5;
+    const SECOND_ITEM_RATE = 0.3;
 
     let gameTimer = null;
     let packetTimer = null;
@@ -82,12 +83,19 @@
         rainTimerBarFill.style.width = `${progress * 100}%`;
     }
 
+    function getPacketType() {
+        return Math.random() < SECOND_ITEM_RATE ? "type2" : "type1";
+    }
+
     function createRedPacket() {
         if (!isPlaying) return;
 
         const packet = document.createElement("button");
+        const packetType = getPacketType();
+
         packet.type = "button";
-        packet.className = "redPacket";
+        packet.className = `redPacket redPacket--${packetType}`;
+        packet.dataset.packetType = packetType;
 
         const stageWidth = rainStage.clientWidth;
         const packetWidth = 66;
@@ -114,7 +122,7 @@
     function collectPacket(packet) {
         if (!isPlaying || packet.classList.contains("is-hit")) return;
 
-        const reward = getRandomReward();
+        const reward = getRandomReward(packet.dataset.packetType);
 
         totalHits++;
         totalAmount += reward;
@@ -191,8 +199,11 @@
         return Math.random() < theme.bigWinRate ? "big" : "normal";
     }
 
-    function getRandomReward() {
-        const rewards = [0.18, 0.28, 0.38, 0.58, 0.88, 1.28, 1.88];
+    function getRandomReward(packetType = "type1") {
+        const rewardsType1 = [0.18, 0.28, 0.38, 0.58, 0.88, 1.28, 1.88];
+        const rewardsType2 = [0.88, 1.28, 1.88, 2.88, 3.88];
+
+        const rewards = packetType === "type2" ? rewardsType2 : rewardsType1;
         const randomIndex = Math.floor(Math.random() * rewards.length);
 
         return rewards[randomIndex];
