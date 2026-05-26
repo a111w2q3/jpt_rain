@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const GAME_DURATION = 15;
     const PACKET_INTERVAL = 360;
     const BIG_WIN_RATE = 0.5;
-    const SECOND_ITEM_RATE = 0.3;
+    const SECOND_ITEM_RATE = 0.5;
 
     let gameTimer = null;
     let packetTimer = null;
