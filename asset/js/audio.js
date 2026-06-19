@@ -1,20 +1,21 @@
 window.RainAudio = (() => {
     const theme = window.RainTheme.get();
-    const audioPath = theme.audioPath;
+    const audioConfig = theme.audio;
 
-    const BGM_FILE = `${audioPath}bgm-trim.ogg`;
+    const audioPath = audioConfig.path;
+    const files = audioConfig.files;
+    const volume = audioConfig.volume;
+    const bgmConfig = audioConfig.bgm;
 
-    const hit = new Audio(`${audioPath}hit.mp3`);
-    const win = new Audio(`${audioPath}win.mp3`);
-    const bigWin = new Audio(`${audioPath}bigwin.mp3`);
+    const BGM_FILE = `${audioPath}${files.bgm}`;
 
-    const BGM_NORMAL_VOLUME = 0.35;
-    const BGM_DUCK_NORMAL_WIN_VOLUME = 0.12;
-    const BGM_DUCK_BIG_WIN_VOLUME = 0.06;
+    const hit = new Audio(`${audioPath}${files.hit}`);
+    const win = new Audio(`${audioPath}${files.win}`);
+    const bigWin = new Audio(`${audioPath}${files.bigWin}`);
 
-    hit.volume = 0.55;
-    win.volume = 0.4;
-    bigWin.volume = 0.4;
+    hit.volume = volume.hit;
+    win.volume = volume.win;
+    bigWin.volume = volume.bigWin;
 
     let audioContext = null;
     let bgmBuffer = null;
@@ -36,13 +37,23 @@ window.RainAudio = (() => {
         audioContext = new AudioContextClass();
 
         bgmGain = audioContext.createGain();
-        bgmGain.gain.value = BGM_NORMAL_VOLUME;
+        bgmGain.gain.value = volume.bgm;
         bgmGain.connect(audioContext.destination);
 
         return audioContext;
     }
 
-    function trimAudioBufferSilence(buffer, threshold = 0.0008) {
+    function trimAudioBufferSilence(buffer) {
+        if (!bgmConfig.trimSilence) {
+            return buffer;
+        }
+
+        const threshold =
+            bgmConfig.silenceThreshold ?? 0.0008;
+
+        const safetySeconds =
+            bgmConfig.trimSafetySeconds ?? 0.002;
+
         const channelCount = buffer.numberOfChannels;
         const sampleRate = buffer.sampleRate;
         const totalSamples = buffer.length;
@@ -56,9 +67,13 @@ window.RainAudio = (() => {
                 channel < channelCount;
                 channel++
             ) {
-                const data = buffer.getChannelData(channel);
+                const channelData =
+                    buffer.getChannelData(channel);
 
-                if (Math.abs(data[sampleIndex]) > threshold) {
+                if (
+                    Math.abs(channelData[sampleIndex]) >
+                    threshold
+                ) {
                     return true;
                 }
             }
@@ -80,9 +95,8 @@ window.RainAudio = (() => {
             endSample--;
         }
 
-        // 保留 2ms，避免裁切得太贴而产生爆音。
         const safetySamples = Math.floor(
-            sampleRate * 0.002
+            sampleRate * safetySeconds
         );
 
         startSample = Math.max(
@@ -117,27 +131,19 @@ window.RainAudio = (() => {
             channel < channelCount;
             channel++
         ) {
-            const originalData =
+            const sourceData =
                 buffer.getChannelData(channel);
 
-            const trimmedData =
+            const targetData =
                 trimmedBuffer.getChannelData(channel);
 
-            trimmedData.set(
-                originalData.subarray(
+            targetData.set(
+                sourceData.subarray(
                     startSample,
                     endSample + 1
                 )
             );
         }
-
-        console.log(
-            "BGM trimmed:",
-            {
-                originalDuration: buffer.duration,
-                trimmedDuration: trimmedBuffer.duration
-            }
-        );
 
         return trimmedBuffer;
     }
@@ -198,10 +204,13 @@ window.RainAudio = (() => {
                 context.createBufferSource();
 
             bgmSource.buffer = bgmBuffer;
-            bgmSource.loop = true;
+            bgmSource.loop = bgmConfig.loop !== false;
 
-            bgmSource.loopStart = 0;
+            bgmSource.loopStart =
+                bgmConfig.loopStart ?? 0;
+
             bgmSource.loopEnd =
+                bgmConfig.loopEnd ??
                 bgmBuffer.duration;
 
             bgmSource.connect(bgmGain);
@@ -235,39 +244,36 @@ window.RainAudio = (() => {
         } catch (error) { }
     }
 
-    function setBgmVolume(volume) {
+    function setBgmVolume(targetVolume) {
         if (!bgmGain || !audioContext) return;
 
-        const currentTime =
-            audioContext.currentTime;
+        const now = audioContext.currentTime;
 
-        bgmGain.gain.cancelScheduledValues(
-            currentTime
-        );
+        bgmGain.gain.cancelScheduledValues(now);
 
         bgmGain.gain.setValueAtTime(
             bgmGain.gain.value,
-            currentTime
+            now
         );
 
         bgmGain.gain.linearRampToValueAtTime(
-            volume,
-            currentTime + 0.08
+            targetVolume,
+            now + 0.08
         );
     }
 
     function restoreBgm() {
-        setBgmVolume(BGM_NORMAL_VOLUME);
+        setBgmVolume(volume.bgm);
     }
 
-    function duckBgm(volume) {
-        setBgmVolume(volume);
+    function duckBgm(targetVolume) {
+        setBgmVolume(targetVolume);
     }
 
     function playHit() {
         const sound = hit.cloneNode();
 
-        sound.volume = hit.volume;
+        sound.volume = volume.hit;
         sound.play().catch(() => { });
     }
 
@@ -292,8 +298,8 @@ window.RainAudio = (() => {
 
         duckBgm(
             isBigWin
-                ? BGM_DUCK_BIG_WIN_VOLUME
-                : BGM_DUCK_NORMAL_WIN_VOLUME
+                ? volume.duckBigWin
+                : volume.duckNormalWin
         );
 
         sound.currentTime = 0;
