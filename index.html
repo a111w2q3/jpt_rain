@@ -84,6 +84,144 @@
 
     </section>
 
+    <div class="rainEligibility" id="rainEligibility" data-eligible="true"
+         role="dialog" aria-modal="true" aria-labelledby="rainEligibilityTitle"
+         aria-hidden="true">
+        <div class="rainEligibility__card">
+            <img src="asset/image/angpao/item.png"
+                 class="rainFloatingItem rainFloatingItem--one"
+                 alt="" aria-hidden="true" />
+            <img src="asset/image/angpao/item2.png"
+                 class="rainFloatingItem rainFloatingItem--two"
+                 alt="" aria-hidden="true" />
+
+            <img src="asset/image/angpao/dec02.png" class="fwFloatingItem fwFloatingItem--one" />
+            <img src="asset/image/angpao/dec03.png" class="fwFloatingItem fwFloatingItem--two" />
+
+            <div class="rainEligibility__head">
+                <img src="asset/image/angpao/header_2.png"
+                     class="rainEligibility__logo rainEligibility__header" alt="Angpow Rain" />
+            </div>
+
+            <div class="rainEligibility__panel">
+                <div class="rainEligibility__status" id="rainEligibilityStatus"
+                     aria-hidden="true">✓</div>
+                <h2 class="rainEligibility__title" id="rainEligibilityTitle">
+                    You have 1 play available!
+                </h2>
+                <p class="rainEligibility__message" id="rainEligibilityMessage">
+                    Try your luck and win big rewards!
+                </p>
+                <a class="rainEligibility__action" id="rainEligibilityAction" href="#">
+                    PLAY NOW
+                </a>
+            </div>
+
+            <button class="rainEligibility__later" id="rainEligibilityLater" type="button">
+                Later
+            </button>
+        </div>
+    </div>
+
+    <script>
+        /*
+         * BACKEND INTEGRATION
+         * Replace these values with the member's eligibility response.
+         */
+        /*
+         * TESTING ONLY
+         * Each page refresh randomly returns either 0 or 1 available play.
+         * Remove this random value when the backend eligibility API is ready.
+         */
+        var randomPlayCount = Math.floor(Math.random() * 2);
+
+        window.JACKPOT_RAIN_ACCESS = window.JACKPOT_RAIN_ACCESS || {
+            hasPlay: randomPlayCount > 0,
+            plays: randomPlayCount,
+            depositUrl: "#",
+            laterFallbackUrl: "#"
+        };
+
+        (function () {
+            var popup = document.getElementById("rainEligibility");
+            var status = document.getElementById("rainEligibilityStatus");
+            var title = document.getElementById("rainEligibilityTitle");
+            var message = document.getElementById("rainEligibilityMessage");
+            var action = document.getElementById("rainEligibilityAction");
+            var later = document.getElementById("rainEligibilityLater");
+
+            function renderJackpotRainAccess(access) {
+                var hasPlay = Boolean(access && access.hasPlay);
+                var plays = Math.max(0, Number(access && access.plays) || 0);
+
+                popup.dataset.eligible = String(hasPlay);
+                status.textContent = hasPlay ? "✓" : "×";
+
+                if (hasPlay) {
+                    title.textContent = "You have " + plays + " play" +
+                        (plays === 1 ? "" : "s") + " available!";
+                    message.textContent = "Try your luck and win big rewards!";
+                    action.textContent = "PLAY NOW";
+                    action.setAttribute("href", "#");
+                } else {
+                    title.textContent = "You don’t have any plays.";
+                    message.textContent = "Please deposit to get more plays!";
+                    action.textContent = "DEPOSIT NOW";
+                    action.setAttribute("href", access.depositUrl || "#");
+                }
+
+                popup.classList.add("is-open");
+                popup.setAttribute("aria-hidden", "false");
+            }
+
+            function closeJackpotRainAccess() {
+                popup.classList.remove("is-open");
+                popup.setAttribute("aria-hidden", "true");
+            }
+
+            action.addEventListener("click", function (event) {
+                var access = window.JACKPOT_RAIN_ACCESS;
+
+                if (access.hasPlay) {
+                    event.preventDefault();
+                    closeJackpotRainAccess();
+                    document.getElementById("startRainBtn").focus();
+                    return;
+                }
+
+                if (!access.depositUrl || access.depositUrl === "#") {
+                    event.preventDefault();
+                }
+            });
+
+            later.addEventListener("click", function () {
+                var fallbackUrl = window.JACKPOT_RAIN_ACCESS.laterFallbackUrl || "#";
+
+                if (window.history.length > 1) {
+                    window.history.back();
+                } else if (fallbackUrl !== "#") {
+                    window.location.href = fallbackUrl;
+                }
+            });
+
+            /*
+             * Backend can call this after an async eligibility request:
+             * window.setJackpotRainAccess({ hasPlay: false, plays: 0 });
+             */
+            window.setJackpotRainAccess = function (nextAccess) {
+                window.JACKPOT_RAIN_ACCESS = Object.assign(
+                    {},
+                    window.JACKPOT_RAIN_ACCESS,
+                    nextAccess || {}
+                );
+                renderJackpotRainAccess(window.JACKPOT_RAIN_ACCESS);
+            };
+
+            document.addEventListener("DOMContentLoaded", function () {
+                renderJackpotRainAccess(window.JACKPOT_RAIN_ACCESS);
+            });
+        }());
+    </script>
 
 </body>
 </html>
