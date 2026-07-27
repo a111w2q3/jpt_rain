@@ -10,13 +10,16 @@
     <script src="asset/js/audio.js" defer></script>
     <script src="asset/js/script.js" defer></script>
 
+    <style>
+        
+    </style>
 </head>
 <body>
     <section class="redPacketDemo">
         <div class="rainGame">
             <div class="rainGame__top">
                 <div class="rainGame__topMain">
-                    <img src="asset/image/angpao/header.png" class="rainTopHeader" alt="Angpow Rain" />
+                    <img src="asset/image/angpao/header_2.png" class="rainTopHeader" alt="Angpow Rain" />
 
                     <div class="rainTimerBox">
                         <div class="rainGame__label">Time Left</div>
@@ -38,7 +41,7 @@
 
             <div class="rainGame__stage" id="rainStage">
                 <div class="rainGame__intro" id="rainIntro">
-                    <img src="asset/image/angpao/header.png" class="rainHeader" />
+                    <img src="asset/image/angpao/header_2.png" class="rainHeader" />
                     <button class="rainGame__startBtn" id="startRainBtn" type="button">
                         START RAIN
                     </button>
@@ -48,7 +51,7 @@
 
         <div class="rainResult" id="rainResult" aria-hidden="true">
             <div class="rainResult__card" id="rainResultCard">
-                <img src="asset/image/angpao/header.png" class="resultHeader" alt="Angpow Rain" />
+                <img src="asset/image/angpao/header_2.png" class="resultHeader" alt="Angpow Rain" />
 
                 <div class="rainResult__content">
                     <div class="rainResult__badge" id="resultBadge">WIN</div>
@@ -112,6 +115,16 @@
                 <p class="rainEligibility__message" id="rainEligibilityMessage">
                     Try your luck and win big rewards!
                 </p>
+
+                <div class="rainEligibility__schedule">
+                    <span class="rainEligibility__scheduleTitle">DAILY EVENT TIME</span>
+
+                    <div class="rainEligibility__scheduleRange">
+                        <span id="jackpotStartTime">00:00:00</span>
+                        <i></i>
+                        <span id="jackpotFinishTime">23:00:00</span>
+                    </div>
+                </div>
                 <a class="rainEligibility__action" id="rainEligibilityAction" href="#">
                     PLAY NOW
                 </a>
@@ -164,7 +177,7 @@
                     action.textContent = "PLAY NOW";
                     action.setAttribute("href", "#");
                 } else {
-                    title.textContent = "You don’t have any plays.";
+                    title.textContent = "No Plays Available.";
                     message.textContent = "Please deposit to get more plays!";
                     action.textContent = "DEPOSIT NOW";
                     action.setAttribute("href", access.depositUrl || "#");
@@ -222,6 +235,5 @@
             });
         }());
     </script>
-
 </body>
 </html>
