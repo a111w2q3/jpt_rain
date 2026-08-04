@@ -105,10 +105,14 @@
                 <img src="asset/image/angpao/header_2.png"
                      class="rainEligibility__logo rainEligibility__header" alt="Angpow Rain" />
             </div>
-
+            
             <div class="rainEligibility__panel">
-                <div class="rainEligibility__status" id="rainEligibilityStatus"
-                     aria-hidden="true">✓</div>
+                <div>
+
+                    <img class="rainEligibility__status" id="rainEligibilityStatus" src="asset/image/angpao/img-win.png" lt="Win" aria-hidden="true">
+
+                </div>
+
                 <h2 class="rainEligibility__title" id="rainEligibilityTitle">
                     You have 1 play available!
                 </h2>
@@ -168,7 +172,10 @@
                 var plays = Math.max(0, Number(access && access.plays) || 0);
 
                 popup.dataset.eligible = String(hasPlay);
-                status.textContent = hasPlay ? "✓" : "×";
+                status.src = hasPlay ? "asset/image/angpao/img-win.png" : "asset/image/angpao/img-no credt.png";
+
+                status.alt = hasPlay ? "Win" : "Lose";
+                //status.textContent = hasPlay ? "✓" : "×";
 
                 if (hasPlay) {
                     title.textContent = "You have " + plays + " play" +
