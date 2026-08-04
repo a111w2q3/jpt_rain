@@ -301,8 +301,11 @@ body { width: 100%; height: 100%; overflow: hidden; }
 .rainEligibility__head { position: relative; z-index: 1; padding: 28px 28px 18px; }
 .rainEligibility__logo { display: block; width: min(320px,100%); max-height: 116px; object-fit: contain; margin: 0 auto; transform: scale(1.5); }
 .rainEligibility__panel { position: relative; z-index: 1; margin: 0 18px 18px; padding: 32px 22px 24px; border: 6px double #f8b12d; border-radius: 18px; background: linear-gradient(180deg,#fffdf6,#fff1d9); box-shadow: inset 0 0 0 2px #fff,0 8px 20px rgba(59,0,0,.8); color: #3e0905; }
-.rainEligibility__status { display: grid; place-items: center; width: 48px; height: 48px; margin: -2px auto 12px; border: 3px solid #fff; border-radius: 50%; background: #36a347; box-shadow: 0 3px 8px rgba(0,0,0,.22); color: #fff; font: 800 28px/1 Arial,sans-serif; }
-.rainEligibility[data-eligible="false"] .rainEligibility__status { background: #d7261d; }
+/*.rainEligibility__status { display: grid; place-items: center; width: 48px; height: 48px; margin: -2px auto 12px; border: 3px solid #fff; border-radius: 50%; background: #36a347; box-shadow: 0 3px 8px rgba(0,0,0,.22); color: #fff; font: 800 28px/1 Arial,sans-serif; }
+.rainEligibility[data-eligible="false"] .rainEligibility__status { background: #d7261d; }*/
+.rainEligibility__status { width: 80px; height: 80px; object-fit: contain; display: block; margin: 25px auto; margin-top: -35px; animation: headerPulse 2.4s ease-in-out infinite;}
+
+
 .rainEligibility__title { margin: 0; font: 800 22px/1.22 Arial,sans-serif; }
 .rainEligibility__message { min-height: 40px; margin: 10px 0 18px; color: #5d3128; font: 500 14px/1.45 Arial,sans-serif; }
 .rainEligibility__action { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 48px; box-sizing: border-box; padding: 12px 18px; border: 0; border-radius: 10px; background: linear-gradient(180deg,#ef3d2e,#be0907); box-shadow: inset 0 1px 0 rgba(255,255,255,.45),0 5px 12px rgba(130,0,0,.28); color: #fff; font: 800 15px/1 Arial,sans-serif; text-decoration: none; cursor: pointer; }
