@@ -11,15 +11,14 @@
     <script src="asset/js/script.js" defer></script>
 
     <style>
-        
     </style>
 </head>
 <body>
-    <section class="redPacketDemo">
+    <section class="redPacketDemo hide" id="redPacketDemo">
         <div class="rainGame">
             <div class="rainGame__top">
                 <div class="rainGame__topMain">
-                    <img src="asset/image/angpao/header_2.png" class="rainTopHeader" alt="Angpow Rain" />
+                    <img src="asset/image/angpao/header.png" class="rainTopHeader" alt="Angpow Rain" />
 
                     <div class="rainTimerBox">
                         <div class="rainGame__label">Time Left</div>
@@ -41,7 +40,7 @@
 
             <div class="rainGame__stage" id="rainStage">
                 <div class="rainGame__intro" id="rainIntro">
-                    <img src="asset/image/angpao/header_2.png" class="rainHeader" />
+                    <img src="asset/image/angpao/header.png" class="rainHeader" />
                     <button class="rainGame__startBtn" id="startRainBtn" type="button">
                         START RAIN
                     </button>
@@ -64,6 +63,11 @@
                         <div class="rainResult__amount">
                             RM <span id="finalAmount">0.00</span>
                         </div>
+                    </div>
+
+                    <div class="rainResult__breakdown">
+                        <div class="rainResult__breakdownTitle">REWARD DETAILS</div>
+                        <ol class="rainResult__rewardList" id="rewardBreakdown"></ol>
                     </div>
 
                     <div class="rainResult__meta" style="display:none;">
@@ -105,14 +109,10 @@
                 <img src="asset/image/angpao/header_2.png"
                      class="rainEligibility__logo rainEligibility__header" alt="Angpow Rain" />
             </div>
-            
+
             <div class="rainEligibility__panel">
-                <div>
-
-                    <img class="rainEligibility__status" id="rainEligibilityStatus" src="asset/image/angpao/img-win.png" lt="Win" aria-hidden="true">
-
-                </div>
-
+                <div class="rainEligibility__status" id="rainEligibilityStatus"
+                     aria-hidden="true">✓</div>
                 <h2 class="rainEligibility__title" id="rainEligibilityTitle">
                     You have 1 play available!
                 </h2>
@@ -140,6 +140,23 @@
         </div>
     </div>
 
+    <button class="rainMiniLauncher" id="rainMiniLauncher" type="button"
+            aria-label="Open Angpow Rain" aria-hidden="true">
+        <span class="rainMiniLauncher__circle">
+            <img src="asset/image/angpao/item.png"
+                 class="rainMiniLauncher__packet rainMiniLauncher__packet--one" alt="" />
+            <img src="asset/image/angpao/item2.png"
+                 class="rainMiniLauncher__packet rainMiniLauncher__packet--two" alt="" />
+            <span class="rainMiniLauncher__close" aria-hidden="true">×</span>
+        </span>
+        <img src="asset/image/angpao/header.png"
+             class="rainMiniLauncher__title" alt="Angpow Rain" />
+        <span class="rainMiniLauncher__countdown">
+            <i aria-hidden="true"></i>
+            <b id="rainMiniCountdown">05:00</b>
+        </span>
+    </button>
+
     <script>
         /*
          * BACKEND INTEGRATION
@@ -156,26 +173,75 @@
             hasPlay: randomPlayCount > 0,
             plays: randomPlayCount,
             depositUrl: "#",
-            laterFallbackUrl: "#"
+            laterFallbackUrl: "#",
+            countdownSeconds: 300,
+            countdownEndAt: null
         };
 
         (function () {
             var popup = document.getElementById("rainEligibility");
+            var gameRoot = document.getElementById("redPacketDemo");
             var status = document.getElementById("rainEligibilityStatus");
             var title = document.getElementById("rainEligibilityTitle");
             var message = document.getElementById("rainEligibilityMessage");
             var action = document.getElementById("rainEligibilityAction");
             var later = document.getElementById("rainEligibilityLater");
+            var miniLauncher = document.getElementById("rainMiniLauncher");
+            var miniCountdown = document.getElementById("rainMiniCountdown");
+            var countdownTimer = null;
+            var countdownDeadline = null;
+
+            function getCountdownDeadline(access) {
+                var configuredEnd = access && access.countdownEndAt;
+                var parsedEnd = configuredEnd ? new Date(configuredEnd).getTime() : NaN;
+
+                if (Number.isFinite(parsedEnd)) return parsedEnd;
+
+                if (!countdownDeadline) {
+                    countdownDeadline = Date.now() +
+                        Math.max(0, Number(access && access.countdownSeconds) || 300) * 1000;
+                }
+
+                return countdownDeadline;
+            }
+
+            function formatCountdown(milliseconds) {
+                var totalSeconds = Math.max(0, Math.ceil(milliseconds / 1000));
+                var hours = Math.floor(totalSeconds / 3600);
+                var minutes = Math.floor((totalSeconds % 3600) / 60);
+                var seconds = totalSeconds % 60;
+                var parts = hours > 0 ? [hours, minutes, seconds] : [minutes, seconds];
+
+                return parts.map(function (part) {
+                    return String(part).padStart(2, "0");
+                }).join(":");
+            }
+
+            function updateMiniCountdown() {
+                var deadline = getCountdownDeadline(window.JACKPOT_RAIN_ACCESS);
+                miniCountdown.textContent = formatCountdown(deadline - Date.now());
+            }
+
+            function showMiniLauncher() {
+                updateMiniCountdown();
+                clearInterval(countdownTimer);
+                countdownTimer = setInterval(updateMiniCountdown, 1000);
+                miniLauncher.classList.add("is-show");
+                miniLauncher.setAttribute("aria-hidden", "false");
+            }
+
+            function hideMiniLauncher() {
+                miniLauncher.classList.remove("is-show");
+                miniLauncher.setAttribute("aria-hidden", "true");
+                clearInterval(countdownTimer);
+            }
 
             function renderJackpotRainAccess(access) {
                 var hasPlay = Boolean(access && access.hasPlay);
                 var plays = Math.max(0, Number(access && access.plays) || 0);
 
                 popup.dataset.eligible = String(hasPlay);
-                status.src = hasPlay ? "asset/image/angpao/img-win.png" : "asset/image/angpao/img-no credt.png";
-
-                status.alt = hasPlay ? "Win" : "Lose";
-                //status.textContent = hasPlay ? "✓" : "×";
+                status.textContent = hasPlay ? "✓" : "×";
 
                 if (hasPlay) {
                     title.textContent = "You have " + plays + " play" +
@@ -192,6 +258,7 @@
 
                 popup.classList.add("is-open");
                 popup.setAttribute("aria-hidden", "false");
+                hideMiniLauncher();
             }
 
             function closeJackpotRainAccess() {
@@ -205,6 +272,8 @@
                 if (access.hasPlay) {
                     event.preventDefault();
                     closeJackpotRainAccess();
+                    hideMiniLauncher();
+                    gameRoot.classList.remove("hide");
                     document.getElementById("startRainBtn").focus();
                     return;
                 }
@@ -215,13 +284,19 @@
             });
 
             later.addEventListener("click", function () {
-                var fallbackUrl = window.JACKPOT_RAIN_ACCESS.laterFallbackUrl || "#";
+                var access = window.JACKPOT_RAIN_ACCESS;
 
-                if (window.history.length > 1) {
-                    window.history.back();
-                } else if (fallbackUrl !== "#") {
-                    window.location.href = fallbackUrl;
+                closeJackpotRainAccess();
+
+                if (access && access.hasPlay) {
+                    showMiniLauncher();
+                } else {
+                    hideMiniLauncher();
                 }
+            });
+
+            miniLauncher.addEventListener("click", function () {
+                renderJackpotRainAccess(window.JACKPOT_RAIN_ACCESS);
             });
 
             /*
