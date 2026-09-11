@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const rewardType = document.getElementById("rewardType");
     const finalAmount = document.getElementById("finalAmount");
     const finalHits = document.getElementById("finalHits");
+    const rewardBreakdown = document.getElementById("rewardBreakdown");
 
     const GAME_DURATION = 15;
     const PACKET_INTERVAL = 360;
@@ -28,6 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let timeLeft = GAME_DURATION;
     let totalAmount = 0;
     let totalHits = 0;
+    let rewardHistory = [];
     let isPlaying = false;
 
     function startRainGame() {
@@ -65,6 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
         timeLeft = GAME_DURATION;
         totalAmount = 0;
         totalHits = 0;
+        rewardHistory = [];
         isPlaying = false;
 
         rainTimer.textContent = timeLeft;
@@ -126,10 +129,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         totalHits++;
         totalAmount += reward;
+        rewardHistory.push(reward);
 
         rainHits.textContent = totalHits;
 
-        createOpenEffect(packet);
+        createOpenEffect(packet, reward);
 
         packet.classList.add("is-hit");
         RainAudio.playHit();
@@ -139,12 +143,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 340);
     }
 
-    function createOpenEffect(packet) {
+    function createOpenEffect(packet, reward) {
         const packetRect = packet.getBoundingClientRect();
         const stageRect = rainStage.getBoundingClientRect();
 
         const effect = document.createElement("div");
         effect.className = "packetOpenEffect";
+
+        const rewardText = document.createElement("strong");
+        rewardText.className = "packetRewardAmount";
+        rewardText.textContent = `+ RM ${reward.toFixed(2)}`;
+        effect.appendChild(rewardText);
 
         effect.style.left = `${packetRect.left - stageRect.left + packetRect.width / 2}px`;
         effect.style.top = `${packetRect.top - stageRect.top + packetRect.height / 2}px`;
@@ -165,7 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         setTimeout(() => {
             effect.remove();
-        }, 650);
+        }, 1050);
     }
 
     function setupResultPopup(resultType) {
@@ -179,10 +188,6 @@ document.addEventListener("DOMContentLoaded", () => {
             rainResultCard.classList.add("is-big-win");
             rainResult.classList.add("is-big-win");
 
-            totalAmount = Math.max(
-                totalAmount * theme.bigWinMultiplier,
-                theme.bigWinMinAmount
-            );
         } else {
             rainResultCard.classList.add("is-normal-win");
             rainResult.classList.add("is-normal-win");
@@ -192,6 +197,23 @@ document.addEventListener("DOMContentLoaded", () => {
         resultTitle.textContent = resultCopy.title;
         resultDesc.textContent = resultCopy.desc;
         rewardType.textContent = resultCopy.rewardType;
+    }
+
+    function renderRewardBreakdown() {
+        rewardBreakdown.replaceChildren();
+
+        rewardHistory.forEach((reward, index) => {
+            const item = document.createElement("li");
+            item.innerHTML = `<span>Hit ${index + 1}</span><b>RM ${reward.toFixed(2)}</b>`;
+            rewardBreakdown.appendChild(item);
+        });
+
+        if (rewardHistory.length === 0) {
+            const emptyItem = document.createElement("li");
+            emptyItem.className = "is-empty";
+            emptyItem.textContent = "No packets collected";
+            rewardBreakdown.appendChild(emptyItem);
+        }
     }
 
     function getResultType() {
@@ -224,6 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const resultType = getResultType();
 
         setupResultPopup(resultType);
+        renderRewardBreakdown();
 
         finalAmount.textContent = totalAmount.toFixed(2);
         finalHits.textContent = totalHits;
