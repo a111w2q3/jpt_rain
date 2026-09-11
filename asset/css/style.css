@@ -39,6 +39,8 @@ body { width: 100%; height: 100%; overflow: hidden; }
 
 .redPacketDemo { width: 100dvw; height: 100dvh; min-height: 100dvh; position: relative; overflow: hidden; color: var(--rain-color-text); background: var(--rain-bg-fallback); background-image: var(--rain-bg-desktop); background-size: cover; background-position: center; background-repeat: no-repeat; }
 
+    .redPacketDemo.hide { display: none; }
+
 .rainGame { width: 100%; height: 100%; position: relative; }
 
 /* =========================
@@ -96,13 +98,13 @@ body { width: 100%; height: 100%; overflow: hidden; }
    Falling Packet
 ========================= */
 
-.redPacket { width: var(--rain-packet-w); height: var(--rain-packet-h); position: absolute; top: -120px; z-index: 10; border: 0; padding: 0; cursor: pointer; background: transparent;  background-size: contain; background-repeat: no-repeat; background-position: center; animation-name: packetFall; animation-timing-function: linear; animation-fill-mode: forwards; user-select: none; -webkit-user-select: none; -webkit-user-drag: none; touch-action: manipulation; }
+.redPacket { width: var(--rain-packet-w); height: var(--rain-packet-h); position: absolute; top: -120px; z-index: 10; border: 0; padding: 0; cursor: pointer; background: transparent; background-size: contain; background-repeat: no-repeat; background-position: center; animation-name: packetFall; animation-timing-function: linear; animation-fill-mode: forwards; user-select: none; -webkit-user-select: none; -webkit-user-drag: none; touch-action: manipulation; }
 
 .redPacket--type1 { background-image: var(--rain-packet-img-1); }
 
 .redPacket--type2 { background-image: var(--rain-packet-img-2); }
 
-    .redPacket.is-hit { pointer-events: none; animation: packetCollect 0.22s ease forwards; }
+.redPacket.is-hit { pointer-events: none; animation: packetCollect 0.22s ease forwards; }
 
 /* =========================
    Packet Click Effect
@@ -110,15 +112,17 @@ body { width: 100%; height: 100%; overflow: hidden; }
 
 .packetOpenEffect { position: absolute; left: 0; top: 0; z-index: 30; width: 10px; height: 10px; transform: translate(-50%, -50%); pointer-events: none; }
 
-    .packetOpenEffect::before { content: ""; position: absolute; inset: -22px; border-radius: 50%; background: radial-gradient( circle, rgba(255, 244, 184, 0.95), rgba(255, 178, 26, 0.5) 35%, transparent 70% ); animation: openFlash 0.42s ease-out forwards; }
+.packetRewardAmount { position: absolute; left: 50%; top: 50%; z-index: 2; width: max-content; transform: translate(-50%, -50%); color: #fff4b8; font-size: clamp(16px, 3.6vw, 22px); font-weight: 900; line-height: 1; letter-spacing: .02em; text-shadow: 0 2px 3px rgba(90, 9, 9, .95), 0 0 10px rgba(255, 178, 26, .9); animation: rewardAmountFloat .9s ease-out forwards; }
 
-    .packetOpenEffect::after { content: ""; position: absolute; inset: -36px; border-radius: 50%; border: 2px solid rgba(255, 214, 107, 0.75); animation: openRing 0.48s ease-out forwards; }
+.packetOpenEffect::before { content: ""; position: absolute; inset: -22px; border-radius: 50%; background: radial-gradient( circle, rgba(255, 244, 184, 0.95), rgba(255, 178, 26, 0.5) 35%, transparent 70% ); animation: openFlash 0.42s ease-out forwards; }
 
-    .packetOpenEffect span { position: absolute; left: 50%; top: 50%; width: 7px; height: 7px; border-radius: 50%; background: var(--rain-color-primary); box-shadow: 0 0 8px rgba(255, 214, 107, 0.85); transform: translate(-50%, -50%); animation: openParticle 0.52s ease-out forwards; animation-delay: var(--delay); }
+.packetOpenEffect::after { content: ""; position: absolute; inset: -36px; border-radius: 50%; border: 2px solid rgba(255, 214, 107, 0.75); animation: openRing 0.48s ease-out forwards; }
 
-        .packetOpenEffect span:nth-child(2n) { width: 5px; height: 5px; background: #fff4b8; }
+.packetOpenEffect span { position: absolute; left: 50%; top: 50%; width: 7px; height: 7px; border-radius: 50%; background: var(--rain-color-primary); box-shadow: 0 0 8px rgba(255, 214, 107, 0.85); transform: translate(-50%, -50%); animation: openParticle 0.52s ease-out forwards; animation-delay: var(--delay); }
 
-        .packetOpenEffect span:nth-child(3n) { border-radius: 2px; transform: translate(-50%, -50%) rotate(45deg); }
+    .packetOpenEffect span:nth-child(2n) { width: 5px; height: 5px; background: #fff4b8; }
+
+    .packetOpenEffect span:nth-child(3n) { border-radius: 2px; transform: translate(-50%, -50%) rotate(45deg); }
 
 /* =========================
    Result Overlay
@@ -153,6 +157,20 @@ body { width: 100%; height: 100%; overflow: hidden; }
 .rainResult__amountLabel { margin-bottom: 4px; font-size: 11px; font-weight: 900; letter-spacing: 0.16em; color: rgba(255, 244, 184, 0.82); }
 
 .rainResult__amount { font-size: clamp(38px, 10vw, 54px); line-height: 1; font-weight: 900; color: var(--rain-color-primary); text-shadow: 0 0 8px rgba(255, 214, 107, 0.78), 0 3px 0 rgba(90, 9, 9, 0.45); }
+
+.rainResult__breakdown { position: relative; z-index: 1; margin: -2px 0 16px; text-align: left; }
+
+.rainResult__breakdownTitle { margin: 0 2px 7px; color: rgba(255, 244, 184, .82); font-size: 11px; font-weight: 900; letter-spacing: .14em; }
+
+.rainResult__rewardList { display: grid; gap: 6px; max-height: 150px; margin: 0; padding: 2px; overflow-y: auto; list-style: none; scrollbar-width: thin; scrollbar-color: rgba(255, 214, 107, .55) rgba(255, 255, 255, .06); }
+
+    .rainResult__rewardList li { display: flex; align-items: center; justify-content: space-between; min-height: 34px; padding: 7px 12px; border: 1px solid rgba(255, 214, 107, .16); border-radius: 11px; background: rgba(255, 255, 255, .07); font-size: 12px; }
+
+        .rainResult__rewardList li span { color: rgba(255, 255, 255, .78); }
+
+        .rainResult__rewardList li b { color: #fff4b8; font-size: 13px; }
+
+        .rainResult__rewardList li.is-empty { justify-content: center; color: rgba(255, 255, 255, .66); }
 
 .rainResult__meta { position: relative; z-index: 1; display: grid; grid-template-columns: 0.75fr 1.25fr; gap: 10px; margin: 0 0 20px; }
 
@@ -217,6 +235,13 @@ body { width: 100%; height: 100%; overflow: hidden; }
     100% { transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(0.15); opacity: 0; }
 }
 
+@keyframes rewardAmountFloat {
+    0% { transform: translate(-50%, -35%) scale(.7); opacity: 0; }
+    20% { transform: translate(-50%, -65%) scale(1.08); opacity: 1; }
+    72% { opacity: 1; }
+    100% { transform: translate(-50%, -155%) scale(1); opacity: 0; }
+}
+
 @keyframes resultPopIn {
     to { transform: scale(1); opacity: 1; }
 }
@@ -273,7 +298,7 @@ body { width: 100%; height: 100%; overflow: hidden; }
 
     .resultHeader { width: min(360px, 94vw); max-height: 108px; transform: translate(-50%, -34%); }
 
-    .rainResult__content { padding: 24px 16px 20px; border-radius: 24px; }
+    .rainResult__content { max-height: calc(100dvh - 76px); padding: 24px 16px 20px; border-radius: 24px; overflow-y: auto; }
 
     .rainResult__title { font-size: 26px; }
 
@@ -282,6 +307,8 @@ body { width: 100%; height: 100%; overflow: hidden; }
     .rainResult__amountBox { padding: 12px 12px 14px; border-radius: 18px; }
 
     .rainResult__amount { font-size: 38px; }
+
+    .rainResult__rewardList { max-height: 116px; }
 
     .rainResult__meta { grid-template-columns: 1fr; gap: 8px; }
 
@@ -301,16 +328,34 @@ body { width: 100%; height: 100%; overflow: hidden; }
 .rainEligibility__head { position: relative; z-index: 1; padding: 28px 28px 18px; }
 .rainEligibility__logo { display: block; width: min(320px,100%); max-height: 116px; object-fit: contain; margin: 0 auto; transform: scale(1.5); }
 .rainEligibility__panel { position: relative; z-index: 1; margin: 0 18px 18px; padding: 32px 22px 24px; border: 6px double #f8b12d; border-radius: 18px; background: linear-gradient(180deg,#fffdf6,#fff1d9); box-shadow: inset 0 0 0 2px #fff,0 8px 20px rgba(59,0,0,.8); color: #3e0905; }
-/*.rainEligibility__status { display: grid; place-items: center; width: 48px; height: 48px; margin: -2px auto 12px; border: 3px solid #fff; border-radius: 50%; background: #36a347; box-shadow: 0 3px 8px rgba(0,0,0,.22); color: #fff; font: 800 28px/1 Arial,sans-serif; }
-.rainEligibility[data-eligible="false"] .rainEligibility__status { background: #d7261d; }*/
-.rainEligibility__status { width: 80px; height: 80px; object-fit: contain; display: block; margin: 25px auto; margin-top: -35px; animation: headerPulse 2.4s ease-in-out infinite;}
-
-
+.rainEligibility__status { display: grid; place-items: center; width: 48px; height: 48px; margin: -2px auto 12px; border: 3px solid #fff; border-radius: 50%; background: #36a347; box-shadow: 0 3px 8px rgba(0,0,0,.22); color: #fff; font: 800 28px/1 Arial,sans-serif; }
+.rainEligibility[data-eligible="false"] .rainEligibility__status { background: #d7261d; }
 .rainEligibility__title { margin: 0; font: 800 22px/1.22 Arial,sans-serif; }
 .rainEligibility__message { min-height: 40px; margin: 10px 0 18px; color: #5d3128; font: 500 14px/1.45 Arial,sans-serif; }
 .rainEligibility__action { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 48px; box-sizing: border-box; padding: 12px 18px; border: 0; border-radius: 10px; background: linear-gradient(180deg,#ef3d2e,#be0907); box-shadow: inset 0 1px 0 rgba(255,255,255,.45),0 5px 12px rgba(130,0,0,.28); color: #fff; font: 800 15px/1 Arial,sans-serif; text-decoration: none; cursor: pointer; }
 .rainEligibility[data-eligible="false"] .rainEligibility__action { background: linear-gradient(180deg,#ffd15a,#f39b08); color: #542300; }
 .rainEligibility__later { position: relative; z-index: 1; display: inline-block; margin: 0 0 22px; padding: 7px 14px; border: 0; background: none; color: #fff5dd; font: 600 13px/1 Arial,sans-serif; text-decoration: underline; cursor: pointer; }
+
+.rainMiniLauncher { position: fixed; left: max(18px, env(safe-area-inset-left)); bottom: max(18px, env(safe-area-inset-bottom)); z-index: 9998; display: grid; justify-items: center; width: 124px; padding: 0 5px 3px; border: 0; background: transparent; color: #fff; cursor: pointer; opacity: 0; visibility: hidden; transform: translateY(18px) scale(.9); transition: opacity .25s ease, visibility .25s ease, transform .3s cubic-bezier(.2,.8,.2,1); }
+    .rainMiniLauncher.is-show { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+.rainMiniLauncher__circle { position: relative; display: block; width: 106px; height: 106px; border: 5px solid #6f5523; border-radius: 50%; background: radial-gradient(circle at 50% 62%, #4e1815, #210c0d 72%); box-shadow: inset 0 0 18px rgba(0,0,0,.58), 0 8px 18px rgba(0,0,0,.3); }
+.rainMiniLauncher__packet { position: absolute; bottom: 8px; width: 58px; height: 66px; object-fit: contain; filter: drop-shadow(0 5px 5px rgba(0,0,0,.32)); pointer-events: none; }
+.rainMiniLauncher__packet--one { left: 12px; animation: miniPacketFloatOne 2.8s ease-in-out infinite; }
+.rainMiniLauncher__packet--two { right: 10px; animation: miniPacketFloatTwo 3.2s ease-in-out .25s infinite; }
+.rainMiniLauncher__close { position: absolute; right: -8px; top: -9px; display: grid; place-items: center; width: 23px; height: 23px; border: 2px solid #fff; border-radius: 50%; background: #ef4b4b; box-shadow: 0 3px 7px rgba(0,0,0,.35); color: #fff; font: 800 15px/1 Arial,sans-serif; }
+.rainMiniLauncher__title { position: relative; z-index: 2; display: block; width: 100px; margin-top: -16px; object-fit: contain; filter: drop-shadow(0 3px 4px rgba(0,0,0,.45)); pointer-events: none; transform: scale(1.25); }
+.rainMiniLauncher__countdown { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-width: 74px; min-height: 24px; margin-top: 2px; padding: 4px 10px; border: 2px solid #b98623; border-radius: 999px; background: #110f0c; box-shadow: 0 4px 8px rgba(0,0,0,.32); color: #ffe185; font: 800 12px/1 Arial,sans-serif; font-variant-numeric: tabular-nums; letter-spacing: .06em; z-index: 2; }
+    .rainMiniLauncher__countdown i { width: 5px; height: 5px; border-radius: 50%; background: #ffc928; box-shadow: 0 0 6px rgba(255,201,40,.75); }
+
+@keyframes miniPacketFloatOne {
+    0%, 100% { transform: translateY(0) rotate(-5deg); }
+    50% { transform: translateY(-7px) rotate(2deg); }
+}
+
+@keyframes miniPacketFloatTwo {
+    0%, 100% { transform: translateY(0) rotate(5deg); }
+    50% { transform: translateY(-9px) rotate(-2deg); }
+}
 
 .rainFloatingItem { position: absolute; z-index: 0; width: min(128px, 27vw); height: min(172px, 36vw); object-fit: contain; pointer-events: none; user-select: none; filter: drop-shadow(0 10px 14px rgba(61, 0, 0, .24)); will-change: transform; }
 .rainFloatingItem--one { left: -76px; top: 19%; animation: rainFloatOne 3.8s ease-in-out infinite; }
@@ -351,10 +396,11 @@ body { width: 100%; height: 100%; overflow: hidden; }
     .rainFloatingItem { width: min(104px, 25vw); height: min(140px, 34vw); opacity: .92; }
     .rainFloatingItem--one { left: -48px; top: 20%; }
     .rainFloatingItem--two { right: -48px; bottom: 14%; }
+    .rainMiniLauncher { left: max(10px, env(safe-area-inset-left)); bottom: max(10px, env(safe-area-inset-bottom)); transform-origin: left bottom; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .rainFloatingItem { animation: none; }
+    .rainFloatingItem, .rainMiniLauncher__packet { animation: none; }
 }
 
 .rainEligibility__header { position: relative; overflow: hidden; animation: headerPulse 2.4s ease-in-out infinite; transform-origin: center; will-change: transform, filter; }
