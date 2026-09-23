@@ -14,151 +14,203 @@
     </style>
 </head>
 <body>
-    <section class="redPacketDemo hide" id="redPacketDemo">
-        <div class="rainGame">
-            <div class="rainGame__top">
-                <div class="rainGame__topMain">
-                    <img src="asset/image/angpao/header.png" class="rainTopHeader" alt="Angpow Rain" />
+    <main class="rainShell">
+        <div class="rainViewport">
+            <div class="rainLoading is-complete" id="rainLoading" aria-live="polite" aria-hidden="true">
+                <div class="rainLoading__content">
+                    <img src="asset/image/angpao/header.png"
+                         class="rainLoading__logo" alt="Angpow Rain" />
 
-                    <div class="rainTimerBox">
-                        <div class="rainGame__label">Time Left</div>
-
-                        <div class="rainTimerBar" aria-label="Time Left">
-                            <div class="rainTimerBar__fill" id="rainTimerBarFill"></div>
-                            <div class="rainTimerBar__text">
-                                <span id="rainTimer">15</span>s
+                    <div class="rainLoading__progress" role="progressbar"
+                         aria-label="Loading" aria-valuemin="0" aria-valuemax="100"
+                         aria-valuenow="0" id="rainLoadingProgress">
+                        <div class="rainLoading__track">
+                            <div class="rainLoading__slot">
+                                <div class="rainLoading__fill" id="rainLoadingFill"></div>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <div class="rainHitPill">
-                    <span>Hits</span>
-                    <b id="rainHits">0</b>
-                </div>
-            </div>
-
-            <div class="rainGame__stage" id="rainStage">
-                <div class="rainGame__intro" id="rainIntro">
-                    <img src="asset/image/angpao/header.png" class="rainHeader" />
-                    <button class="rainGame__startBtn" id="startRainBtn" type="button">
-                        START RAIN
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="rainResult" id="rainResult" aria-hidden="true">
-            <div class="rainResult__card" id="rainResultCard">
-                <img src="asset/image/angpao/header_2.png" class="resultHeader" alt="Angpow Rain" />
-
-                <div class="rainResult__content">
-                    <div class="rainResult__badge" id="resultBadge">WIN</div>
-
-                    <h2 class="rainResult__title" id="resultTitle">Congratulations!</h2>
-                    <p class="rainResult__desc" id="resultDesc">You collected</p>
-
-                    <div class="rainResult__amountBox">
-                        <div class="rainResult__amountLabel">TOTAL WIN</div>
-                        <div class="rainResult__amount">
-                            RM <span id="finalAmount">0.00</span>
+                        <div class="rainLoading__status">
+                            <span>Loading...</span>
+                            <b id="rainLoadingPercent">0%</b>
                         </div>
                     </div>
-
-                    <div class="rainResult__breakdown">
-                        <div class="rainResult__breakdownTitle">REWARD DETAILS</div>
-                        <ol class="rainResult__rewardList" id="rewardBreakdown"></ol>
-                    </div>
-
-                    <div class="rainResult__meta" style="display:none;">
-                        <div class="rainResult__metaItem">
-                            <span>Hits</span>
-                            <b id="finalHits">0</b>
-                        </div>
-
-                        <div class="rainResult__metaItem">
-                            <span>Reward</span>
-                            <b id="rewardType">Demo Bonus</b>
-                        </div>
-                    </div>
-
-                    <button class="rainResult__btn" id="playAgainBtn" type="button">
-                        PLAY AGAIN
-                    </button>
                 </div>
             </div>
-        </div>
 
-    </section>
+            <section class="redPacketDemo hide" id="redPacketDemo">
+                <div class="rainGame">
+                    <div class="rainGame__top">
+                        <div class="rainGame__topMain">
+                            <img src="asset/image/angpao/header.png" class="rainTopHeader" alt="Angpow Rain" />
 
-    <div class="rainEligibility" id="rainEligibility" data-eligible="true"
-         role="dialog" aria-modal="true" aria-labelledby="rainEligibilityTitle"
-         aria-hidden="true">
-        <div class="rainEligibility__card">
-            <img src="asset/image/angpao/item.png"
-                 class="rainFloatingItem rainFloatingItem--one"
-                 alt="" aria-hidden="true" />
-            <img src="asset/image/angpao/item2.png"
-                 class="rainFloatingItem rainFloatingItem--two"
-                 alt="" aria-hidden="true" />
+                            <div class="rainTimerBox">
+                                <div class="rainTimerBar" role="timer" aria-label="Time left">
+                                    <div class="rainTimerBar__track">
+                                        <div class="rainTimerBar__fill" id="rainTimerBarFill"></div>
+                                    </div>
+                                    <div class="rainTimerBar__text"><span id="rainTimer">15</span>s</div>
+                                </div>
+                            </div>
+                            <div class="rainCombo" id="rainCombo" aria-live="off" aria-hidden="true">Combo <span id="rainComboCount">x2</span></div>
+                        </div>
 
-            <img src="asset/image/angpao/dec02.png" class="fwFloatingItem fwFloatingItem--one" />
-            <img src="asset/image/angpao/dec03.png" class="fwFloatingItem fwFloatingItem--two" />
+                    </div>
 
-            <div class="rainEligibility__head">
-                <img src="asset/image/angpao/header_2.png"
-                     class="rainEligibility__logo rainEligibility__header" alt="Angpow Rain" />
-            </div>
-
-            <div class="rainEligibility__panel">
-                <div class="rainEligibility__status" id="rainEligibilityStatus"
-                     aria-hidden="true">✓</div>
-                <h2 class="rainEligibility__title" id="rainEligibilityTitle">
-                    You have 1 play available!
-                </h2>
-                <p class="rainEligibility__message" id="rainEligibilityMessage">
-                    Try your luck and win big rewards!
-                </p>
-
-                <div class="rainEligibility__schedule">
-                    <span class="rainEligibility__scheduleTitle">DAILY EVENT TIME</span>
-
-                    <div class="rainEligibility__scheduleRange">
-                        <span id="jackpotStartTime">00:00:00</span>
-                        <i></i>
-                        <span id="jackpotFinishTime">23:00:00</span>
+                    <div class="rainGame__stage" id="rainStage">
+                        <div class="rainGame__intro" id="rainIntro">
+                            <img src="asset/image/angpao/header.png" class="rainHeader" />
+                            <button class="rainGame__startBtn" id="startRainBtn" type="button">
+                                START RAIN
+                            </button>
+                        </div>
+                        <div class="rainGame__countdown" id="rainCountdown" aria-live="assertive" aria-hidden="true">
+                            <img class="rainGame__countdownImage" id="rainCountdownImage" src="asset/image/angpao/countdown/3.png" alt="" />
+                        </div>
                     </div>
                 </div>
-                <a class="rainEligibility__action" id="rainEligibilityAction" href="#">
-                    PLAY NOW
-                </a>
+
+                <div class="rainResult" id="rainResult" aria-hidden="true">
+                    <div class="rainResult__card" id="rainResultCard">
+                        <div class="rainResult__head">
+                            <img src="asset/image/angpao/header.png" class="resultHeader" alt="Angpow Rain" />
+                        </div>
+
+                        <div class="rainResult__content">
+                            <div class="rainResult__badge" id="resultBadge">WIN</div>
+
+                            <h2 class="rainResult__title" id="resultTitle">Congratulations!</h2>
+                            <p class="rainResult__desc" id="resultDesc">You collected</p>
+
+                            <div class="rainResult__amountBox">
+                                <div class="rainResult__amountLabel">TOTAL WIN</div>
+                                <div class="rainResult__amount">
+                                    RM <span id="finalAmount">0.00</span>
+                                </div>
+                            </div>
+
+                            <div class="rainResult__summary">
+                                <div class="rainResult__summaryItem">
+                                    <img class="rainResult__summaryIcon"
+                                         src="asset/image/angpao/icon-opened.png"
+                                         alt="" aria-hidden="true" />
+                                    <span>OPENED</span>
+                                    <b id="resultOpened">0</b>
+                                </div>
+                                <div class="rainResult__summaryItem is-prize">
+                                    <img class="rainResult__summaryIcon"
+                                         src="asset/image/angpao/icon-prize.png"
+                                         alt="" aria-hidden="true" />
+                                    <span>PRIZES</span>
+                                    <b id="resultPrizeCount">0</b>
+                                </div>
+                                <div class="rainResult__summaryItem is-empty-count">
+                                    <img class="rainResult__summaryIcon"
+                                         src="asset/image/angpao/icon-no-prize.png"
+                                         alt="" aria-hidden="true" />
+                                    <span>EMPTY</span>
+                                    <b id="resultEmptyCount">0</b>
+                                </div>
+                            </div>
+
+                            <section class="rainResult__rewards" aria-label="Reward summary">
+                                <div class="rainResult__rewardsHead" aria-hidden="true">
+                                    <span>ANGPOW</span>
+                                    <span>HITS</span>
+                                    <span>TOTAL</span>
+                                </div>
+                                <div class="rainResult__rewardRows" id="rewardBreakdown"></div>
+                            </section>
+
+                            <div class="rainResult__meta" style="display:none;">
+                                <div class="rainResult__metaItem">
+                                    <span>Hits</span>
+                                    <b id="finalHits">0</b>
+                                </div>
+
+                                <div class="rainResult__metaItem">
+                                    <span>Reward</span>
+                                    <b id="rewardType">Demo Bonus</b>
+                                </div>
+                            </div>
+
+                            <button class="rainResult__btn" id="playAgainBtn" type="button">
+                                PLAY AGAIN
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <div class="rainEligibility" id="rainEligibility" data-eligible="true"
+                 role="dialog" aria-modal="true" aria-labelledby="rainEligibilityTitle"
+                 aria-hidden="true">
+                <div class="rainEligibility__card">
+                    <img src="asset/image/angpao/item.png"
+                         class="rainFloatingItem rainFloatingItem--one"
+                         alt="" aria-hidden="true" />
+                    <img src="asset/image/angpao/item2.png"
+                         class="rainFloatingItem rainFloatingItem--two"
+                         alt="" aria-hidden="true" />
+
+                    <img src="asset/image/angpao/dec02.png" class="fwFloatingItem fwFloatingItem--one" />
+                    <img src="asset/image/angpao/dec03.png" class="fwFloatingItem fwFloatingItem--two" />
+
+                    <div class="rainEligibility__head">
+                        <img src="asset/image/angpao/header.png"
+                             class="rainEligibility__logo rainEligibility__header" alt="Angpow Rain" />
+                    </div>
+
+                    <div class="rainEligibility__panel">
+                        <div class="rainEligibility__status" id="rainEligibilityStatus"
+                             aria-hidden="true">✓</div>
+                        <h2 class="rainEligibility__title" id="rainEligibilityTitle">
+                            You have 1 play available!
+                        </h2>
+                        <p class="rainEligibility__message" id="rainEligibilityMessage">
+                            Try your luck and win big rewards!
+                        </p>
+
+                        <div class="rainEligibility__schedule">
+                            <span class="rainEligibility__scheduleTitle">DAILY EVENT TIME</span>
+
+                            <div class="rainEligibility__scheduleRange">
+                                <span id="jackpotStartTime">00:00:00</span>
+                                <i></i>
+                                <span id="jackpotFinishTime">23:00:00</span>
+                            </div>
+                        </div>
+                        <a class="rainEligibility__action" id="rainEligibilityAction" href="#">
+                            PLAY NOW
+                        </a>
+                        <button class="rainEligibility__later" id="rainEligibilityLater" type="button">
+                            Later
+                        </button>
+                    </div>
+                </div>
             </div>
 
-            <button class="rainEligibility__later" id="rainEligibilityLater" type="button">
-                Later
+            <button class="rainMiniLauncher" id="rainMiniLauncher" type="button"
+                    aria-label="Open Angpow Rain" aria-hidden="true">
+                <span class="rainMiniLauncher__circle">
+                    <img src="asset/image/angpao/item.png"
+                         class="rainMiniLauncher__packet rainMiniLauncher__packet--one" alt="" />
+                    <img src="asset/image/angpao/item2.png"
+                         class="rainMiniLauncher__packet rainMiniLauncher__packet--two" alt="" />
+                    <span class="rainMiniLauncher__close" aria-hidden="true">×</span>
+                </span>
+                <img src="asset/image/angpao/header.png"
+                     class="rainMiniLauncher__title" alt="Angpow Rain" />
+                <span class="rainMiniLauncher__countdown">
+                    <i aria-hidden="true"></i>
+                    <b id="rainMiniCountdown">05:00</b>
+                </span>
             </button>
         </div>
-    </div>
+    </main>
 
-    <button class="rainMiniLauncher" id="rainMiniLauncher" type="button"
-            aria-label="Open Angpow Rain" aria-hidden="true">
-        <span class="rainMiniLauncher__circle">
-            <img src="asset/image/angpao/item.png"
-                 class="rainMiniLauncher__packet rainMiniLauncher__packet--one" alt="" />
-            <img src="asset/image/angpao/item2.png"
-                 class="rainMiniLauncher__packet rainMiniLauncher__packet--two" alt="" />
-            <span class="rainMiniLauncher__close" aria-hidden="true">×</span>
-        </span>
-        <img src="asset/image/angpao/header.png"
-             class="rainMiniLauncher__title" alt="Angpow Rain" />
-        <span class="rainMiniLauncher__countdown">
-            <i aria-hidden="true"></i>
-            <b id="rainMiniCountdown">05:00</b>
-        </span>
-    </button>
-
-    <script>
-        /*
+    <script>/*
          * BACKEND INTEGRATION
          * Replace these values with the member's eligibility response.
          */
@@ -188,8 +240,48 @@
             var later = document.getElementById("rainEligibilityLater");
             var miniLauncher = document.getElementById("rainMiniLauncher");
             var miniCountdown = document.getElementById("rainMiniCountdown");
+            var loading = document.getElementById("rainLoading");
+            var loadingProgress = document.getElementById("rainLoadingProgress");
+            var loadingFill = document.getElementById("rainLoadingFill");
+            var loadingPercent = document.getElementById("rainLoadingPercent");
             var countdownTimer = null;
             var countdownDeadline = null;
+            var isLoading = false;
+
+            function setLoadingProgress(value) {
+                var progress = Math.max(0, Math.min(100, Math.round(value)));
+
+                loadingFill.style.width = progress + "%";
+                loadingPercent.textContent = progress + "%";
+                loadingProgress.setAttribute("aria-valuenow", String(progress));
+            }
+
+            function startFakeLoading() {
+                if (isLoading) return;
+                isLoading = true;
+                setLoadingProgress(0);
+                loading.classList.remove("is-complete");
+                loading.setAttribute("aria-hidden", "false");
+                var progress = 0;
+                var loadingTimer = setInterval(function () {
+                    var increment = progress < 45 ? 8 : progress < 78 ? 5 : 2;
+                    progress = Math.min(94, progress + increment);
+                    setLoadingProgress(progress);
+                }, 90);
+
+                setTimeout(function () {
+                    clearInterval(loadingTimer);
+                    setLoadingProgress(100);
+
+                    setTimeout(function () {
+                        isLoading = false;
+                        loading.classList.add("is-complete");
+                        loading.setAttribute("aria-hidden", "true");
+                        gameRoot.classList.remove("hide");
+                        document.getElementById("startRainBtn").focus();
+                    }, 600);
+                }, 3200);
+            }
 
             function getCountdownDeadline(access) {
                 var configuredEnd = access && access.countdownEndAt;
@@ -228,11 +320,17 @@
                 countdownTimer = setInterval(updateMiniCountdown, 1000);
                 miniLauncher.classList.add("is-show");
                 miniLauncher.setAttribute("aria-hidden", "false");
+                miniLauncher.style.opacity = "1";
+                miniLauncher.style.visibility = "visible";
+                miniLauncher.style.pointerEvents = "auto";
             }
 
             function hideMiniLauncher() {
                 miniLauncher.classList.remove("is-show");
                 miniLauncher.setAttribute("aria-hidden", "true");
+                miniLauncher.style.opacity = "0";
+                miniLauncher.style.visibility = "hidden";
+                miniLauncher.style.pointerEvents = "none";
                 clearInterval(countdownTimer);
             }
 
@@ -273,8 +371,7 @@
                     event.preventDefault();
                     closeJackpotRainAccess();
                     hideMiniLauncher();
-                    gameRoot.classList.remove("hide");
-                    document.getElementById("startRainBtn").focus();
+                    startFakeLoading();
                     return;
                 }
 
@@ -284,15 +381,8 @@
             });
 
             later.addEventListener("click", function () {
-                var access = window.JACKPOT_RAIN_ACCESS;
-
                 closeJackpotRainAccess();
-
-                if (access && access.hasPlay) {
-                    showMiniLauncher();
-                } else {
-                    hideMiniLauncher();
-                }
+                showMiniLauncher();
             });
 
             miniLauncher.addEventListener("click", function () {
@@ -309,13 +399,14 @@
                     window.JACKPOT_RAIN_ACCESS,
                     nextAccess || {}
                 );
-                renderJackpotRainAccess(window.JACKPOT_RAIN_ACCESS);
+                if (!isLoading) {
+                    renderJackpotRainAccess(window.JACKPOT_RAIN_ACCESS);
+                }
             };
 
             document.addEventListener("DOMContentLoaded", function () {
                 renderJackpotRainAccess(window.JACKPOT_RAIN_ACCESS);
             });
-        }());
-    </script>
+        }());</script>
 </body>
 </html>
