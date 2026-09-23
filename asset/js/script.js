@@ -1,13 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
     const rainStage = document.getElementById("rainStage");
     const rainIntro = document.getElementById("rainIntro");
+    const rainCountdown = document.getElementById("rainCountdown");
+    const rainCountdownImage = document.getElementById("rainCountdownImage");
     const rainGameTop = document.querySelector(".rainGame__top");
     const startRainBtn = document.getElementById("startRainBtn");
     const playAgainBtn = document.getElementById("playAgainBtn");
 
     const rainTimer = document.getElementById("rainTimer");
     const rainTimerBarFill = document.getElementById("rainTimerBarFill");
-    const rainHits = document.getElementById("rainHits");
+    const rainCombo = document.getElementById("rainCombo");
+    const rainComboCount = document.getElementById("rainComboCount");
 
     const rainResult = document.getElementById("rainResult");
     const rainResultCard = document.getElementById("rainResultCard");
@@ -18,19 +21,88 @@ document.addEventListener("DOMContentLoaded", () => {
     const finalAmount = document.getElementById("finalAmount");
     const finalHits = document.getElementById("finalHits");
     const rewardBreakdown = document.getElementById("rewardBreakdown");
+    const resultOpened = document.getElementById("resultOpened");
+    const resultPrizeCount = document.getElementById("resultPrizeCount");
+    const resultEmptyCount = document.getElementById("resultEmptyCount");
 
     const GAME_DURATION = 15;
     const PACKET_INTERVAL = 360;
-    const BIG_WIN_RATE = 0.5;
     const SECOND_ITEM_RATE = 0.5;
 
+    // RESULT TEXT: edit the WIN / EMPTY wording here.
+    const RESULT_COPY = {
+        win: {
+            badge: "WIN",
+            title: "Congratulations!",
+            rewardType: "Reward"
+        },
+        empty: {
+            badge: "NO WIN",
+            title: "Please Try Again",
+            rewardType: "No reward"
+        }
+    };
+
+    const FEEDBACK_IMAGE_URLS = [
+        "asset/image/angpao/bravo.png",
+        "asset/image/angpao/perfect.png",
+        "asset/image/angpao/nice.png"
+    ];
+
+    const feedbackImageCache = FEEDBACK_IMAGE_URLS.map((src) => {
+        const image = new Image();
+        image.src = src;
+        image.alt = "";
+        image.setAttribute("aria-hidden", "true");
+        image.decode?.().catch(() => {});
+        return image;
+    });
+
+    let countdownTimer = null;
+    let countdownStep = 0;
+    const COUNTDOWN_STEPS = ["3", "2", "1", "go"];
+    const COUNTDOWN_IMAGE_BASE = "asset/image/angpao/countdown/";
+    COUNTDOWN_STEPS.forEach((step) => { const image = new Image(); image.src = `${COUNTDOWN_IMAGE_BASE}${step}.png`; });
     let gameTimer = null;
     let packetTimer = null;
     let timeLeft = GAME_DURATION;
     let totalAmount = 0;
     let totalHits = 0;
+    let combo = 0;
+    let comboHideTimer = null;
     let rewardHistory = [];
     let isPlaying = false;
+
+    function startCountdown() {
+        if (countdownTimer || isPlaying) return;
+        resetRainGame();
+        rainIntro.style.display = "none";
+        rainCountdown.classList.add("is-show");
+        rainCountdown.setAttribute("aria-hidden", "false");
+        countdownStep = 0;
+        showCountdownStep();
+        countdownTimer = setInterval(() => {
+            countdownStep++;
+            if (countdownStep < COUNTDOWN_STEPS.length) {
+                showCountdownStep();
+            } else {
+                clearInterval(countdownTimer);
+                countdownTimer = null;
+                rainCountdown.classList.remove("is-show");
+                rainCountdown.setAttribute("aria-hidden", "true");
+                startRainGame();
+            }
+        }, 900);
+    }
+
+    function showCountdownStep() {
+        const step = COUNTDOWN_STEPS[countdownStep];
+        rainCountdownImage.src = `${COUNTDOWN_IMAGE_BASE}${step}.png`;
+        rainCountdownImage.alt = step === "go" ? "GO" : step;
+        rainCountdownImage.classList.remove("is-pop");
+        void rainCountdownImage.offsetWidth;
+        rainCountdownImage.classList.add("is-pop");
+    }
 
     function startRainGame() {
         resetRainGame();
@@ -39,9 +111,9 @@ document.addEventListener("DOMContentLoaded", () => {
         rainIntro.style.display = "none";
         rainGameTop.classList.add("is-show");
 
-        rainResult.classList.remove("is-show", "is-big-win", "is-normal-win");
+        rainResult.classList.remove("is-show", "is-big-win", "is-normal-win", "is-empty");
         rainResult.setAttribute("aria-hidden", "true");
-        rainResultCard.classList.remove("is-big-win", "is-normal-win");
+        rainResultCard.classList.remove("is-big-win", "is-normal-win", "is-empty");
 
         RainAudio.startBgm();
         RainAudio.restoreBgm();
@@ -63,17 +135,18 @@ document.addEventListener("DOMContentLoaded", () => {
     function resetRainGame() {
         clearInterval(gameTimer);
         clearInterval(packetTimer);
+        clearInterval(countdownTimer);
+        countdownTimer = null;
 
         timeLeft = GAME_DURATION;
         totalAmount = 0;
         totalHits = 0;
+        clearCombo();
         rewardHistory = [];
         isPlaying = false;
 
         rainTimer.textContent = timeLeft;
         rainTimerBarFill.style.width = "100%";
-        rainHits.textContent = totalHits;
-
         rainStage.querySelectorAll(".redPacket, .packetOpenEffect").forEach((item) => {
             item.remove();
         });
@@ -84,6 +157,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const progress = Math.max(timeLeft / GAME_DURATION, 0);
         rainTimerBarFill.style.width = `${progress * 100}%`;
+    }
+
+    function clearCombo() {
+        combo = 0;
+        clearTimeout(comboHideTimer);
+        comboHideTimer = null;
+        rainStage.classList.remove("is-combo-flash");
+        rainCombo.classList.remove("is-show", "is-pop");
+        rainCombo.setAttribute("aria-hidden", "true");
+    }
+
+    function flashComboScreen() {
+        rainStage.classList.remove("is-combo-flash");
+        void rainStage.offsetWidth;
+        rainStage.classList.add("is-combo-flash");
+    }
+
+    function showCombo() {
+        clearTimeout(comboHideTimer);
+        if (combo < 2) return;
+        flashComboScreen();
+        rainComboCount.textContent = `x${combo}`;
+        rainCombo.classList.remove("is-pop");
+        void rainCombo.offsetWidth;
+        rainCombo.classList.add("is-show", "is-pop");
+        rainCombo.setAttribute("aria-hidden", "false");
+        comboHideTimer = setTimeout(() => {
+            rainCombo.classList.remove("is-show", "is-pop");
+            rainCombo.setAttribute("aria-hidden", "true");
+        }, 900);
     }
 
     function getPacketType() {
@@ -116,6 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         packet.addEventListener("animationend", () => {
+            if (isPlaying && !packet.classList.contains("is-hit")) clearCombo();
             packet.remove();
         });
 
@@ -128,12 +232,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const reward = getRandomReward(packet.dataset.packetType);
 
         totalHits++;
+        combo++;
+        showCombo();
         totalAmount += reward;
         rewardHistory.push(reward);
 
-        rainHits.textContent = totalHits;
 
-        createOpenEffect(packet, reward);
+        createOpenEffect(packet);
 
         packet.classList.add("is-hit");
         RainAudio.playHit();
@@ -143,17 +248,19 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 340);
     }
 
-    function createOpenEffect(packet, reward) {
+    function createOpenEffect(packet) {
         const packetRect = packet.getBoundingClientRect();
         const stageRect = rainStage.getBoundingClientRect();
 
         const effect = document.createElement("div");
         effect.className = "packetOpenEffect";
 
-        const rewardText = document.createElement("strong");
-        rewardText.className = "packetRewardAmount";
-        rewardText.textContent = `+ RM ${reward.toFixed(2)}`;
-        effect.appendChild(rewardText);
+        const cachedImage = feedbackImageCache[
+            Math.floor(Math.random() * feedbackImageCache.length)
+        ];
+        const feedbackImage = cachedImage.cloneNode();
+        feedbackImage.className = "packetFeedbackImage";
+        effect.appendChild(feedbackImage);
 
         effect.style.left = `${packetRect.left - stageRect.left + packetRect.width / 2}px`;
         effect.style.top = `${packetRect.top - stageRect.top + packetRect.height / 2}px`;
@@ -174,23 +281,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
         setTimeout(() => {
             effect.remove();
-        }, 1050);
+        }, 1200);
     }
 
     function setupResultPopup(resultType) {
-        const theme = window.RainTheme.get();
-        const resultCopy = theme.result[resultType];
+        const resultCopy = RESULT_COPY[resultType];
 
-        rainResultCard.classList.remove("is-big-win", "is-normal-win");
-        rainResult.classList.remove("is-big-win", "is-normal-win");
+        rainResultCard.classList.remove("is-big-win", "is-normal-win", "is-empty");
+        rainResult.classList.remove("is-big-win", "is-normal-win", "is-empty");
 
-        if (resultType === "big") {
+        if (resultType === "empty") {
+            rainResultCard.classList.add("is-empty");
+            rainResult.classList.add("is-empty");
+        } else {
             rainResultCard.classList.add("is-big-win");
             rainResult.classList.add("is-big-win");
-
-        } else {
-            rainResultCard.classList.add("is-normal-win");
-            rainResult.classList.add("is-normal-win");
         }
 
         resultBadge.textContent = resultCopy.badge;
@@ -201,29 +306,69 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function renderRewardBreakdown() {
         rewardBreakdown.replaceChildren();
+        const groupedRewards = new Map();
 
-        rewardHistory.forEach((reward, index) => {
-            const item = document.createElement("li");
-            item.innerHTML = `<span>Hit ${index + 1}</span><b>RM ${reward.toFixed(2)}</b>`;
-            rewardBreakdown.appendChild(item);
+        rewardHistory.forEach((reward) => {
+            const amount = Number(reward) || 0;
+            const key = amount.toFixed(2);
+            groupedRewards.set(key, (groupedRewards.get(key) || 0) + 1);
         });
 
-        if (rewardHistory.length === 0) {
-            const emptyItem = document.createElement("li");
-            emptyItem.className = "is-empty";
-            emptyItem.textContent = "No packets collected";
-            rewardBreakdown.appendChild(emptyItem);
+        const sortedRewards = [...groupedRewards.entries()]
+    .sort(([amountA], [amountB]) => {
+        const a = Number(amountA);
+        const b = Number(amountB);
+
+        if (a <= 0 && b > 0) return 1;
+        if (b <= 0 && a > 0) return -1;
+
+        return a - b;
+    });
+
+        sortedRewards.forEach(([amount, count]) => {
+            const numericAmount = Number(amount);
+            const row = document.createElement("div");
+            row.className = `rainResult__rewardRow${numericAmount <= 0 ? " is-no-prize" : ""}`;
+
+            const label = document.createElement("span");
+            label.textContent = numericAmount <= 0 ? "No Prize" : `RM ${numericAmount.toFixed(2)}`;
+
+            const hits = document.createElement("b");
+            hits.textContent = `\u00D7${count}`;
+
+            const subtotal = document.createElement("strong");
+            subtotal.textContent = numericAmount <= 0
+                ? "-"
+                : `RM ${(numericAmount * count).toFixed(2)}`;
+
+            row.append(label, hits, subtotal);
+            rewardBreakdown.appendChild(row);
+        });
+
+        if (sortedRewards.length === 0) {
+            const emptyState = document.createElement("p");
+            emptyState.className = "rainResult__rewardEmpty";
+            emptyState.textContent = "No angpow collected";
+            rewardBreakdown.appendChild(emptyState);
         }
+
+        const prizeCount = rewardHistory.filter((reward) => Number(reward) > 0).length;
+        const emptyCount = rewardHistory.length - prizeCount;
+        resultOpened.textContent = rewardHistory.length;
+        resultPrizeCount.textContent = prizeCount;
+        resultEmptyCount.textContent = emptyCount;
     }
 
     function getResultType() {
-        const theme = window.RainTheme.get();
-        return Math.random() < theme.bigWinRate ? "big" : "normal";
+        // Result has only two states: any positive reward is WIN; otherwise EMPTY.
+        if (totalHits === 0 || totalAmount <= 0) return "empty";
+        return "win";
     }
 
     function getRandomReward(packetType = "type1") {
-        const rewardsType1 = [0.18, 0.28, 0.38, 0.58, 0.88, 1.28, 1.88];
-        const rewardsType2 = [0.88, 1.28, 1.88, 2.88, 3.88];
+        // Zero is kept in the fake demo so the result UI can preview No Prize rows.
+        const rewardsType1 = [0, 0.18, 0.28, 0.38, 0.58, 0.88, 1.28, 1.88];
+        const rewardsType2 = [0, 0.88, 1.28, 1.88, 2.88, 3.88];
 
         const rewards = packetType === "type2" ? rewardsType2 : rewardsType1;
         const randomIndex = Math.floor(Math.random() * rewards.length);
@@ -233,6 +378,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function endRainGame() {
         isPlaying = false;
+        clearCombo();
 
         clearInterval(gameTimer);
         clearInterval(packetTimer);
@@ -251,13 +397,13 @@ document.addEventListener("DOMContentLoaded", () => {
         finalAmount.textContent = totalAmount.toFixed(2);
         finalHits.textContent = totalHits;
 
-        RainAudio.playResult(resultType);
+        RainAudio.playResult(resultType === "empty" ? "normal" : "big");
 
         rainResult.classList.add("is-show");
         rainResult.setAttribute("aria-hidden", "false");
     }
 
-    startRainBtn.addEventListener("click", startRainGame);
+    startRainBtn.addEventListener("click", startCountdown);
 
     playAgainBtn.addEventListener("click", () => {
         RainAudio.stopResultSounds();
@@ -266,10 +412,10 @@ document.addEventListener("DOMContentLoaded", () => {
         rainIntro.style.display = "block";
         rainGameTop.classList.remove("is-show");
 
-        rainResult.classList.remove("is-show", "is-big-win", "is-normal-win");
+        rainResult.classList.remove("is-show", "is-big-win", "is-normal-win", "is-empty");
         rainResult.setAttribute("aria-hidden", "true");
 
-        rainResultCard.classList.remove("is-big-win", "is-normal-win");
+        rainResultCard.classList.remove("is-big-win", "is-normal-win", "is-empty");
 
         resetRainGame();
     });
