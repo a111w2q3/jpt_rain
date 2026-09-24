@@ -81,7 +81,7 @@ body { background: #240303; }
    Top HUD / Header
 ========================= */
 
-.rainGame__top { position: absolute; top: var(--rain-top-y); left: var(--rain-top-x); right: var(--rain-top-x); z-index: 20; display: flex; align-items: flex-start; justify-content: space-between; gap: var(--rain-top-gap); pointer-events: none; opacity: 0; transform: translateY(-18px); visibility: hidden; transition: opacity 0.28s ease, transform 0.28s ease, visibility 0.28s ease; }
+.rainGame__top { position: absolute; top: var(--rain-top-y); left: var(--rain-top-x); right: var(--rain-top-x); z-index: 50; display: flex; align-items: flex-start; justify-content: space-between; gap: var(--rain-top-gap); pointer-events: none; opacity: 0; transform: translateY(-18px); visibility: hidden; transition: opacity 0.28s ease, transform 0.28s ease, visibility 0.28s ease; }
 
     .rainGame__top.is-show { opacity: 1; transform: translateY(0); visibility: visible; }
 
@@ -374,13 +374,13 @@ body { background: #240303; }
 
 
 /*************** ADDITIONAL */
-.rainEligibility { position: absolute; inset: 0; z-index: 9999; display: grid; place-items: center; padding: 24px; background: rgba(33,0,0,.78); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); opacity: 0; visibility: hidden; transition: opacity .25s ease, visibility .25s ease; }
+.rainEligibility { position: absolute; inset: 0; z-index: 9999; display: grid; place-items: center; /* padding: 24px; */ background: rgba(33,0,0,.78); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); opacity: 0; visibility: hidden; transition: opacity .25s ease, visibility .25s ease; }
     .rainEligibility.is-open { opacity: 1; visibility: visible; }
 .rainEligibility__card { position: relative; width: min(100%,470px); color: #fff; text-align: center; transform: translateY(18px) scale(.96); transition: transform .3s cubic-bezier(.2,.8,.2,1); }
 .rainEligibility.is-open .rainEligibility__card { transform: translateY(0) scale(1); }
-.rainEligibility__head { position: relative; z-index: 2; padding: 28px 28px 18px; }
+.rainEligibility__head { position: relative; z-index: 2; padding: 28px 28px 18px; width: 90%; margin: auto; }
 .rainEligibility__logo { display: block; width: min(320px,100%); max-height: 116px; object-fit: contain; margin: 0 auto; transform: scale(1.5); }
-.rainEligibility__panel { position: relative; z-index: 1; margin-top: -50px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; height: min(64dvh, 500px); min-height: min(360px, calc(100dvh - 160px)); margin: 0 12px; margin-top: -64px; padding: 86px clamp(32px, 16%, 80px) 84px; border: 0; border-radius: 0; background-color: transparent; background-image: url('../image/angpao/loading-ui-panel.png'); background-size: 100% 100%; background-position: center; background-repeat: no-repeat; box-shadow: none; color: #fff2c8; text-shadow: 0 2px 5px rgba(45, 0, 0, .75); }
+.rainEligibility__panel { position: relative; z-index: 1; margin-top: -50px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; height: min(80dvh, 500px); min-height: min(480px, calc(100dvh - 160px)); /* margin: 0 12px; */ margin-top: -64px; padding: 86px clamp(32px, 17%, 80px) 84px; border: 0; border-radius: 0; background-color: transparent; background-image: url('../image/angpao/loading-ui-panel.png'); background-size: 100% 100%; background-position: center; background-repeat: no-repeat; box-shadow: none; color: #fff2c8; text-shadow: 0 2px 5px rgba(45, 0, 0, .75); }
 .rainEligibility__status { display: grid; place-items: center; width: 48px; height: 48px; margin: -2px auto 12px; border: 3px solid #fff; border-radius: 50%; background: #36a347; box-shadow: 0 3px 8px rgba(0,0,0,.22); color: #fff; font: 800 28px/1 Arial,sans-serif; }
 .rainEligibility[data-eligible="false"] .rainEligibility__status { background: #d7261d; }
 .rainEligibility__title { margin: 0; font: 800 22px/1.22 Arial,sans-serif; }
@@ -513,7 +513,7 @@ body { background: #240303; }
 /* Game timer: themed image behind live progress and seconds. */
 .rainGame__top { justify-content: center; }
 .rainGame__topMain { width: 100%; justify-items: center; gap: 0; }
-.rainCombo { position: absolute; top: 100%; left: 50%; z-index: 1; width: max-content; margin-top: 4px; color: #fff0ad; font: 900 clamp(16px, 4.5vw, 22px)/1.1 Arial, sans-serif; letter-spacing: .02em; text-shadow: 0 2px 2px #5c0805, 0 0 9px #ac2c08; opacity: 0; visibility: hidden; transform: translate(-50%, -8px) scale(.85); transition: opacity .18s ease, transform .18s ease, visibility .18s; pointer-events: none; }
+.rainCombo { position: absolute; top: 100%; left: 50%; z-index: 1; width: max-content; margin-top: 4px; color: #fff0ad; font: 900 clamp(16px, 4.5vw, 22px)/1.1 Arial, sans-serif; letter-spacing: .02em; text-shadow: 0 2px 2px #5c0805, 0 0 9px #ac2c08; opacity: 0; visibility: hidden; transform: translate(-50%, -8px) scale(.85); transition: opacity .18s ease, transform .18s ease, visibility .18s; pointer-events: none; z }
     .rainCombo.is-show { opacity: 1; visibility: visible; transform: translate(-50%, 0) scale(1); }
     .rainCombo.is-pop { animation: rainComboPop .26s ease-out; }
 
