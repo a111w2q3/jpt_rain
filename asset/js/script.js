@@ -76,11 +76,13 @@ document.addEventListener("DOMContentLoaded", () => {
     function startCountdown() {
         if (countdownTimer || isPlaying) return;
         resetRainGame();
+        RainAudio.stopCountdown();
         rainIntro.style.display = "none";
         rainCountdown.classList.add("is-show");
         rainCountdown.setAttribute("aria-hidden", "false");
         countdownStep = 0;
         showCountdownStep();
+        RainAudio.playCountdown();
         countdownTimer = setInterval(() => {
             countdownStep++;
             if (countdownStep < COUNTDOWN_STEPS.length) {
@@ -114,9 +116,6 @@ document.addEventListener("DOMContentLoaded", () => {
         rainResult.classList.remove("is-show", "is-big-win", "is-normal-win", "is-empty");
         rainResult.setAttribute("aria-hidden", "true");
         rainResultCard.classList.remove("is-big-win", "is-normal-win", "is-empty");
-
-        RainAudio.startBgm();
-        RainAudio.restoreBgm();
 
         gameTimer = setInterval(() => {
             timeLeft--;
