@@ -151,7 +151,7 @@ body { background: #240303; }
 
 .packetOpenEffect { position: absolute; left: 0; top: 0; z-index: 30; width: 10px; height: 10px; transform: translate(-50%, -50%); pointer-events: none; }
 
-.packetFeedbackImage { position: absolute; left: 50%; top: 50%; z-index: 4; display: block; width: clamp(46px, 12vw, 126px); height: auto; max-width: none; max-height: 104px; object-fit: contain; opacity: 0; transform: translate(-50%, -50%); filter: drop-shadow(0 4px 5px rgba(90, 9, 9, .72)) drop-shadow(0 0 10px rgba(255, 178, 26, .72)); animation: rewardFeedbackFloat 1.25s cubic-bezier(.16,.78,.24,1) forwards; }
+.packetFeedbackImage { position: absolute; left: 50%; top: 50%; z-index: 4; display: block; width: clamp(100px, 20vw, 126px); height: auto; max-width: none; max-height: 104px; object-fit: contain; opacity: 0; transform: translate(-50%, -50%); filter: drop-shadow(0 4px 5px rgba(90, 9, 9, .72)) drop-shadow(0 0 10px rgba(255, 178, 26, .72)); animation: rewardFeedbackFloat 1.25s cubic-bezier(.16,.78,.24,1) forwards; }
 
 .packetOpenEffect::before { content: ""; position: absolute; inset: -22px; border-radius: 50%; background: radial-gradient( circle, rgba(255, 244, 184, 0.95), rgba(255, 178, 26, 0.5) 35%, transparent 70% ); animation: openFlash 0.42s ease-out forwards; }
 
@@ -556,7 +556,7 @@ body { background: #240303; }
 .rainResult__btn { flex: 0 0 auto; align-self: center; }
 
 /* Result summary v2: all reward details are grouped and shown directly. */
-.rainResult { padding: 12px; }
+.rainResult { padding: 0px; }
 .rainResult__card { width: min(100%, 480px); }
 .rainResult__head { padding: 18px 28px 10px; }
 .rainResult__card .rainResult__content,
@@ -603,6 +603,8 @@ body { background: #240303; }
     .rainResult__amountBox { min-height: 70px; padding: 8px; }
     .rainResult__summary { min-height: 38px; }
     .rainResult__rewardRow { min-height: 24px; }
+
+    .rainResult__head {  width: 90%; margin: auto; }
 }
 
 /* Result PNG skin: dynamic text stays in HTML; reward rows remain variable. */
