@@ -13,6 +13,12 @@ window.RainAudio = (() => {
     const win = new Audio(`${audioPath}${files.win}`);
     const bigWin = new Audio(`${audioPath}${files.bigWin}`);
 
+    // One complete 3-2-1-GO clip. Trim its first sound to start at time 0.
+    // The visual countdown lasts 4 × 900ms = 3.6s.
+    const countdown = new Audio(`${audioPath}${files.countdown || "countdown.mp3"}`);
+    countdown.preload = "auto";
+    countdown.volume = volume.countdown ?? 0.8;
+
     hit.volume = volume.hit;
     win.volume = volume.win;
     bigWin.volume = volume.bigWin;
@@ -227,6 +233,25 @@ window.RainAudio = (() => {
         }
     }
 
+    async function fadeInBgm(duration = 2500) {
+        const context = createAudioContext();
+        if (bgmSource) return;
+
+        const gain = bgmGain.gain;
+        gain.cancelScheduledValues(context.currentTime);
+        gain.setValueAtTime(0, context.currentTime);
+
+        await startBgm();
+        if (!bgmSource) {
+            gain.setValueAtTime(volume.bgm, context.currentTime);
+            return;
+        }
+
+        const now = context.currentTime;
+        gain.setValueAtTime(0, now);
+        gain.linearRampToValueAtTime(volume.bgm, now + duration / 1000);
+    }
+
     function stopBgm() {
         if (!bgmSource) return;
 
@@ -268,6 +293,17 @@ window.RainAudio = (() => {
 
     function duckBgm(targetVolume) {
         setBgmVolume(targetVolume);
+    }
+
+    function playCountdown() {
+        countdown.pause();
+        countdown.currentTime = 0;
+        countdown.play().catch(() => { });
+    }
+
+    function stopCountdown() {
+        countdown.pause();
+        countdown.currentTime = 0;
     }
 
     function playHit() {
@@ -321,24 +357,25 @@ window.RainAudio = (() => {
             );
         });
 
-        document.addEventListener(
-            "pointerdown",
-            startBgm,
-            { once: true }
-        );
-
-        document.addEventListener(
-            "keydown",
-            startBgm,
-            { once: true }
-        );
+        // Unlock the AudioContext on user interaction when needed.
+        const unlockAudio = () => {
+            try {
+                const context = createAudioContext();
+                if (context.state === "suspended") context.resume().catch(() => { });
+            } catch (error) { }
+        };
+        document.addEventListener("pointerdown", unlockAudio, { once: true });
+        document.addEventListener("keydown", unlockAudio, { once: true });
     }
 
     return {
         startBgm,
+        fadeInBgm,
         stopBgm,
         restoreBgm,
         duckBgm,
+        playCountdown,
+        stopCountdown,
         playHit,
         playResult,
         stopResultSounds,
