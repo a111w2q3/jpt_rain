@@ -17,22 +17,26 @@
     <main class="rainShell">
         <div class="rainViewport">
             <div class="rainLoading is-complete" id="rainLoading" aria-live="polite" aria-hidden="true">
-                <div class="rainLoading__content">
-                    <img src="asset/image/angpao/header.png"
-                         class="rainLoading__logo" alt="Angpow Rain" />
+                <div class="rainLoading__content rainIntroScene">
+                    <div class="rainIntroGroup">
+                        <img src="asset/image/angpao/header.png"
+                             class="rainLoading__logo" alt="Angpow Rain" />
 
-                    <div class="rainLoading__progress" role="progressbar"
-                         aria-label="Loading" aria-valuemin="0" aria-valuemax="100"
-                         aria-valuenow="0" id="rainLoadingProgress">
-                        <div class="rainLoading__track">
-                            <div class="rainLoading__slot">
-                                <div class="rainLoading__fill" id="rainLoadingFill"></div>
+                        <div class="rainIntroControl">
+                            <div class="rainLoading__progress" role="progressbar"
+                                 aria-label="Loading" aria-valuemin="0" aria-valuemax="100"
+                                 aria-valuenow="0" id="rainLoadingProgress">
+                                <div class="rainLoading__track">
+                                    <div class="rainLoading__slot">
+                                        <div class="rainLoading__fill" id="rainLoadingFill"></div>
+                                    </div>
+                                </div>
+
+                                <div class="rainLoading__status">
+                                    <span>Loading...</span>
+                                    <b id="rainLoadingPercent">0%</b>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="rainLoading__status">
-                            <span>Loading...</span>
-                            <b id="rainLoadingPercent">0%</b>
                         </div>
                     </div>
                 </div>
@@ -58,11 +62,15 @@
                     </div>
 
                     <div class="rainGame__stage" id="rainStage">
-                        <div class="rainGame__intro" id="rainIntro">
-                            <img src="asset/image/angpao/header.png" class="rainHeader" />
-                            <button class="rainGame__startBtn" id="startRainBtn" type="button">
-                                START RAIN
-                            </button>
+                        <div class="rainGame__intro rainIntroScene" id="rainIntro">
+                            <div class="rainIntroGroup">
+                                <img src="asset/image/angpao/header.png" class="rainHeader" />
+                                <div class="rainIntroControl">
+                                    <button class="rainGame__startBtn" id="startRainBtn" type="button">
+                                        START RAIN
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                         <div class="rainGame__countdown" id="rainCountdown" aria-live="assertive" aria-hidden="true">
                             <img class="rainGame__countdownImage" id="rainCountdownImage" src="asset/image/angpao/countdown/3.png" alt="" />
