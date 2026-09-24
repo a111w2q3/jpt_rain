@@ -39,21 +39,21 @@ body { background: #240303; }
 
     .rainShell::after { content: ""; position: absolute; inset: 0; background: rgba(20, 0, 0, .16); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); pointer-events: none; }
 
-.rainViewport { --rain-intro-logo-height: clamp(120px, 14dvh, 250px); --rain-intro-control-height: 76px; position: relative; z-index: 1; width: min(100dvw, calc(100dvh * 9 / 16)); height: min(100dvh, calc(100dvw * 16 / 9)); aspect-ratio: 9 / 16; overflow: hidden; isolation: isolate; background: var(--rain-bg-fallback); background-image: var(--rain-bg-mobile); background-size: cover; background-position: center; background-repeat: no-repeat; box-shadow: 0 0 42px rgba(0, 0, 0, .5); }
+.rainViewport { --rain-main-bg-size: 115% auto; --rain-main-bg-position: center center; position: relative; z-index: 1; width: min(100dvw, calc(100dvh * 9 / 16)); height: min(100dvh, calc(100dvw * 16 / 9)); aspect-ratio: 9 / 16; overflow: hidden; isolation: isolate; background: var(--rain-bg-fallback); background-image: var(--rain-bg-mobile); background-size: cover; background-position: center; background-repeat: no-repeat; box-shadow: 0 0 42px rgba(0, 0, 0, .5); }
 
 /* =========================
    Fake Loading Screen
 ========================= */
 
-.rainLoading { position: absolute; inset: 0; z-index: 10000; display: grid; place-items: center; padding: 24px; color: #fff4cf; background-color: #850909; background-image: var(--rain-bg-mobile); background-size: cover; background-position: center; background-repeat: no-repeat; opacity: 1; visibility: visible; transition: opacity .38s ease, visibility .38s ease; }
+.rainLoading { position: absolute; inset: 0; z-index: 10000; display: grid; place-items: center; padding: 0; color: #fff4cf; background-color: #850909; background-image: var(--rain-bg-mobile); background-size: cover; background-position: center; background-repeat: no-repeat; opacity: 1; visibility: visible; transition: opacity .38s ease, visibility .38s ease; }
 
     .rainLoading.is-complete { opacity: 0; visibility: hidden; pointer-events: none; }
 
-.rainLoading__content { width: 100%; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: var(--rain-intro-logo-height) var(--rain-intro-control-height); align-content: center; justify-items: center; gap: 18px; transform: none; }
+.rainLoading__content { width: 100%; transform: none; }
 
-.rainLoading__logo { display: block; width: 90%; height: 100%; max-width: 840px; margin: 0; object-fit: contain; filter: drop-shadow(0 8px 12px rgba(62, 0, 0, .62)); animation: rainLoadingLogoPulse 1.8s ease-in-out infinite; }
+.rainLoading__logo { display: block; margin: 0; filter: drop-shadow(0 8px 12px rgba(62, 0, 0, .62)); }
 
-.rainLoading__progress { width: min(92%, var(--rain-loading-bar-width)); height: 100%; display: grid; align-content: center; }
+.rainLoading__progress { position: relative; z-index: 1; width: min(82%, 440px); display: grid; align-content: center; }
 
 .rainLoading__track { position: relative; width: 100%; aspect-ratio: var(--rain-loading-bar-ratio); background-color: transparent; background-image: var(--rain-loading-bar-bg); background-repeat: no-repeat; background-position: center; background-size: 100% 100%; filter: drop-shadow(0 5px 8px rgba(50, 0, 0, .48)); }
 
@@ -122,13 +122,9 @@ body { background: #240303; }
    Intro Screen
 ========================= */
 
-.rainGame__intro { position: absolute; inset: 0; z-index: 15; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: var(--rain-intro-logo-height) var(--rain-intro-control-height); align-content: center; justify-items: center; gap: 18px; text-align: center; padding: 24px; }
+.rainGame__intro { position: absolute; inset: 0; z-index: 15; text-align: center; }
 
-.rainHeader { display: block; width: 90%; height: 100%; max-width: 840px; object-fit: contain; margin: 0; animation: rainLoadingLogoPulse 1.8s ease-in-out infinite; }
-
-.rainGame__intro h2 { font-size: 34px; margin: 0 0 10px; }
-
-.rainGame__intro p { margin: 0 0 20px; opacity: 0.8; }
+.rainHeader { display: block; margin: 0; }
 
 /* =========================
    Buttons
@@ -299,12 +295,6 @@ body { background: #240303; }
     100% { transform: translate(-50%, -155%) scale(1); opacity: 0; }
 }
 
-@keyframes rainLoadingLogoPulse {
-    0%, 100% { transform: scale(1); filter: brightness(1) drop-shadow(0 8px 12px rgba(62, 0, 0, .62)); }
-
-    50% { transform: scale(1.025); filter: brightness(1.08) drop-shadow(0 8px 16px rgba(255, 190, 55, .32)); }
-}
-
 @keyframes rainLoadingShine {
     to { transform: translateX(340%); }
 }
@@ -347,10 +337,6 @@ body { background: #240303; }
     .rainHitPill { align-self: flex-end; margin-top: 0; padding: 7px 12px; font-size: 12px; }
 
         .rainHitPill b { min-width: 24px; height: 24px; font-size: 13px; }
-
-    .rainHeader, .rainLoading__logo { width: 94%; }
-
-    .rainGame__intro h2 { font-size: 28px; }
 
     .rainResult__card { width: min(92vw, 360px); padding: 18px 18px; }
 
@@ -409,7 +395,7 @@ body { background: #240303; }
 
 .rainEligibility__action { width: min(100%, 220px); }
 
-.rainGame__startBtn { width: 200px; height: 48px; min-width: 0; padding: 0 18px; align-self: center; justify-self: center; }
+.rainGame__startBtn { position: relative; z-index: 1; width: min(78%, 420px); height: clamp(64px, 9dvh, 90px); min-width: 0; padding: 0 20px; font-size: clamp(18px, 4.3vw, 25px); animation: rainStartButtonPulse 1.8s ease-in-out infinite; transform-origin: center; }
 
 .rainResult__btn { min-width: 190px; }
 
@@ -648,4 +634,23 @@ body { background: #240303; }
     .rainResult__amountBox { min-height: 68px; }
     .rainResult__rewardsHead { min-height: 27px; }
     .rainResult__rewardRow { min-height: 24px; }
+}
+
+/* Start and Loading share the same full-screen art and bottom-third layout. */
+.rainIntroScene { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; background: url('../image/angpao/img-main.png') var(--rain-main-bg-position) / var(--rain-main-bg-size) no-repeat; }
+.rainIntroGroup { position: absolute; left: 0; right: 0; bottom: 0; height: 33dvh; display: grid; grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); align-items: center; justify-items: center; padding: 0 18px max(8px, env(safe-area-inset-bottom)); }
+    .rainIntroGroup .rainHeader,
+    .rainIntroGroup .rainLoading__logo { grid-row: 1; width: 100%; height: 100%; max-width: none; object-fit: contain; transform: scale(1.3); }
+.rainIntroControl { grid-row: 2; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+
+@keyframes rainStartButtonPulse {
+    0%, 100% { transform: scale(1); filter: brightness(1) drop-shadow(0 4px 7px rgba(100, 19, 0, .45)); }
+    50% { transform: scale(1.065); filter: brightness(1.18) drop-shadow(0 0 18px rgba(255, 215, 95, .85)); }
+}
+
+.rainIntroControl .rainGame__startBtn:hover { animation-play-state: paused; }
+.rainIntroControl .rainGame__startBtn:active { animation: none; transform: scale(.97); }
+
+@media (prefers-reduced-motion: reduce) {
+    .rainGame__startBtn { animation: none; }
 }
