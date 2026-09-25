@@ -25,44 +25,34 @@ document.addEventListener("DOMContentLoaded", () => {
     const resultPrizeCount = document.getElementById("resultPrizeCount");
     const resultEmptyCount = document.getElementById("resultEmptyCount");
 
+    const i18n = window.RainI18n;
     const GAME_DURATION = 15;
     const PACKET_INTERVAL = 360;
     const SECOND_ITEM_RATE = 0.5;
 
-    // RESULT TEXT: edit the WIN / EMPTY wording here.
-    const RESULT_COPY = {
-        win: {
-            badge: "WIN",
-            title: "Congratulations!",
-            rewardType: "Reward"
-        },
-        empty: {
-            badge: "NO WIN",
-            title: "Please Try Again",
-            rewardType: "No reward"
-        }
-    };
-
-    const FEEDBACK_IMAGE_URLS = [
-        "asset/image/angpao/bravo.png",
-        "asset/image/angpao/perfect.png",
-        "asset/image/angpao/nice.png"
-    ];
-
-    const feedbackImageCache = FEEDBACK_IMAGE_URLS.map((src) => {
-        const image = new Image();
-        image.src = src;
-        image.alt = "";
-        image.setAttribute("aria-hidden", "true");
-        image.decode?.().catch(() => {});
-        return image;
-    });
+    const feedbackNames = ["bravo", "perfect", "nice"];
+    const feedbackImageCache = { en: [], zh: [] };
+    for (const language of ["en", "zh"]) {
+        feedbackImageCache[language] = feedbackNames.map((name) => {
+            const image = new Image();
+            image.src = i18n.image(name, language);
+            image.alt = "";
+            image.setAttribute("aria-hidden", "true");
+            image.decode?.().catch(() => {});
+            return image;
+        });
+    }
 
     let countdownTimer = null;
     let countdownStep = 0;
     const COUNTDOWN_STEPS = ["3", "2", "1", "go"];
-    const COUNTDOWN_IMAGE_BASE = "asset/image/angpao/countdown/";
-    COUNTDOWN_STEPS.forEach((step) => { const image = new Image(); image.src = `${COUNTDOWN_IMAGE_BASE}${step}.png`; });
+    const COUNTDOWN_IMAGE_BASE = "asset/image/angpao/";
+    COUNTDOWN_STEPS.forEach((step) => {
+        for (const language of ["en", "zh"]) {
+            const image = new Image();
+            image.src = step === "go" ? i18n.image("go", language) : `${COUNTDOWN_IMAGE_BASE}${step}.png`;
+        }
+    });
     let gameTimer = null;
     let packetTimer = null;
     let timeLeft = GAME_DURATION;
@@ -99,8 +89,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function showCountdownStep() {
         const step = COUNTDOWN_STEPS[countdownStep];
-        rainCountdownImage.src = `${COUNTDOWN_IMAGE_BASE}${step}.png`;
-        rainCountdownImage.alt = step === "go" ? "GO" : step;
+        rainCountdownImage.src = step === "go" ? i18n.image("go") : `${COUNTDOWN_IMAGE_BASE}${step}.png`;
+        rainCountdownImage.alt = step === "go" ? (i18n.language === "zh" ? "开始" : "GO") : step;
         rainCountdownImage.classList.remove("is-pop");
         void rainCountdownImage.offsetWidth;
         rainCountdownImage.classList.add("is-pop");
@@ -254,8 +244,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const effect = document.createElement("div");
         effect.className = "packetOpenEffect";
 
-        const cachedImage = feedbackImageCache[
-            Math.floor(Math.random() * feedbackImageCache.length)
+        const cachedImage = feedbackImageCache[i18n.language][
+            Math.floor(Math.random() * feedbackImageCache[i18n.language].length)
         ];
         const feedbackImage = cachedImage.cloneNode();
         feedbackImage.className = "packetFeedbackImage";
@@ -284,7 +274,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function setupResultPopup(resultType) {
-        const resultCopy = RESULT_COPY[resultType];
+        const resultCopy = {
+            badge: i18n.t(resultType === "win" ? "winBadge" : "emptyBadge"),
+            title: i18n.t(resultType === "win" ? "winTitle" : "emptyTitle"),
+            desc: i18n.t(resultType === "win" ? "winDesc" : "emptyDesc"),
+            rewardType: i18n.t(resultType === "win" ? "winReward" : "emptyReward")
+        };
 
         rainResultCard.classList.remove("is-big-win", "is-normal-win", "is-empty");
         rainResult.classList.remove("is-big-win", "is-normal-win", "is-empty");
@@ -330,7 +325,7 @@ document.addEventListener("DOMContentLoaded", () => {
             row.className = `rainResult__rewardRow${numericAmount <= 0 ? " is-no-prize" : ""}`;
 
             const label = document.createElement("span");
-            label.textContent = numericAmount <= 0 ? "No Prize" : `RM ${numericAmount.toFixed(2)}`;
+            label.textContent = numericAmount <= 0 ? i18n.t("noPrize") : `RM ${numericAmount.toFixed(2)}`;
 
             const hits = document.createElement("b");
             hits.textContent = `\u00D7${count}`;
@@ -347,7 +342,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (sortedRewards.length === 0) {
             const emptyState = document.createElement("p");
             emptyState.className = "rainResult__rewardEmpty";
-            emptyState.textContent = "No angpow collected";
+            emptyState.textContent = i18n.t("noCollected");
             rewardBreakdown.appendChild(emptyState);
         }
 
@@ -401,6 +396,14 @@ document.addEventListener("DOMContentLoaded", () => {
         rainResult.classList.add("is-show");
         rainResult.setAttribute("aria-hidden", "false");
     }
+
+    document.addEventListener("rain:languagechange", () => {
+        if (rainCountdown.classList.contains("is-show")) showCountdownStep();
+        if (rainResult.classList.contains("is-show")) {
+            setupResultPopup(getResultType());
+            renderRewardBreakdown();
+        }
+    });
 
     startRainBtn.addEventListener("click", startCountdown);
 
