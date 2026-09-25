@@ -1,30 +1,95 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>Angpow Rain</title>
     <link href="asset/css/style.css" rel="stylesheet" />
 
-    <script src="asset/js/theme-angpao.js" defer></script>
+    <script>window.RainI18n = {
+    imageBase: "asset/image/angpao/",
+    // Only images that contain words go into en/ and cn/.
+    image(name, language = this.language) {
+        return `${this.imageBase}${language === "zh" ? "cn" : "en"}/${name}.png`;
+    },
+    language: (() => {
+        const requested = new URLSearchParams(location.search).get("lang");
+        if (requested === "zh" || requested === "en") return requested;
+        try { return localStorage.getItem("jackpotRainLanguage") === "zh" ? "zh" : "en"; }
+        catch (_) { return "en"; }
+    })(),
+    strings: {
+        en: {
+            loading: "Loading...", timeLeft: "Time left", combo: "Combo", start: "START",
+            winBadge: "WIN", winTitle: "Congratulations!", winDesc: "You collected", winReward: "Reward",
+            emptyBadge: "NO WIN", emptyTitle: "Please Try Again", emptyDesc: "Better luck next time!", emptyReward: "No reward",
+            totalWin: "TOTAL WIN", opened: "OPENED", prizes: "PRIZES", empty: "EMPTY",
+            angpow: "ANGPOW", hits: "HITS", total: "TOTAL", noPrize: "No Prize",
+            noCollected: "No angpow collected", playAgain: "PLAY AGAIN", eventTime: "DAILY EVENT TIME",
+            later: "Later", playNow: "PLAY NOW", depositNow: "DEPOSIT NOW",
+            noPlays: "No Plays Available.", depositMessage: "Please deposit to get more plays!",
+            luckMessage: "Try your luck and win big rewards!", playsAvailable: (n) => `You have ${n} play${n === 1 ? "" : "s"} available!`,
+            reward: "Reward", openGame: "Open Angpow Rain", gameTitle: "Angpow Rain", languageButton: "中文"
+        },
+        zh: {
+            loading: "载入中...", timeLeft: "剩余时间", combo: "连击", start: "开始",
+            winBadge: "中奖", winTitle: "恭喜中奖！", winDesc: "你共获得", winReward: "奖励",
+            emptyBadge: "未中奖", emptyTitle: "再接再厉", emptyDesc: "下次好运！", emptyReward: "无奖励",
+            totalWin: "奖金总额", opened: "已开启", prizes: "中奖", empty: "未中奖",
+            angpow: "红包", hits: "次数", total: "合计", noPrize: "未中奖",
+            noCollected: "尚未收集红包", playAgain: "再玩一次", eventTime: "每日活动时间",
+            later: "稍后再说", playNow: "立即开始", depositNow: "立即充值",
+            noPlays: "暂无游戏次数", depositMessage: "充值即可获得更多游戏次数！",
+            luckMessage: "试试手气，赢取丰厚奖励！", playsAvailable: (n) => `你有 ${n} 次游戏机会！`,
+            reward: "奖励", openGame: "打开鸿运红包雨", gameTitle: "鸿运红包雨", languageButton: "EN"
+        }
+    },
+    t(key) { return this.strings[this.language][key]; },
+    setLanguage(language) {
+        if (language !== "en" && language !== "zh") return;
+        this.language = language;
+        document.documentElement.lang = language === "zh" ? "zh-CN" : "en";
+        document.title = this.t("gameTitle");
+        try { localStorage.setItem("jackpotRainLanguage", language); } catch (_) {}
+        document.querySelectorAll("[data-i18n]").forEach((element) => {
+            element.textContent = this.t(element.dataset.i18n);
+        });
+        document.querySelectorAll("[data-i18n-aria]").forEach((element) => {
+            element.setAttribute("aria-label", this.t(element.dataset.i18nAria));
+        });
+        document.querySelectorAll("[data-i18n-alt]").forEach((element) => {
+            element.alt = this.t(element.dataset.i18nAlt);
+        });
+        // Mark any future image with data-i18n-image and put both language files in en/ and cn/.
+        document.querySelectorAll("img[data-i18n-image]").forEach((element) => {
+            element.src = this.image(element.dataset.i18nImage);
+        });
+        const button = document.getElementById("rainLanguageToggle");
+        if (button) button.textContent = this.t("languageButton");
+        document.dispatchEvent(new CustomEvent("rain:languagechange", { detail: { language } }));
+    }
+};</script>
+    <script src="asset/js/theme-angpao.js?v=3" defer></script>
     <script src="asset/js/audio.js" defer></script>
-    <script src="asset/js/script.js" defer></script>
+    <script src="asset/js/script.js?v=4" defer></script>
 
     <style>
+        .rainLanguageToggle { position: fixed; top: 12px; right: 12px; z-index: 9999; border: 1px solid #ffd681; border-radius: 18px; padding: 7px 13px; background: #9b0711; color: #fff; font: 700 14px sans-serif; cursor: pointer; box-shadow: 0 2px 10px #42000088; }
     </style>
 </head>
 <body>
+    <button id="rainLanguageToggle" class="rainLanguageToggle" type="button" aria-label="Switch language">中文</button>
     <main class="rainShell">
         <div class="rainViewport">
             <div class="rainLoading is-complete" id="rainLoading" aria-live="polite" aria-hidden="true">
                 <div class="rainLoading__content rainIntroScene">
                     <div class="rainIntroGroup">
-                        <img src="asset/image/angpao/header.png"
-                             class="rainLoading__logo" alt="Angpow Rain" />
+                        <img src="asset/image/angpao/en/header.png" data-i18n-image="header"
+                             class="rainLoading__logo" alt="Angpow Rain" data-i18n-alt="gameTitle" />
 
                         <div class="rainIntroControl">
                             <div class="rainLoading__progress" role="progressbar"
-                                 aria-label="Loading" aria-valuemin="0" aria-valuemax="100"
+                                 aria-label="Loading" data-i18n-aria="loading" aria-valuemin="0" aria-valuemax="100"
                                  aria-valuenow="0" id="rainLoadingProgress">
                                 <div class="rainLoading__track">
                                     <div class="rainLoading__slot">
@@ -33,7 +98,7 @@
                                 </div>
 
                                 <div class="rainLoading__status">
-                                    <span>Loading...</span>
+                                    <span data-i18n="loading">Loading...</span>
                                     <b id="rainLoadingPercent">0%</b>
                                 </div>
                             </div>
@@ -46,17 +111,17 @@
                 <div class="rainGame">
                     <div class="rainGame__top">
                         <div class="rainGame__topMain">
-                            <img src="asset/image/angpao/header.png" class="rainTopHeader" alt="Angpow Rain" />
+                            <img src="asset/image/angpao/en/header.png" data-i18n-image="header" class="rainTopHeader" alt="Angpow Rain" data-i18n-alt="gameTitle" />
 
                             <div class="rainTimerBox">
-                                <div class="rainTimerBar" role="timer" aria-label="Time left">
+                                <div class="rainTimerBar" role="timer" aria-label="Time left" data-i18n-aria="timeLeft">
                                     <div class="rainTimerBar__track">
                                         <div class="rainTimerBar__fill" id="rainTimerBarFill"></div>
                                     </div>
                                     <div class="rainTimerBar__text"><span id="rainTimer">15</span>s</div>
                                 </div>
                             </div>
-                            <div class="rainCombo" id="rainCombo" aria-live="off" aria-hidden="true">Combo <span id="rainComboCount">x2</span></div>
+                            <div class="rainCombo" id="rainCombo" aria-live="off" aria-hidden="true"> <span data-i18n="combo">Combo</span> <span id="rainComboCount">x2</span></div>
                         </div>
 
                     </div>
@@ -64,16 +129,16 @@
                     <div class="rainGame__stage" id="rainStage">
                         <div class="rainGame__intro rainIntroScene" id="rainIntro">
                             <div class="rainIntroGroup">
-                                <img src="asset/image/angpao/header.png" class="rainHeader" />
+                                <img src="asset/image/angpao/en/header.png" data-i18n-image="header" class="rainHeader" />
                                 <div class="rainIntroControl">
                                     <button class="rainGame__startBtn" id="startRainBtn" type="button">
-                                        START
+                                        <span data-i18n="start">START</span>
                                     </button>
                                 </div>
                             </div>
                         </div>
                         <div class="rainGame__countdown" id="rainCountdown" aria-live="assertive" aria-hidden="true">
-                            <img class="rainGame__countdownImage" id="rainCountdownImage" src="asset/image/angpao/countdown/3.png" alt="" />
+                            <img class="rainGame__countdownImage" id="rainCountdownImage" src="asset/image/angpao/3.png" alt="" />
                         </div>
                     </div>
                 </div>
@@ -81,7 +146,7 @@
                 <div class="rainResult" id="rainResult" aria-hidden="true">
                     <div class="rainResult__card" id="rainResultCard">
                         <div class="rainResult__head">
-                            <img src="asset/image/angpao/header.png" class="resultHeader" alt="Angpow Rain" />
+                            <img src="asset/image/angpao/en/header.png" data-i18n-image="header" class="resultHeader" alt="Angpow Rain" data-i18n-alt="gameTitle" />
                         </div>
 
                         <div class="rainResult__content">
@@ -91,7 +156,7 @@
                             <p class="rainResult__desc" id="resultDesc">You collected</p>
 
                             <div class="rainResult__amountBox">
-                                <div class="rainResult__amountLabel">TOTAL WIN</div>
+                                <div class="rainResult__amountLabel" data-i18n="totalWin">TOTAL WIN</div>
                                 <div class="rainResult__amount">
                                     RM <span id="finalAmount">0.00</span>
                                 </div>
@@ -102,30 +167,30 @@
                                     <img class="rainResult__summaryIcon"
                                          src="asset/image/angpao/icon-opened.png"
                                          alt="" aria-hidden="true" />
-                                    <span>OPENED</span>
+                                    <span data-i18n="opened">OPENED</span>
                                     <b id="resultOpened">0</b>
                                 </div>
                                 <div class="rainResult__summaryItem is-prize">
                                     <img class="rainResult__summaryIcon"
                                          src="asset/image/angpao/icon-prize.png"
                                          alt="" aria-hidden="true" />
-                                    <span>PRIZES</span>
+                                    <span data-i18n="prizes">PRIZES</span>
                                     <b id="resultPrizeCount">0</b>
                                 </div>
                                 <div class="rainResult__summaryItem is-empty-count">
                                     <img class="rainResult__summaryIcon"
                                          src="asset/image/angpao/icon-no-prize.png"
                                          alt="" aria-hidden="true" />
-                                    <span>EMPTY</span>
+                                    <span data-i18n="empty">EMPTY</span>
                                     <b id="resultEmptyCount">0</b>
                                 </div>
                             </div>
 
                             <section class="rainResult__rewards" aria-label="Reward summary">
                                 <div class="rainResult__rewardsHead" aria-hidden="true">
-                                    <span>ANGPOW</span>
-                                    <span>HITS</span>
-                                    <span>TOTAL</span>
+                                    <span data-i18n="angpow">ANGPOW</span>
+                                    <span data-i18n="hits">HITS</span>
+                                    <span data-i18n="total">TOTAL</span>
                                 </div>
                                 <div class="rainResult__rewardRows" id="rewardBreakdown"></div>
                             </section>
@@ -143,7 +208,7 @@
                             </div>
 
                             <button class="rainResult__btn" id="playAgainBtn" type="button">
-                                PLAY AGAIN
+                                <span data-i18n="playAgain">PLAY AGAIN</span>
                             </button>
                         </div>
                     </div>
@@ -166,8 +231,8 @@
                     <img src="asset/image/angpao/dec03.png" class="fwFloatingItem fwFloatingItem--two" />
 
                     <div class="rainEligibility__head">
-                        <img src="asset/image/angpao/header.png"
-                             class="rainEligibility__logo rainEligibility__header" alt="Angpow Rain" />
+                        <img src="asset/image/angpao/en/header.png" data-i18n-image="header"
+                             class="rainEligibility__logo rainEligibility__header" alt="Angpow Rain" data-i18n-alt="gameTitle" />
                     </div>
 
                     <div class="rainEligibility__panel">
@@ -181,7 +246,7 @@
                         </p>
 
                         <div class="rainEligibility__schedule">
-                            <span class="rainEligibility__scheduleTitle">DAILY EVENT TIME</span>
+                            <span class="rainEligibility__scheduleTitle" data-i18n="eventTime">DAILY EVENT TIME</span>
 
                             <div class="rainEligibility__scheduleRange">
                                 <span id="jackpotStartTime">00:00:00</span>
@@ -193,14 +258,14 @@
                             PLAY NOW
                         </a>
                         <button class="rainEligibility__later" id="rainEligibilityLater" type="button">
-                            Later
+                            <span data-i18n="later">Later</span>
                         </button>
                     </div>
                 </div>
             </div>
 
             <button class="rainMiniLauncher" id="rainMiniLauncher" type="button"
-                    aria-label="Open Angpow Rain" aria-hidden="true">
+                    aria-label="Open Angpow Rain" data-i18n-aria="openGame" aria-hidden="true">
                 <span class="rainMiniLauncher__circle">
                     <img src="asset/image/angpao/item.png"
                          class="rainMiniLauncher__packet rainMiniLauncher__packet--one" alt="" />
@@ -208,8 +273,8 @@
                          class="rainMiniLauncher__packet rainMiniLauncher__packet--two" alt="" />
                     <span class="rainMiniLauncher__close" aria-hidden="true">×</span>
                 </span>
-                <img src="asset/image/angpao/header.png"
-                     class="rainMiniLauncher__title" alt="Angpow Rain" />
+                <img src="asset/image/angpao/en/header.png" data-i18n-image="header"
+                     class="rainMiniLauncher__title" alt="Angpow Rain" data-i18n-alt="gameTitle" />
                 <span class="rainMiniLauncher__countdown">
                     <i aria-hidden="true"></i>
                     <b id="rainMiniCountdown">05:00</b>
@@ -255,6 +320,11 @@
             var countdownTimer = null;
             var countdownDeadline = null;
             var isLoading = false;
+            var i18n = window.RainI18n;
+            var languageToggle = document.getElementById("rainLanguageToggle");
+            languageToggle.addEventListener("click", function () {
+                i18n.setLanguage(i18n.language === "en" ? "zh" : "en");
+            });
 
             function setLoadingProgress(value) {
                 var progress = Math.max(0, Math.min(100, Math.round(value)));
@@ -342,7 +412,7 @@
                 clearInterval(countdownTimer);
             }
 
-            function renderJackpotRainAccess(access) {
+            function renderJackpotRainAccess(access, textOnly) {
                 var hasPlay = Boolean(access && access.hasPlay);
                 var plays = Math.max(0, Number(access && access.plays) || 0);
 
@@ -350,21 +420,22 @@
                 status.textContent = hasPlay ? "✓" : "×";
 
                 if (hasPlay) {
-                    title.textContent = "You have " + plays + " play" +
-                        (plays === 1 ? "" : "s") + " available!";
-                    message.textContent = "Try your luck and win big rewards!";
-                    action.textContent = "PLAY NOW";
+                    title.textContent = i18n.t("playsAvailable")(plays);
+                    message.textContent = i18n.t("luckMessage");
+                    action.textContent = i18n.t("playNow");
                     action.setAttribute("href", "#");
                 } else {
-                    title.textContent = "No Plays Available.";
-                    message.textContent = "Please deposit to get more plays!";
-                    action.textContent = "DEPOSIT NOW";
+                    title.textContent = i18n.t("noPlays");
+                    message.textContent = i18n.t("depositMessage");
+                    action.textContent = i18n.t("depositNow");
                     action.setAttribute("href", access.depositUrl || "#");
                 }
 
-                popup.classList.add("is-open");
-                popup.setAttribute("aria-hidden", "false");
-                hideMiniLauncher();
+                if (!textOnly) {
+                    popup.classList.add("is-open");
+                    popup.setAttribute("aria-hidden", "false");
+                    hideMiniLauncher();
+                }
             }
 
             function closeJackpotRainAccess() {
@@ -413,7 +484,12 @@
                 }
             };
 
+            document.addEventListener("rain:languagechange", function () {
+                renderJackpotRainAccess(window.JACKPOT_RAIN_ACCESS, true);
+            });
+
             document.addEventListener("DOMContentLoaded", function () {
+                i18n.setLanguage(i18n.language);
                 renderJackpotRainAccess(window.JACKPOT_RAIN_ACCESS);
             });
         }());</script>
