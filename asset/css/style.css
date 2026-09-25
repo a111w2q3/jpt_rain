@@ -391,7 +391,7 @@ body { background: #240303; }
 /* Shared image button: keep the label as real HTML text. */
 .rainEligibility__action,
 .rainGame__startBtn,
-.rainResult__btn { /*min-height: 66px;*/ border: 0; border-radius: 0; background-color: transparent; background-image: url('../image/angpao/action-button-gold.png'); background-position: center; background-size: 100% 145%; background-repeat: no-repeat; box-shadow: none; color: #642006; text-shadow: 0 1px 0 rgba(255, 246, 194, .7); -webkit-appearance: none; appearance: none; border: 0; outline: none; }
+.rainResult__btn { /*min-height: 66px;*/ border: 0; border-radius: 0; background-color: transparent; background-image: url('../image/angpao/action-button-gold.png'); background-position: center; background-size: 100% 100%; background-repeat: no-repeat; box-shadow: none; color: #642006; text-shadow: 0 1px 0 rgba(255, 246, 194, .7); -webkit-appearance: none; appearance: none; border: 0; outline: none; }
 
 .rainEligibility__action { width: min(100%, 220px); }
 
