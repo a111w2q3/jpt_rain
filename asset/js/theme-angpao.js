@@ -8,6 +8,8 @@ window.RainTheme = {
 
                 files: {
                     bgm: "bgm-trim.ogg",
+                    countdown: "countdown.mp3",
+                    countdownCn: "countdown-cn.mp3",
                     hit: "hit.mp3",
                     win: "win.mp3",
                     bigWin: "bigwin.mp3"
