@@ -15,9 +15,27 @@ window.RainAudio = (() => {
 
     // One complete 3-2-1-GO clip. Trim its first sound to start at time 0.
     // The visual countdown lasts 4 × 900ms = 3.6s.
-    const countdown = new Audio(`${audioPath}${files.countdown || "countdown.mp3"}`);
-    countdown.preload = "auto";
-    countdown.volume = volume.countdown ?? 0.8;
+    const countdownDefault = new Audio(`${audioPath}${files.countdown || "countdown.mp3"}`);
+    countdownDefault.preload = "auto";
+    countdownDefault.volume = volume.countdown ?? 0.8;
+
+    // A translated clip is optional. Themes with a language-neutral beep
+    // simply omit files.countdownCn and keep using the default sound.
+    const countdownCn = files.countdownCn
+        ? new Audio(`${audioPath}${files.countdownCn}`)
+        : null;
+    if (countdownCn) {
+        countdownCn.preload = "auto";
+        countdownCn.volume = volume.countdown ?? 0.8;
+    }
+    let activeCountdown = null;
+
+    function isChineseLanguage() {
+        const language = window.RainTheme?.language ||
+            window.RainTheme?.currentLanguage ||
+            document.documentElement.lang || "";
+        return /^(zh|cn)(?:-|$)/i.test(language);
+    }
 
     hit.volume = volume.hit;
     win.volume = volume.win;
@@ -296,14 +314,37 @@ window.RainAudio = (() => {
     }
 
     function playCountdown() {
-        countdown.pause();
-        countdown.currentTime = 0;
-        countdown.play().catch(() => { });
+        stopCountdown();
+        const sound = isChineseLanguage() && countdownCn
+            ? countdownCn
+            : countdownDefault;
+        activeCountdown = sound;
+        sound.currentTime = 0;
+
+        if (sound === countdownCn) {
+            sound.onerror = () => {
+                if (activeCountdown !== sound) return;
+                sound.onerror = null;
+                activeCountdown = countdownDefault;
+                countdownDefault.currentTime = 0;
+                countdownDefault.play().catch(() => { });
+            };
+        }
+        sound.play().catch(() => {
+            if (sound === countdownCn && activeCountdown === sound) {
+                sound.onerror();
+            }
+        });
     }
 
     function stopCountdown() {
-        countdown.pause();
-        countdown.currentTime = 0;
+        [countdownDefault, countdownCn].forEach((sound) => {
+            if (!sound) return;
+            sound.onerror = null;
+            sound.pause();
+            sound.currentTime = 0;
+        });
+        activeCountdown = null;
     }
 
     function playHit() {
