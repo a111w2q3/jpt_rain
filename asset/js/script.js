@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const PACKET_INTERVAL = 360;
     const SECOND_ITEM_RATE = 0.5;
 
-    const feedbackNames = ["bravo", "perfect", "nice"];
+    const feedbackNames = ["hit1", "hit2", "hit3"];
     const feedbackImageCache = { en: [], zh: [] };
     for (const language of ["en", "zh"]) {
         feedbackImageCache[language] = feedbackNames.map((name) => {
