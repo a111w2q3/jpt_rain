@@ -1,0 +1,404 @@
+﻿/* Disco Fever: load style.css first, then this theme stylesheet.
+   Existing image filenames and layout measurements are preserved. */
+
+:root { --rain-bg-desktop: url('../image/disco/bg_desktop.jpg'); --rain-bg-mobile: url('../image/disco/bg_mobile.webp'); --rain-packet-img-1: url('../image/disco/item1.png'); --rain-packet-img-2: url('../image/disco/item2.png'); --rain-loading-bar-bg: url('../image/disco/loading-bar-bg.png'); --rain-loading-bar-width: 292px; --rain-loading-bar-ratio: 9.5 / 1; --rain-loading-slot-left: 8.42%; --rain-loading-slot-right: 8.4%; --rain-loading-slot-top: 32%; --rain-loading-slot-bottom: 32%; --rain-loading-fill: linear-gradient(90deg, #7541be, #6be6ff 55%, #adf1ff); --rain-loading-fill-shadow: 0 0 8px rgba(82, 226, 255, .65); --rain-color-text: #ffffff; --rain-color-primary: #8aebff; --rain-color-secondary: #7541be; --rain-color-accent: #7541be; --rain-color-dark: #1d073d; --rain-color-deep: #14032b; --rain-bg-fallback: linear-gradient(180deg, #54cfd2, #3d0986 70%, #1d063d); --rain-stage-bg: linear-gradient(180deg, rgba(31, 2, 71, .10), rgba(18, 3, 39, .22)); --rain-panel-bg: rgba(27, 1, 64, .55); --rain-panel-border: rgba(138, 235, 255, 0.34); --rain-panel-blur: 8px; --rain-pill-text: #ffffff; --rain-pill-value-bg: #8aebff; --rain-pill-value-text: #00242b; --rain-timer-bg: rgba(0, 0, 0, 0.42); --rain-timer-border: rgba(138, 235, 255, 0.38); --rain-timer-fill: linear-gradient(90deg, #b0f2ff, #7541be, #7541be); --rain-top-x: 18px; --rain-top-y: max(12px, env(safe-area-inset-top)); --rain-top-gap: 16px; --rain-header-width: min(360px, 42vw); --rain-header-height: 90px; --rain-top-main-width: min(360px, 70vw); --rain-timer-width: min(320px, 52vw); --rain-packet-w: 64px; --rain-packet-h: 64px; --rain-btn-bg: linear-gradient(135deg, #b0f2ff, #7541be); --rain-btn-text: #00242b; --rain-btn-shadow: rgba(117, 65, 190, 0.35); --rain-effect-flash: radial-gradient( circle, rgba(176, 242, 255, 0.95), rgba(117, 65, 190, 0.52) 35%, transparent 70% ); --rain-effect-ring: rgba(138, 235, 255, 0.75); --rain-effect-particle: #8aebff; --rain-effect-particle-soft: #c7f6ff; --rain-effect-particle-shadow: rgba(138, 235, 255, 0.85); --rain-result-bg: rgba(0, 0, 0, 0.72); --rain-result-overlay-glow: radial-gradient(circle at 50% 28%, rgba(138, 235, 255, 0.2), transparent 32%); --rain-result-big-glow: radial-gradient(circle, rgba(138, 235, 255, 0.28), transparent 34%), conic-gradient( from 0deg, transparent, rgba(138, 235, 255, 0.22), transparent, rgba(255, 255, 255, 0.12), transparent ); --rain-result-content-bg: linear-gradient(180deg, #2b075d, #16042f); --rain-result-content-border: rgba(138, 235, 255, 0.42); --rain-result-inner-border: rgba(138, 235, 255, 0.22); --rain-result-top-glow: radial-gradient(circle, rgba(138, 235, 255, 0.22), transparent 66%); --rain-result-normal-bg: radial-gradient(circle at 50% 0%, rgba(138, 235, 255, 0.18), transparent 38%), linear-gradient(180deg, rgba(4, 26, 31, 0.96), rgba(0, 3, 4, 0.98)); --rain-result-big-bg: radial-gradient(circle at 50% 0%, rgba(176, 242, 255, 0.34), transparent 38%), linear-gradient(180deg, rgba(41, 22, 68, 0.98), rgba(0, 7, 8, 0.98)); --rain-result-big-border: rgba(138, 235, 255, 0.68); --rain-result-badge-bg: linear-gradient(135deg, #c7f6ff, #7541be); --rain-result-badge-text: #00242b; --rain-result-badge-shadow: rgba(138, 235, 255, 0.38); --rain-result-title: #d8f8ff; --rain-result-desc: rgba(255, 255, 255, 0.82); --rain-amount-box-bg: radial-gradient(circle at 50% 0%, rgba(176, 242, 255, 0.22), transparent 44%), linear-gradient(180deg, rgba(0, 17, 20, 0.94), rgba(0, 3, 4, 0.92)); --rain-amount-box-border: rgba(138, 235, 255, 0.46); --rain-amount-label: rgba(199, 246, 255, 0.82); --rain-amount-text: #8aebff; --rain-amount-shadow: 0 0 8px rgba(138, 235, 255, 0.76), 0 3px 0 rgba(0, 36, 43, 0.55); --rain-big-amount-text: #c7f6ff; --rain-big-amount-shadow: 0 0 10px rgba(138, 235, 255, 0.9), 0 0 24px rgba(117, 65, 190, 0.55), 0 3px 0 rgba(0, 36, 43, 0.6); --rain-big-amount-box-border: rgba(199, 246, 255, 0.62); --rain-meta-bg: rgba(255, 255, 255, 0.07); --rain-meta-border: rgba(138, 235, 255, 0.22); --rain-meta-label: rgba(255, 255, 255, 0.68); --rain-meta-value: #c7f6ff; }
+
+.rainGame__startBtn{font-size:0;}
+html[lang="en"] .rainGame__startBtn { background-image: url('../image/disco/en/action-button-gold_start.png'); }
+html[lang="zh-CN"] .rainGame__startBtn { background-image: url('../image/disco/cn/action-button-gold_start.png'); }
+
+body { background: #1e0c37; }
+
+.rainShell { background: var(--rain-bg-fallback); background-image: linear-gradient(rgba(28, 9, 55, .42), rgba(28, 9, 55, .42)), var(--rain-bg-desktop); background-size: cover; background-position: center; }
+
+    .rainShell::after { background: rgba(20, 0, 0, .16); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
+
+.rainViewport { background: var(--rain-bg-fallback); background-image: var(--rain-bg-mobile); background-size: cover; background-position: center; background-repeat: no-repeat; box-shadow: 0 0 42px rgba(0, 0, 0, .5); }
+
+.rainLoading { color: #cff7ff; background-color: #512c85; background-image: var(--rain-bg-mobile); background-size: cover; background-position: center; background-repeat: no-repeat; }
+
+.rainLoading__logo { filter: drop-shadow(0 8px 12px rgba(37, 20, 62, .62)); }
+
+.rainLoading__track { background-color: transparent; background-image: var(--rain-loading-bar-bg); background-repeat: no-repeat; background-position: center; background-size: 100% 100%; filter: drop-shadow(0 5px 8px rgba(32, 16, 55, .48)); }
+
+.rainLoading__slot { border-radius: 999px; }
+
+.rainLoading__fill { border-radius: inherit; background: var(--rain-loading-fill); box-shadow: var(--rain-loading-fill-shadow); }
+
+    .rainLoading__fill::after { background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .68), transparent); }
+
+.rainLoading__status { color: #c2f5ff; text-shadow: 0 2px 4px rgba(32, 16, 55, .9); }
+
+    .rainLoading__status b { color: #6be6ff; }
+
+.redPacketDemo { color: var(--rain-color-text); background: var(--rain-bg-fallback); background-image: var(--rain-bg-mobile); background-size: cover; background-position: center; background-repeat: no-repeat; }
+
+.rainTimerBox { border-radius: 16px; background: var(--rain-panel-bg); border: 1px solid var(--rain-panel-border); backdrop-filter: blur(var(--rain-panel-blur)); -webkit-backdrop-filter: blur(var(--rain-panel-blur)); }
+
+.rainTimerBar { border-radius: 999px; background: var(--rain-timer-bg); border: 1px solid var(--rain-timer-border); }
+
+.rainTimerBar__fill { border-radius: inherit; background: var(--rain-timer-fill); }
+
+.rainTimerBar__text { color: var(--rain-color-text); text-shadow: 0 1px 4px rgba(0, 0, 0, 0.75); }
+
+.rainHitPill { border-radius: 999px; background: var(--rain-panel-bg); border: 1px solid var(--rain-panel-border); backdrop-filter: blur(var(--rain-panel-blur)); -webkit-backdrop-filter: blur(var(--rain-panel-blur)); color: var(--rain-color-text); }
+
+    .rainHitPill b { border-radius: 50%; background: var(--rain-color-primary); color: #371e5a; }
+
+.rainGame__stage::after { background: radial-gradient( ellipse at center, transparent 0%, transparent 52%, rgba(112, 231, 255, .08) 66%, rgba(117, 65, 190, .24) 82%, rgba(132, 234, 255, .52) 100% ); box-shadow: inset 0 0 24px rgba(184, 243, 255, .72), inset 0 0 64px rgba(48, 220, 255, .34); }
+
+.rainGame__startBtn,
+.rainResult__btn { border: 0; border-radius: 999px; background: var(--rain-btn-bg); color: var(--rain-btn-text); box-shadow: 0 10px 24px var(--rain-btn-shadow); }
+
+.redPacket { border: 0; background: transparent; background-size: contain; background-repeat: no-repeat; background-position: center; }
+
+.redPacket--type1 { background-image: var(--rain-packet-img-1); }
+
+.redPacket--type2 { background-image: var(--rain-packet-img-2); }
+
+.packetFeedbackImage { filter: drop-shadow(0 4px 5px rgba(55, 30, 90, .72)) drop-shadow(0 0 10px rgba(117, 65, 190, .72)); }
+
+.packetOpenEffect::before { border-radius: 50%; background: radial-gradient( circle, rgba(184, 243, 255, 0.95), rgba(117, 65, 190, 0.5) 35%, transparent 70% ); }
+
+.packetOpenEffect::after { border-radius: 50%; border: 2px solid rgba(107, 230, 255, 0.75); }
+
+.packetOpenEffect span { border-radius: 50%; background: var(--rain-color-primary); box-shadow: 0 0 8px rgba(107, 230, 255, 0.85); }
+
+    .packetOpenEffect span:nth-child(2n) { background: #b8f3ff; }
+
+    .packetOpenEffect span:nth-child(3n) { border-radius: 2px; }
+
+.rainResult { background: radial-gradient(circle at 50% 28%, rgba(107, 230, 255, 0.2), transparent 32%), var(--rain-result-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+
+    .rainResult.is-big-win::before { background: radial-gradient(circle, rgba(107, 230, 255, 0.28), transparent 34%), conic-gradient( from 0deg, transparent, rgba(107, 230, 255, 0.22), transparent, rgba(255, 255, 255, 0.12), transparent ); }
+
+.resultHeader { filter: drop-shadow(0 3px 3px rgba(32, 16, 55, .24)) drop-shadow(0 0 5px rgba(107, 230, 255, .16)); }
+
+.rainResult__content { border-radius: 30px; background: var(--rain-result-content-bg); border-color: var(--rain-result-content-border); border-width: 1px; border-style: solid; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), inset 0 -18px 40px rgba(0, 0, 0, 0.22), 0 24px 70px rgba(0, 0, 0, 0.58); }
+
+    .rainResult__content::before { border-radius: 24px; border: 1px solid rgba(107, 230, 255, 0.22); }
+
+    .rainResult__content::after { border-radius: 50%; background: radial-gradient(circle, rgba(107, 230, 255, 0.22), transparent 66%); }
+
+.rainResult__badge { border-radius: 999px; background: linear-gradient(135deg, #b8f3ff, var(--rain-color-secondary)); color: #3f2267; box-shadow: 0 0 16px rgba(107, 230, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.45); }
+
+.rainResult__title { color: #dcf9ff; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45); }
+
+.rainResult__amountBox { border-radius: 22px; background: var(--rain-amount-box-bg); border-color: var(--rain-amount-box-border); border-width: 1px; border-style: solid; box-shadow: inset 0 0 18px rgba(107, 230, 255, 0.12), 0 12px 26px rgba(0, 0, 0, 0.32); }
+
+.rainResult__amountLabel { color: rgba(184, 243, 255, 0.82); }
+
+.rainResult__amount { color: var(--rain-color-primary); text-shadow: 0 0 8px rgba(107, 230, 255, 0.78), 0 3px 0 rgba(55, 30, 90, 0.45); }
+
+.rainResult__breakdown { border: 1px solid rgba(107, 230, 255, .27); border-radius: 16px; background: linear-gradient(180deg, rgba(255, 255, 255,.09), rgba(255, 255, 255,.045)); box-shadow: inset 0 1px 0 rgba(255, 255, 255,.09), 0 8px 18px rgba(30, 12, 55,.2); }
+
+.rainResult__breakdownToggle { border: 0; background: transparent; color: #bdf4ff; }
+
+    .rainResult__breakdownToggle:hover { background: rgba(107, 230, 255,.09); color: #dcf9ff; }
+
+.rainResult__breakdownToggleText { border: 1px solid rgba(107, 230, 255,.3); border-radius: 999px; background: rgba(34, 18, 56,.28); color: rgba(184, 243, 255,.82); }
+
+.rainResult__breakdownToggle i { border-right: 2px solid #6be6ff; border-bottom: 2px solid #6be6ff; }
+
+.rainResult__breakdownPanel { border-top: 1px solid rgba(107, 230, 255,.14); }
+
+.rainResult__rewardList { scrollbar-color: rgba(107, 230, 255, .55) rgba(255, 255, 255, .06); }
+
+    .rainResult__rewardList li { border: 1px solid rgba(107, 230, 255, .13); border-radius: 10px; background: rgba(30, 12, 55,.22); }
+
+        .rainResult__rewardList li span { color: rgba(255, 255, 255, .78); }
+
+        .rainResult__rewardList li b { color: #b8f3ff; }
+
+        .rainResult__rewardList li.is-empty { color: rgba(255, 255, 255, .66); }
+
+.rainResult__metaItem { border-radius: 16px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(107, 230, 255, 0.2); }
+
+    .rainResult__metaItem b { color: #b8f3ff; }
+
+.rainResult__btn { border: 0; border-radius: 999px; background: var(--rain-btn-bg); color: var(--rain-btn-text); box-shadow: 0 10px 24px var(--rain-btn-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.45); }
+
+    .rainResult__btn:hover { filter: brightness(1.05); }
+
+.rainResult__card.is-normal-win .rainResult__content { background: var(--rain-result-normal-bg); }
+
+.rainResult__card.is-big-win .rainResult__content { border: 0; border-radius: 0; background-color: transparent; background-image: url('../image/disco/loading-ui-panel.png'); background-size: 100% 100%; background-position: center; background-repeat: no-repeat; box-shadow: none; }
+
+    .rainResult__card.is-big-win .rainResult__content::before { border: 0; }
+
+.rainResult__card.is-big-win .rainResult__amount { color: #ffffff; text-shadow: 0 0 10px rgba(107, 230, 255, 0.9), 0 0 24px rgba(117, 65, 190, 0.55), 0 3px 0 rgba(55, 30, 90, 0.5); }
+
+@keyframes bigWinGlow {
+    from { filter: drop-shadow(0 8px 12px rgba(107, 230, 255, .24)); }
+
+    to { filter: drop-shadow(0 8px 20px rgba(107, 230, 255, .62)); }
+}
+
+@media (max-width: 1024px) {
+    :root { --rain-bg-desktop: var(--rain-bg-mobile); }
+}
+
+@media (max-width: 640px) {
+    :root { --rain-top-x: 10px; --rain-top-y: max(10px, env(safe-area-inset-top)); --rain-top-gap: 8px; --rain-header-width: min(300px, 80vw); --rain-header-height: 78px; --rain-top-main-width: 100%; --rain-timer-width: 100%; --rain-packet-w: 56px; --rain-packet-h: 56px; }
+
+    .rainTimerBox { border-radius: 14px; }
+
+    .rainResult__content { border-radius: 24px; }
+
+    .rainResult__amountBox { border-radius: 18px; }
+}
+
+.rainEligibility { background: rgba(29, 11, 55,.78); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+
+.rainEligibility__card { color: #ffffff; }
+
+.rainEligibility__panel { border: 0; border-radius: 0; background-color: transparent; background-image: url('../image/disco/loading-ui-panel.png'); background-size: 100% 100%; background-position: center; background-repeat: no-repeat; box-shadow: none; color: #c8f6ff; text-shadow: 0 2px 5px rgba(32, 15, 55, .75); }
+
+
+
+.rainEligibility__message { color: #dffaff; }
+
+.rainEligibility__action { border: 0; border-radius: 10px; background: linear-gradient(180deg,#7541be,#743fbe); box-shadow: inset 0 1px 0 rgba(255, 255, 255,.45),0 5px 12px rgba(79, 43, 130,.28); color: #ffffff; }
+
+.rainEligibility[data-eligible="false"] .rainEligibility__action { color: #3d2164; }
+
+.rainEligibility__action,
+.rainGame__startBtn,
+.rainResult__btn { border: 0; border-radius: 0; background-color: transparent; background-image: url('../image/disco/action-button-gold.png'); background-position: center; background-size: 100% 100%; background-repeat: no-repeat; box-shadow: none; color: #3d2164; text-shadow: 0 1px 0 rgba(194, 245, 255, .7); border: 0; outline: none; }
+
+    .rainEligibility__action:hover,
+    .rainGame__startBtn:hover,
+    .rainResult__btn:hover { filter: brightness(1.08); }
+
+.rainEligibility__later { border: 0; background: none; color: #ddf9ff; }
+
+.rainMiniLauncher { border: 0; background: transparent; color: #ffffff; }
+
+.rainMiniLauncher__circle { border: 5px solid #23626f; border-radius: 50%; background: radial-gradient(circle at 50% 62%, #301a4e, #210c0d 72%); box-shadow: inset 0 0 18px rgba(0, 0, 0,.58), 0 8px 18px rgba(0, 0, 0,.3); }
+
+.rainMiniLauncher__packet { filter: drop-shadow(0 5px 5px rgba(0, 0, 0,.32)); }
+
+.rainMiniLauncher__close { border: 2px solid #ffffff; border-radius: 50%; background: #7541be; box-shadow: 0 3px 7px rgba(0, 0, 0,.35); color: #ffffff; }
+
+.rainMiniLauncher__title { filter: drop-shadow(0 3px 4px rgba(0, 0, 0,.45)); }
+
+.rainMiniLauncher__countdown { border: 2px solid #713db9; border-radius: 999px; background: #0c1011; box-shadow: 0 4px 8px rgba(0, 0, 0,.32); color: #85ebff; }
+
+    .rainMiniLauncher__countdown i { border-radius: 50%; background: #28dbff; box-shadow: 0 0 6px rgba(40, 219, 255,.75); }
+
+.rainFloatingItem { filter: drop-shadow(0 10px 14px rgba(37, 20, 61, .24)); }
+
+@keyframes fireworkBurst {
+    0% { opacity: 0; transform: scale(0.15); filter: brightness(1.8) drop-shadow(0 0 4px rgba(120, 232, 255, 0)); }
+
+    12% { opacity: 1; transform: scale(0.45); filter: brightness(2.2) drop-shadow(0 0 12px rgba(120, 232, 255, 0.95)); }
+
+    38% { opacity: 1; transform: scale(1.06); filter: brightness(1.35) drop-shadow(0 0 20px rgba(70, 224, 255, 0.8)); }
+
+    55% { transform: scale(1); filter: brightness(1.1) drop-shadow(0 0 14px rgba(70, 224, 255, 0.55)); }
+
+    100% { opacity: 0; transform: scale(1.12); filter: brightness(0.8) drop-shadow(0 0 4px rgba(70, 224, 255, 0)); }
+}
+
+@media (max-width: 420px) {
+    .rainEligibility__card { border-radius: 20px; }
+}
+
+@keyframes headerPulse {
+    0%, 100% { transform: scale(1.5); filter: brightness(1) drop-shadow(0 4px 8px rgba(117, 65, 190, 0.25)); }
+
+    50% { transform: scale(1.545); filter: brightness(1.18) drop-shadow(0 6px 15px rgba(54, 221, 255, 0.65)); }
+}
+
+.rainEligibility__scheduleTitle { color: #90ecff; }
+
+.rainEligibility__scheduleRange { color: #c8f6ff; }
+
+    .rainEligibility__scheduleRange i { background: rgba(115, 63, 189, 0.45); }
+
+        .rainEligibility__scheduleRange i::after { border-radius: 50%; background: #7541be; box-shadow: 0 0 0 3px rgba(117, 65, 190, 0.12); }
+
+.rainGame__countdownImage { filter: drop-shadow(0 7px 12px rgba(33, 18, 55, .65)); }
+
+.rainCombo { color: #adf1ff; text-shadow: 0 2px 2px #381e5c, 0 0 9px #6939ac; }
+
+.rainTimerBox { border: 0; border-radius: 0; background: transparent; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+
+.rainTimerBar { border: 0; border-radius: 0; background: transparent url('../image/disco/countdown-frame-right.png') center / 100% 200% no-repeat; box-shadow: none; }
+
+.rainTimerBar__track { border-radius: 999px; }
+
+.rainTimerBar__fill { border-radius: inherit; background: linear-gradient( -90deg, #c8f6ff 0%, #6ae6ff 28%, #28dbff 68%, #8b54d7 100% ); box-shadow: inset 0 1px 2px rgba(255, 255, 255, .85), 0 0 9px rgba(55, 222, 255, .7); }
+.rainTimerBar__text { color: #bef4ff; text-shadow: 0 1px 3px #301a4f; }
+
+@media (max-width: 640px) {
+    .rainTimerBox { border-radius: 0; }
+}
+
+.rainResult__card .rainResult__content,
+.rainResult__card.is-big-win .rainResult__content { border: 0; border-radius: 0; background-color: transparent; background-image: url('../image/disco/loading-ui-panel.png'); background-size: 100% 100%; background-position: center; background-repeat: no-repeat; box-shadow: none; color: #c8f6ff; text-shadow: 0 2px 5px rgba(32, 15, 55, .75); }
+
+.rainResult__card.is-empty .rainResult__content { background-image: url('../image/disco/no-reward-panel.png'); }
+
+.rainResult.is-empty .rainResult__badge,
+.rainResult.is-empty .rainResult__amount { color: #a0deea; text-shadow: 0 2px 4px rgba(29, 11, 55, .72); }
+
+.rainResult.is-empty .rainResult__badge { background: linear-gradient(180deg, #8f8b86, #625f5b); border-color: #aaa49c; color: #f1ede7; }
+
+.rainResult.is-empty .rainResult__amountBox { background: linear-gradient( 180deg, rgba(75, 72, 70, 0.88), rgba(43, 41, 40, 0.92) ); border-color: rgba(175, 170, 163, 0.45); box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.32); }
+
+.rainResult__amountBox { border-radius: 17px; }
+
+.rainResult__summary { border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+
+.rainResult__summaryItem { border: 1px solid rgba(75, 225, 255, .52); border-radius: 10px; background: linear-gradient(180deg, rgba(81, 44, 132, .78), rgba(43, 23, 70, .82)); box-shadow: inset 0 1px 0 rgba(178, 242, 255, .16), inset 0 0 12px rgba(117, 65, 190, .08), 0 2px 5px rgba(32, 16, 55, .18); color: rgba(193, 245, 255, .82); }
+
+    .rainResult__summaryItem::after { border: 1px solid rgba(133, 235, 255, .08); border-radius: 7px; }
+
+    .rainResult__summaryItem b { color: #c8f6ff; }
+
+.rainResult__summaryIcon { filter: drop-shadow(0 2px 3px rgba(32, 16, 55, .48)); }
+
+.rainResult__summaryItem.is-prize b { color: #74e8ff; }
+
+.rainResult__summaryItem.is-empty-count b { color: #b0c4c8; }
+
+.rainResult__rewards { border: 2px solid #4bdbf8; border-image: none; border-radius: 8px; box-shadow: inset 0 0 0 1px #a0efff, 0 8px 18px rgba(30, 12, 55, .24); }
+.rainResult__rewardsHead { border-bottom: 1px solid rgba(107, 230, 255, .22); background: rgba(105, 230, 255, .065); color: #61d2e9; }
+
+.rainResult__rewardRows { scrollbar-color: rgba(79, 226, 255, .5) transparent; }
+
+.rainResult__rewardRow { border-bottom: 1px dashed rgba(137, 235, 255, .13); color: #c2f5ff; }
+
+    .rainResult__rewardRow:last-child { border-bottom: 0; }
+
+    .rainResult__rewardRow b { color: #6fe7ff; }
+
+    .rainResult__rewardRow strong { color: #cef7ff; }
+
+    .rainResult__rewardRow.is-no-prize span,
+    .rainResult__rewardRow.is-no-prize b,
+    .rainResult__rewardRow.is-no-prize strong { color: #9db5ba; }
+
+.rainResult__rewardEmpty { color: #a4b8bc; }
+
+.rainResult.is-empty .rainResult__summary,
+.rainResult.is-empty .rainResult__rewards { border-color: rgba(176, 169, 160, .3); background: rgba(45, 42, 40, .48); }
+
+.rainResult__badge { border: 0; border-radius: 0; background: transparent url('../image/disco/result-badge-panel-v2.png') center / 100% 100% no-repeat; box-shadow: none; color: #ffffff; text-shadow: 0 1px 0 rgba(208, 247, 255, .7); }
+
+.rainResult__amountBox { border: 0; border-radius: 0; background: transparent url('../image/disco/result-total-win-panel-v2.png') center / 100% 100% no-repeat; box-shadow: none; }
+.rainResult.is-empty .rainResult__amountBox { border: 0; border-radius: 0; box-shadow: none; background: none; }
+.rainResult.is-empty .rainResult__badge { background: transparent url('../image/disco/result-badge-panel-v2.png') center / 100% 100% no-repeat; box-shadow: none; }
+.rainResult__amountLabel { color: #ffffff; }
+
+.rainResult__amount { color: #b5f3ff; text-shadow: 0 0 8px rgba(116, 232, 255, .88), 0 2px 2px rgba(43, 23, 70, .72); }
+
+.rainResult__rewards { border: clamp(5px, 1.7vw, 8px) solid transparent; border-image-source: url('../image/disco/reward-table-frame.png'); border-image-slice: 72; border-image-width: clamp(5px, 1.7vw, 8px); border-image-repeat: stretch; border-radius: 0; background: #2e194b; box-shadow: 0 8px 18px rgba(30, 12, 55, .24); }
+
+.rainResult__rewardsHead { border: 0; background: #482776 url('../image/disco/reward-table-header.png') center / 100% 100% no-repeat; color: #70ddf3; }
+
+.rainResult__rewardRows { background: #26153f; }
+
+.rainResult__rewardRow { border: 0; background: #351d57 url('../image/disco/reward-table-row.png') center / 100% 100% no-repeat; }
+
+    .rainResult__rewardRow:nth-child(even) { filter: brightness(.93); }
+
+.rainResult__rewardEmpty { background: #351d57 url('../image/disco/reward-table-row.png') center / 100% 100% no-repeat; }
+
+
+.rainIntroScene { background: url('../image/disco/img-main.webp?v1') var(--rain-main-bg-position) / var(--rain-main-bg-size) no-repeat; }
+
+.rainIntroGroup .rainHeader, .rainIntroGroup .rainLoading__logo { transform: scale(1.1); }
+.rainIntroGroup { top: 0; margin: auto; height: 86%; grid-template-rows: minmax(0, 1fr) minmax(0, 2fr); }
+.rainIntroControl { align-items: flex-end; }
+
+@keyframes rainStartButtonPulse {
+    0%, 100% { transform: scale(1); filter: brightness(1) drop-shadow(0 4px 7px rgba(61, 33, 100, .45)); }
+    50% { transform: scale(1.065); filter: brightness(1.18) drop-shadow(0 0 18px rgba(95, 228, 255, .85)); }
+}
+
+.rainTimerBar__track { position: absolute; left: 8%; top: 47%; width: 68%; height: 27%; overflow: hidden; border-radius: 999px; transform: translateY(-50%); }
+
+.redPacket--type1 { --coin-extra-tilt: -12deg; }
+.redPacket--type2 { --coin-extra-tilt: 12deg; }
+
+@keyframes packetFall {
+    from { transform: translateY(0) rotate(calc(var(--rotate) + var(--coin-extra-tilt))); }
+    to { transform: translateY(calc(100dvh + 180px)) rotate(calc(var(--rotate) + var(--coin-extra-tilt))); }
+}
+
+
+.redPacket.is-hit { animation: coinCollect 0.22s ease forwards; }
+
+@keyframes coinCollect {
+    from { transform: scale(1) rotate(var(--rotate)); opacity: 1; }
+    to { transform: scale(0.2) rotate(var(--rotate)); opacity: 0; }
+}
+
+.packetOpenEffect::before { inset: auto; left: 50%; top: 50%; width: 160px; height: 160px; transform: translate(-50%, -50%); background: url("../image/disco/coin-click-sprite.png") 0 0 / 1280px 160px no-repeat; animation: coinClickFrames .667s steps(7, end) forwards, coinClickFade .667s linear forwards; }
+
+@keyframes coinClickFrames {
+    from { background-position: 0 0; }
+    to { background-position: -1120px 0; }
+}
+
+@keyframes coinClickFade {
+    0%, 75% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.packetOpenEffect::after,
+.packetOpenEffect span { display: none; }
+
+/* Shared neon palette. Warm gold is reserved for reward values. */
+:root { --rain-color-primary: #78eaff; --rain-color-secondary: #ff70ce; --rain-color-accent: #b98aff; --rain-color-dark: #20103d; --rain-color-deep: #10091f; --rain-bg-fallback: linear-gradient(180deg, #21113f, #120b28 70%, #080612); --rain-panel-bg: rgba(28, 16, 53, .76); --rain-panel-border: rgba(120, 234, 255, .34); --rain-loading-fill: linear-gradient(90deg, #55dbff, #a882ff 52%, #ff70ce); --rain-loading-fill-shadow: 0 0 8px rgba(85, 219, 255, .45), 0 0 12px rgba(255, 112, 206, .22); --rain-timer-fill: linear-gradient(90deg, #55dbff, #a882ff 52%, #ff70ce); --rain-btn-bg: linear-gradient(135deg, #aaf3ff, #aa8dff 55%, #ff93df); --rain-btn-text: #24103e; --rain-btn-shadow: rgba(153, 98, 255, .35); --rain-effect-flash: radial-gradient(circle, rgba(255,255,255,.92), rgba(85,219,255,.48) 30%, rgba(255,112,206,.18) 48%, transparent 70%); --rain-effect-ring: rgba(120, 234, 255, .75); --rain-effect-particle: #78eaff; --rain-effect-particle-soft: #ffb0e7; --rain-effect-particle-shadow: rgba(185, 138, 255, .75); --rain-amount-text: #ffe3a1; --rain-big-amount-text: #fff0c8; }
+
+body { background: #080612; }
+.rainShell { background-image: linear-gradient(rgba(8, 6, 18, .22), rgba(8, 6, 18, .32)), var(--rain-bg-desktop); }
+    .rainShell::after { background: rgba(8, 6, 18, .12); }
+.rainLoading { background-color: #120b28; color: #f3edff; }
+.rainEligibility { background: rgba(12, 8, 27, .78); }
+.rainLoading__status, .rainEligibility__message, .rainEligibility__panel,
+.rainResult__card .rainResult__content { color: #f3edff; }
+    .rainLoading__status b, .rainEligibility__scheduleTitle { color: #78eaff; }
+.rainEligibility__scheduleRange { color: #e6d9ff; }
+.rainEligibility__action, .rainGame__startBtn, .rainResult__btn,
+.rainEligibility[data-eligible="false"] .rainEligibility__action { color: #f8f4ff; text-shadow: 0 2px 3px rgba(16, 9, 31, .85); }
+.rainMiniLauncher__circle { border-color: #aa8dff; background: radial-gradient(circle at 50% 62%, #39205d, #10091f 72%); box-shadow: inset 0 0 18px rgba(0,0,0,.58), 0 0 12px rgba(85,219,255,.24), 0 8px 18px rgba(0,0,0,.3); }
+.rainMiniLauncher__close { background: #8656c9; }
+.rainMiniLauncher__countdown { border-color: #78eaff; background: #10091f; color: #f3edff; }
+    .rainMiniLauncher__countdown i { background: #ff70ce; box-shadow: 0 0 6px rgba(255,112,206,.6); }
+.packetFeedbackImage { filter: drop-shadow(0 4px 5px rgba(16,9,31,.72)) drop-shadow(0 0 8px rgba(85,219,255,.42)); }
+/* Keep the center clear so the combo glow does not obscure falling items. */
+.rainGame__stage::after { background: radial-gradient( ellipse at center, transparent 0%, transparent 50%, rgba(70, 225, 255, .12) 65%, rgba(70, 225, 255, .42) 83%, rgba(110, 240, 255, .8) 100% ); box-shadow: inset 0 0 26px rgba(170, 250, 255, .95), inset 0 0 85px rgba(50, 220, 255, .65); /* 保留 base 控制的显示和淡出，只让灯光换色 */ animation: discoComboLights 1.8s linear infinite; }
+
+@keyframes discoComboLights {
+    0%, 100% { filter: hue-rotate(0deg) brightness(1.2); }
+    33% { filter: hue-rotate(110deg) brightness(1.35); }
+    66% { filter: hue-rotate(65deg) brightness(1.25); }
+}
+.rainCombo { color: #f9edff; text-shadow: 0 2px 2px #20103d, 0 0 9px rgba(255,112,206,.75); }
+.rainTimerBar__fill { background: var(--rain-timer-fill); box-shadow: inset 0 1px 2px rgba(255,255,255,.65), 0 0 9px rgba(85,219,255,.45); }
+.rainTimerBar__text { color: #f3edff; text-shadow: 0 1px 3px #10091f; }
+.rainResult__amount, .rainResult__card.is-big-win .rainResult__amount { color: #ffe3a1; text-shadow: 0 0 8px rgba(255,211,130,.45), 0 2px 2px rgba(16,9,31,.85); }
+.rainResult__summaryItem { border-color: rgba(120,234,255,.32); background: linear-gradient(180deg, rgba(58,33,89,.82), rgba(26,15,49,.9)); color: #e6d9ff; }
+    .rainResult__summaryItem.is-prize b { color: #ffe3a1; }
+.rainResult__rewards { background: #1b1032; }
+/* These two Coin-era textures are replaced by lightweight CSS surfaces. */
+.rainResult__rewardsHead { background: linear-gradient(90deg, rgba(85,219,255,.12), rgba(169,111,255,.22), rgba(255,112,206,.12)); color: #d9f8ff; }
+.rainResult__rewardRows { background: #140c26; }
+.rainResult__rewardRow, .rainResult__rewardEmpty { background: linear-gradient(180deg, rgba(65,38,96,.55), rgba(31,19,53,.65)); }
+    .rainResult__rewardRow b { color: #ffe3a1; }
+    .rainResult__rewardRow strong { color: #f3edff; }
+    .rainResult.is-empty .rainResult__amount,
+    .rainResult__rewardRow.is-no-prize span,
+    .rainResult__rewardRow.is-no-prize b,
+    .rainResult__rewardRow.is-no-prize strong,
+    .rainResult__rewardEmpty { color: #b8b5c4; text-shadow: none; }
+.rainResult.is-empty .rainResult__summary,
+.rainResult.is-empty .rainResult__rewards { background: rgba(35,32,43,.72); border-color: rgba(184,181,196,.3); }
+/* Titles remain static; the base button pulse is retained. */
+.rainIntroGroup .rainHeader, .rainIntroGroup .rainLoading__logo { animation: none; }
+
+
