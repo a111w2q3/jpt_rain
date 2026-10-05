@@ -10,7 +10,7 @@
                     bgm: "bgm-trim.ogg",
                     hit: "hit.mp3",
                     win: "win.mp3",
-                    bigWin: "bigwin4.mp3"
+                    bigWin: "bigwin.mp3"
                 },
 
                 volume: {
