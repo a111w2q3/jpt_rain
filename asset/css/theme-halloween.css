@@ -1,0 +1,374 @@
+﻿/* Load style.css first, then exactly one theme stylesheet. */
+
+:root { --rain-bg-desktop: url('../image/halloween/bg_desktop.jpg'); --rain-bg-mobile: url('../image/halloween/bg_mobile.jpg'); --rain-packet-img-1: url('../image/halloween/item1.png'); --rain-packet-img-2: url('../image/halloween/item2.png'); --rain-loading-bar-bg: url('../image/halloween/loading-bar-bg.png'); --rain-loading-bar-width: 292px; --rain-loading-bar-ratio: 9.5 / 1; --rain-loading-slot-left: 8.42%; --rain-loading-slot-right: 8.4%; --rain-loading-slot-top: 32%; --rain-loading-slot-bottom: 32%; --rain-loading-fill: linear-gradient(90deg, #a45be5, #ffd66b 55%, #fff0c8); --rain-loading-fill-shadow: 0 0 8px rgba(255, 207, 82, .65); --rain-color-text: #ffffff; --rain-color-primary: #ffd75f; --rain-color-secondary: #a879e8; --rain-color-accent: #ff922e; --rain-color-dark: #3d185a; --rain-color-deep: #200d35; --rain-bg-fallback: linear-gradient(180deg, #4b236b, #32134e 70%, #32134e); --rain-stage-bg: linear-gradient(180deg, rgba(61, 24, 90, .10), rgba(32, 13, 53, .22)); --rain-panel-bg: rgba(38, 17, 62, .55); --rain-panel-border: rgba(255, 224, 138, 0.34); --rain-panel-blur: 8px; --rain-pill-text: #ffffff; --rain-pill-value-bg: #ffd75f; --rain-pill-value-text: #32134e; --rain-timer-bg: rgba(0, 0, 0, 0.42); --rain-timer-border: rgba(255, 224, 138, 0.38); --rain-timer-fill: linear-gradient(90deg, #fff0bf, #a879e8, #ff922e); --rain-top-x: 18px; --rain-top-y: max(12px, env(safe-area-inset-top)); --rain-top-gap: 16px; --rain-header-width: min(360px, 42vw); --rain-header-height: 90px; --rain-top-main-width: min(360px, 70vw); --rain-timer-width: min(320px, 52vw); --rain-packet-w: 64px; --rain-packet-h: 64px; --rain-btn-bg: linear-gradient(135deg, #fff0bf, #a879e8); --rain-btn-text: #32134e; --rain-btn-shadow: rgba(255, 146, 46, 0.35); --rain-effect-flash: radial-gradient( circle, rgba(255, 241, 176, 0.95), rgba(255, 146, 46, 0.52) 35%, transparent 70% ); --rain-effect-ring: rgba(255, 224, 138, 0.75); --rain-effect-particle: #ffd75f; --rain-effect-particle-soft: #fff1d5; --rain-effect-particle-shadow: rgba(255, 224, 138, 0.85); --rain-result-bg: rgba(0, 0, 0, 0.72); --rain-result-overlay-glow: radial-gradient(circle at 50% 28%, rgba(255, 224, 138, 0.2), transparent 32%); --rain-result-big-glow: radial-gradient(circle, rgba(255, 224, 138, 0.28), transparent 34%), conic-gradient( from 0deg, transparent, rgba(255, 224, 138, 0.22), transparent, rgba(255, 255, 255, 0.12), transparent ); --rain-result-content-bg: linear-gradient(180deg, #562479, #26113e); --rain-result-content-border: rgba(255, 224, 138, 0.42); --rain-result-inner-border: rgba(255, 224, 138, 0.22); --rain-result-top-glow: radial-gradient(circle, rgba(255, 224, 138, 0.22), transparent 66%); --rain-result-normal-bg: radial-gradient(circle at 50% 0%, rgba(255, 224, 138, 0.18), transparent 38%), linear-gradient(180deg, rgba(48, 20, 68, 0.96), rgba(20, 8, 32, 0.98)); --rain-result-big-bg: radial-gradient(circle at 50% 0%, rgba(255, 241, 176, 0.34), transparent 38%), linear-gradient(180deg, rgba(70, 29, 99, 0.98), rgba(20, 8, 32, 0.98)); --rain-result-big-border: rgba(255, 224, 138, 0.68); --rain-result-badge-bg: linear-gradient(135deg, #fff1d5, #a879e8); --rain-result-badge-text: #32134e; --rain-result-badge-shadow: rgba(255, 224, 138, 0.38); --rain-result-title: #fff2df; --rain-result-desc: rgba(255, 255, 255, 0.82); --rain-amount-box-bg: radial-gradient(circle at 50% 0%, rgba(255, 241, 176, 0.22), transparent 44%), linear-gradient(180deg, rgba(48, 20, 68, 0.94), rgba(20, 8, 32, 0.92)); --rain-amount-box-border: rgba(255, 224, 138, 0.46); --rain-amount-label: rgba(255, 246, 199, 0.82); --rain-amount-text: #ffd75f; --rain-amount-shadow: 0 0 8px rgba(255, 224, 138, 0.76), 0 3px 0 rgba(43, 22, 0, 0.55); --rain-big-amount-text: #fff1d5; --rain-big-amount-shadow: 0 0 10px rgba(255, 224, 138, 0.9), 0 0 24px rgba(255, 146, 46, 0.55), 0 3px 0 rgba(43, 22, 0, 0.6); --rain-big-amount-box-border: rgba(255, 246, 199, 0.62); --rain-meta-bg: rgba(255, 255, 255, 0.07); --rain-meta-border: rgba(255, 224, 138, 0.22); --rain-meta-label: rgba(255, 255, 255, 0.68); --rain-meta-value: #fff1d5; }
+
+body { background: #200d35; }
+
+.rainShell { background: var(--rain-bg-fallback); background-image: linear-gradient(rgb(24 10 39 / 57%), rgb(20 8 32 / 62%)), var(--rain-bg-desktop); background-size: cover; background-position: center; }
+
+    .rainShell::after { background: rgba(20, 8, 32, .16); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
+
+.rainViewport { background: var(--rain-bg-fallback); background-image: var(--rain-bg-mobile); background-size: cover; background-position: center; background-repeat: no-repeat; box-shadow: 0 0 42px rgba(0, 0, 0, .5); }
+
+.rainLoading { color: #fff4cf; background-color: #32134e; background-image: var(--rain-bg-mobile); background-size: cover; background-position: center; background-repeat: no-repeat; }
+
+.rainLoading__logo { filter: none; }
+
+.rainLoading__track { background-color: transparent; background-image: var(--rain-loading-bar-bg); background-repeat: no-repeat; background-position: center; background-size: 100% 100%; filter: drop-shadow(0 5px 8px rgba(32, 13, 53, .48)); }
+
+.rainLoading__slot { border-radius: 999px; bottom: 38%; }
+
+.rainLoading__fill { border-radius: inherit; background: var(--rain-loading-fill); box-shadow: var(--rain-loading-fill-shadow); }
+
+    .rainLoading__fill::after { background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .68), transparent); }
+
+.rainLoading__status { color: #fff0c2; text-shadow: 0 2px 4px rgba(32, 13, 53, .9); }
+
+    .rainLoading__status b { color: #ffd66b; }
+
+.redPacketDemo { color: var(--rain-color-text); background: var(--rain-bg-fallback); background-image: var(--rain-bg-mobile); background-size: cover; background-position: center; background-repeat: no-repeat; }
+
+.rainTimerBox { border-radius: 16px; background: var(--rain-panel-bg); border: 1px solid var(--rain-panel-border); backdrop-filter: blur(var(--rain-panel-blur)); -webkit-backdrop-filter: blur(var(--rain-panel-blur)); }
+
+.rainTimerBar { border-radius: 999px; background: var(--rain-timer-bg); border: 1px solid var(--rain-timer-border); }
+
+.rainTimerBar__fill { border-radius: inherit; background: var(--rain-timer-fill); }
+
+.rainTimerBar__text { color: var(--rain-color-text); text-shadow: 0 1px 4px rgba(0, 0, 0, 0.75); }
+
+.rainHitPill { border-radius: 999px; background: var(--rain-panel-bg); border: 1px solid var(--rain-panel-border); backdrop-filter: blur(var(--rain-panel-blur)); -webkit-backdrop-filter: blur(var(--rain-panel-blur)); color: var(--rain-color-text); }
+
+    .rainHitPill b { border-radius: 50%; background: var(--rain-color-primary); color: #32134e; }
+
+.rainGame__stage::after { background: radial-gradient( ellipse at center, transparent 0%, transparent 52%, rgba(168, 111, 226, .28) 66%, rgba(255, 146, 46, .60) 82%, rgba(255, 201, 112, .90) 100% ); box-shadow: inset 0 0 28px rgba(239, 211, 255, .95), inset 0 0 75px rgba(255, 146, 46, .70); }
+
+.rainGame__startBtn,
+.rainResult__btn { border: 0; border-radius: 999px; background: var(--rain-btn-bg); color: var(--rain-btn-text); box-shadow: 0 10px 24px var(--rain-btn-shadow); }
+
+.redPacket { border: 0; background: transparent; background-size: contain; background-repeat: no-repeat; background-position: center; }
+
+.redPacket--type1 { background-image: var(--rain-packet-img-1); }
+
+.redPacket--type2 { background-image: var(--rain-packet-img-2); }
+
+.packetFeedbackImage { filter: drop-shadow(0 4px 5px rgba(61, 24, 90, .72)) drop-shadow(0 0 10px rgba(255, 146, 46, .72)); }
+
+.packetOpenEffect::before { border-radius: 50%; background: radial-gradient( circle, rgba(255, 244, 184, 0.95), rgba(255, 146, 46, 0.5) 35%, transparent 70% ); }
+
+.packetOpenEffect::after { border-radius: 50%; border: 2px solid rgba(255, 214, 107, 0.75); }
+
+.packetOpenEffect span { border-radius: 50%; background: var(--rain-color-primary); box-shadow: 0 0 8px rgba(255, 214, 107, 0.85); }
+
+    .packetOpenEffect span:nth-child(2n) { background: #fff4b8; }
+
+    .packetOpenEffect span:nth-child(3n) { border-radius: 2px; }
+
+.rainResult { background: radial-gradient(circle at 50% 28%, rgba(255, 214, 107, 0.2), transparent 32%), var(--rain-result-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+
+    .rainResult.is-big-win::before { background: radial-gradient(circle, rgba(255, 214, 107, 0.28), transparent 34%), conic-gradient( from 0deg, transparent, rgba(255, 214, 107, 0.22), transparent, rgba(255, 255, 255, 0.12), transparent ); }
+
+.resultHeader { filter: drop-shadow(0 3px 3px rgba(32, 13, 53, .24)) drop-shadow(0 0 5px rgba(255, 214, 107, .16)); }
+
+.rainResult__content { border-radius: 30px; background: var(--rain-result-content-bg); border-color: var(--rain-result-content-border); border-width: 1px; border-style: solid; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), inset 0 -18px 40px rgba(0, 0, 0, 0.22), 0 24px 70px rgba(0, 0, 0, 0.58); }
+
+    .rainResult__content::before { border-radius: 24px; border: 1px solid rgba(255, 214, 107, 0.22); }
+
+    .rainResult__content::after { border-radius: 50%; background: radial-gradient(circle, rgba(255, 214, 107, 0.22), transparent 66%); }
+
+.rainResult__badge { border-radius: 999px; background: linear-gradient(135deg, #fff4b8, var(--rain-color-secondary)); color: #4c216c; box-shadow: 0 0 16px rgba(255, 214, 107, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.45); }
+
+.rainResult__title { color: #fff8dc; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45); }
+
+.rainResult__amountBox { border-radius: 22px; background: var(--rain-amount-box-bg); border-color: var(--rain-amount-box-border); border-width: 1px; border-style: solid; box-shadow: inset 0 0 18px rgba(255, 214, 107, 0.12), 0 12px 26px rgba(0, 0, 0, 0.32); }
+
+.rainResult__amountLabel { color: #5c3470; }
+
+
+.rainResult__amount { color: #3d185a; text-shadow: 0 1px 1px rgba(255, 255, 255, .45); }
+
+.rainResult__breakdown { border: 1px solid rgba(255, 214, 107, .27); border-radius: 16px; background: linear-gradient(180deg, rgba(255, 255, 255,.09), rgba(255, 255, 255,.045)); box-shadow: inset 0 1px 0 rgba(255, 255, 255,.09), 0 8px 18px rgba(32, 13, 53,.2); }
+
+.rainResult__breakdownToggle { border: 0; background: transparent; color: #fff0bd; }
+
+    .rainResult__breakdownToggle:hover { background: rgba(255, 214, 107,.09); color: #fff8dc; }
+
+.rainResult__breakdownToggleText { border: 1px solid rgba(255, 214, 107,.3); border-radius: 999px; background: rgba(61, 24, 90,.28); color: rgba(255, 244, 184,.82); }
+
+.rainResult__breakdownToggle i { border-right: 2px solid #ffd66b; border-bottom: 2px solid #ffd66b; }
+
+.rainResult__breakdownPanel { border-top: 1px solid rgba(255, 214, 107,.14); }
+
+.rainResult__rewardList { scrollbar-color: rgba(255, 214, 107, .55) rgba(255, 255, 255, .06); }
+
+    .rainResult__rewardList li { border: 1px solid rgba(255, 214, 107, .13); border-radius: 10px; background: rgba(32, 13, 53,.22); }
+
+        .rainResult__rewardList li span { color: rgba(255, 255, 255, .78); }
+
+        .rainResult__rewardList li b { color: #fff4b8; }
+
+        .rainResult__rewardList li.is-empty { color: rgba(255, 255, 255, .66); }
+
+.rainResult__metaItem { border-radius: 16px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 214, 107, 0.2); }
+
+    .rainResult__metaItem b { color: #fff4b8; }
+
+.rainResult__btn { border: 0; border-radius: 999px; background: var(--rain-btn-bg); color: var(--rain-btn-text); box-shadow: 0 10px 24px var(--rain-btn-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.45); }
+
+    .rainResult__btn:hover { filter: brightness(1.05); }
+
+.rainResult__card.is-normal-win .rainResult__content { background: var(--rain-result-normal-bg); }
+
+.rainResult__card.is-big-win .rainResult__content { border: 0; border-radius: 0; background-color: transparent; background-image: url('../image/halloween/loading-ui-panel.png'); background-size: 100% 100%; background-position: center; background-repeat: no-repeat; box-shadow: none; }
+
+    .rainResult__card.is-big-win .rainResult__content::before { border: 0; }
+
+.rainResult__card.is-big-win .rainResult__amount { color: #3d185a; text-shadow: 0 1px 1px rgba(255, 255, 255, .45); }
+
+@keyframes bigWinGlow {
+    from { filter: drop-shadow(0 8px 12px rgba(255, 214, 107, .24)); }
+
+    to { filter: drop-shadow(0 8px 20px rgba(255, 214, 107, .62)); }
+}
+
+@media (max-width: 1024px) {
+    :root { --rain-bg-desktop: var(--rain-bg-mobile); }
+}
+
+@media (max-width: 640px) {
+    :root { --rain-top-x: 10px; --rain-top-y: max(10px, env(safe-area-inset-top)); --rain-top-gap: 8px; --rain-header-width: min(300px, 80vw); --rain-header-height: 78px; --rain-top-main-width: 100%; --rain-timer-width: 100%; --rain-packet-w: 56px; --rain-packet-h: 56px; }
+
+    .rainTimerBox { border-radius: 14px; }
+
+    .rainResult__content { border-radius: 24px; }
+
+    .rainResult__amountBox { border-radius: 18px; }
+}
+
+.rainEligibility { background: rgb(24 10 39 / 78%); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+
+.rainEligibility__card { color: #fff; }
+
+.rainEligibility__panel { border: 0; border-radius: 0; background-color: transparent; background-image: url('../image/halloween/loading-ui-panel.png'); background-size: 100% 100%; background-position: center; background-repeat: no-repeat; box-shadow: none; color: #fff0df; text-shadow: 0 2px 5px rgba(32, 13, 53, .75); }
+
+
+
+.rainEligibility__message { color: #fff2df; }
+
+.rainEligibility__action { border: 0; border-radius: 10px; background: linear-gradient(180deg,#ffa542,#d97521); box-shadow: inset 0 1px 0 rgba(255, 255, 255,.45),0 5px 12px rgba(217, 117, 33,.28); color: #fff; }
+
+.rainEligibility[data-eligible="false"] .rainEligibility__action { color: #fff; }
+html[lang="en"] .rainEligibility[data-eligible="false"] .rainEligibility__action { letter-spacing: -0.3px; white-space: nowrap; font-size: 12px; }
+
+.rainEligibility__action,
+.rainGame__startBtn,
+.rainResult__btn { border: 0; border-radius: 0; background-color: transparent; background-image: url('../image/halloween/action-button-gold.png'); background-position: center; background-size: 100% 100%; background-repeat: no-repeat; box-shadow: none; color: #ffffff; text-shadow: 0 1px 0 rgb(8 1 1 / 70%); border: 0; outline: none; }
+
+    .rainEligibility__action:hover,
+    .rainGame__startBtn:hover,
+    .rainResult__btn:hover { filter: brightness(1.08); }
+
+.rainEligibility__later { border: 0; background: none; color: #fff5dd; }
+
+.rainMiniLauncher { border: 0; background: transparent; color: #fff; }
+
+.rainMiniLauncher__circle { border: 5px solid #d39a2d; border-radius: 50%; background: radial-gradient(circle at 50% 62%, #4c216c, #200d35 72%); box-shadow: inset 0 0 18px rgba(0, 0, 0,.58), 0 8px 18px rgba(0, 0, 0,.3); }
+
+.rainMiniLauncher__packet { filter: drop-shadow(0 5px 5px rgba(0, 0, 0,.32)); }
+
+.rainMiniLauncher__close { border: 2px solid #fff; border-radius: 50%; background: #8b4bc1; box-shadow: 0 3px 7px rgba(0, 0, 0,.35); color: #fff; }
+
+.rainMiniLauncher__title { filter: drop-shadow(0 3px 4px rgba(0, 0, 0,.45)); }
+
+.rainMiniLauncher__countdown { border: 2px solid #ff9b35; border-radius: 999px; background: #26113e; box-shadow: 0 4px 8px rgba(255, 255, 255,.32); color: #ffe185; }
+
+    .rainMiniLauncher__countdown i { border-radius: 50%; background: #ffd45b; box-shadow: 0 0 6px rgba(255, 201, 40,.75); }
+
+.rainFloatingItem { filter: drop-shadow(0 10px 14px rgba(32, 13, 53, .24)); }
+
+@keyframes fireworkBurst {
+    0% { opacity: 0; transform: scale(0.15); filter: brightness(1.8) drop-shadow(0 0 4px rgba(255, 220, 120, 0)); }
+
+    12% { opacity: 1; transform: scale(0.45); filter: brightness(2.2) drop-shadow(0 0 12px rgba(255, 220, 120, 0.95)); }
+
+    38% { opacity: 1; transform: scale(1.06); filter: brightness(1.35) drop-shadow(0 0 20px rgba(255, 190, 70, 0.8)); }
+
+    55% { transform: scale(1); filter: brightness(1.1) drop-shadow(0 0 14px rgba(255, 190, 70, 0.55)); }
+
+    100% { opacity: 0; transform: scale(1.12); filter: brightness(0.8) drop-shadow(0 0 4px rgba(255, 190, 70, 0)); }
+}
+
+@media (max-width: 420px) {
+    .rainEligibility__card { border-radius: 20px; }
+}
+
+@keyframes headerPulse {
+    0%, 100% { transform: scale(1.5); filter: brightness(1) drop-shadow(0 4px 8px rgba(255, 146, 46, 0.25)); }
+
+    50% { transform: scale(1.545); filter: brightness(1.18) drop-shadow(0 6px 15px rgba(255, 198, 54, 0.65)); }
+}
+
+.rainEligibility__scheduleTitle { color: #ffd76d; }
+
+.rainEligibility__scheduleRange { color: #fff0df; }
+
+    .rainEligibility__scheduleRange i { background: rgba(255, 155, 53, 0.45); }
+
+        .rainEligibility__scheduleRange i::after { border-radius: 50%; background: #ff9b35; box-shadow: 0 0 0 3px rgba(255, 155, 53, 0.12); }
+
+.rainGame__countdownImage { filter: drop-shadow(0 0 10px rgb(168 111 226 / 72%)); }
+
+.rainCombo { color: #fff0c8; text-shadow: 0 2px 2px #3d185a, 0 0 9px #ff922e; }
+
+.rainTimerBox { border: 0; border-radius: 0; background: transparent; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+
+.rainTimerBar { border: 0; border-radius: 0; background: transparent url('../image/halloween/countdown-frame-right.png') center / 100% 200% no-repeat; box-shadow: none; }
+
+.rainTimerBar__track { border-radius: 999px; }
+
+.rainTimerBar__fill { border-radius: inherit; background: linear-gradient( -90deg, #fff3cf 0%, #ffd85c 28%, #ff922e 68%, #9853d1 100% ); box-shadow: inset 0 1px 2px rgba(255, 255, 255, .85), 0 0 9px rgba(255, 202, 55, .7); }
+.rainTimerBar__text { color: #fff0d8; text-shadow: 0 1px 3px #26113e; }
+
+@media (max-width: 640px) {
+    .rainTimerBox { border-radius: 0; }
+}
+
+.rainResult__card .rainResult__content,
+.rainResult__card.is-big-win .rainResult__content { border: 0; border-radius: 0; background-color: transparent; background-image: url('../image/halloween/loading-ui-panel.png'); background-size: 100% 100%; background-position: center; background-repeat: no-repeat; box-shadow: none; color: #fff0df; text-shadow: 0 2px 5px rgba(32, 13, 53, .75); }
+
+.rainResult__card.is-empty .rainResult__content { background-image: url('../image/halloween/no-reward-panel.png'); }
+
+.rainResult.is-empty .rainResult__badge,
+.rainResult.is-empty .rainResult__amount { color: #ead2a0; text-shadow: 0 2px 4px rgba(32, 13, 53, .72); }
+
+.rainResult.is-empty .rainResult__badge { background: linear-gradient(180deg, #8f8b86, #625f5b); border-color: #aaa49c; color: #f1ede7; }
+
+.rainResult.is-empty .rainResult__amountBox { background: linear-gradient( 180deg, rgba(75, 72, 70, 0.88), rgba(43, 41, 40, 0.92) ); border-color: rgba(175, 170, 163, 0.45); box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.32); }
+
+.rainResult__amountBox { border-radius: 17px; }
+
+.rainResult__summary { border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+
+.rainResult__summaryItem { border: 1px solid rgba(255, 208, 75, .52); border-radius: 10px; background: linear-gradient(180deg, rgba(86, 36, 121, .78), rgba(38, 17, 62, .82)); box-shadow: inset 0 1px 0 rgba(255, 241, 178, .16), inset 0 0 12px rgba(168, 111, 226, .08), 0 2px 5px rgba(32, 13, 53, .18); color: rgba(255, 239, 193, .82); }
+
+    .rainResult__summaryItem::after { border: 1px solid rgba(255, 226, 133, .08); border-radius: 7px; }
+
+    .rainResult__summaryItem b { color: #fff0df; }
+
+.rainResult__summaryIcon { filter: drop-shadow(0 2px 3px rgba(32, 13, 53, .48)); }
+
+.rainResult__summaryItem.is-prize b { color: #ffe274; }
+
+.rainResult__summaryItem.is-empty-count b { color: #c8bbb0; }
+
+.rainResult__rewards { border: 2px solid #f8c84b; border-image: none; border-radius: 8px; box-shadow: inset 0 0 0 1px #fff0a0, 0 8px 18px rgba(32, 13, 53, .24); }
+.rainResult__rewardsHead { border-bottom: 1px solid rgba(255, 214, 107, .22); background: rgba(255, 216, 105, .065); color: #ffd675; }
+
+.rainResult__rewardRows { scrollbar-color: rgba(255, 204, 79, .5) transparent; }
+
+.rainResult__rewardRow { border-bottom: 1px dashed rgba(255, 222, 137, .13); color: #fff0c2; }
+
+    .rainResult__rewardRow:last-child { border-bottom: 0; }
+
+    .rainResult__rewardRow b { color: #ffd96f; }
+
+    .rainResult__rewardRow strong { color: #fff2df; }
+
+    .rainResult__rewardRow.is-no-prize span,
+    .rainResult__rewardRow.is-no-prize b,
+    .rainResult__rewardRow.is-no-prize strong { color: #baa99d; }
+
+.rainResult__rewardEmpty { color: #bcaea4; }
+
+.rainResult.is-empty .rainResult__summary,
+.rainResult.is-empty .rainResult__rewards { border-color: rgba(176, 169, 160, .3); background: rgba(45, 42, 40, .48); }
+
+.rainResult__badge { border: 0; border-radius: 0; background: transparent url('../image/halloween/result-badge-panel-v2.png') center / 100% 100% no-repeat; box-shadow: none; color: #fff; text-shadow: 0 1px 0 rgba(255, 249, 208, .7); }
+
+.rainResult__amountBox { border: 0; border-radius: 0; background: transparent url('../image/halloween/result-total-win-panel-v2.png') center / 100% 100% no-repeat; box-shadow: none; }
+.rainResult.is-empty .rainResult__amountBox { border: 0; border-radius: 0; box-shadow: none; background: none; }
+.rainResult.is-empty .rainResult__badge { background: transparent url('../image/halloween/result-badge-panel-v2.png') center / 100% 100% no-repeat; box-shadow: none; }
+.rainResult__amountLabel { color: #5c3470; text-shadow: none; }
+
+.rainResult__amount { color: #fff1b5; text-shadow: 0 0 8px rgba(255, 221, 116, .88), 0 2px 2px rgba(38, 17, 62, .72); }
+
+.rainResult__rewards { border: clamp(5px, 1.7vw, 8px) solid transparent; border-image-source: url('../image/halloween/reward-table-frame.png'); border-image-slice: 72; border-image-width: clamp(5px, 1.7vw, 8px); border-image-repeat: stretch; border-radius: 0; background: #32134e; box-shadow: 0 8px 18px rgba(32, 13, 53, .24); }
+
+.rainResult__rewardsHead { border: 0; background: #d97e29 url('../image/halloween/reward-table-header.png') center / 100% 100% no-repeat; color: #ffe08a; }
+
+.rainResult__rewardRows { background: #26113e; }
+
+.rainResult__rewardRow { border: 0; background: #472065 url('../image/halloween/reward-table-row.png') center / 100% 100% no-repeat; }
+
+    .rainResult__rewardRow:nth-child(even) { filter: brightness(.93); }
+
+.rainResult__rewardEmpty { background: #472065 url('../image/halloween/reward-table-row.png') center / 100% 100% no-repeat; }
+
+
+.rainIntroScene { background: url('../image/halloween/img-main.jpg') var(--rain-main-bg-position) / var(--rain-main-bg-size) no-repeat; }
+
+.rainIntroGroup { /* height: auto; */ grid-template-rows: minmax(0, 4fr) minmax(0, 2fr); /* bottom: auto; */ /* justify-content: center; */ top: 0; margin: auto; }
+.rainIntroControl { align-items: flex-end; }
+
+@keyframes rainStartButtonPulse {
+    0%, 100% { transform: scale(1); filter: brightness(1) drop-shadow(0 4px 7px rgba(61, 24, 90, .45)); }
+    50% { transform: scale(1.065); filter: brightness(1.18) drop-shadow(0 0 18px rgba(255, 215, 95, .85)); }
+}
+
+.rainTimerBar__track { position: absolute; left: 8%; top: 47%; width: 68%; height: 27%; overflow: hidden; border-radius: 999px; transform: translateY(-50%); }
+
+.redPacket--type1 { --coin-extra-tilt: -12deg; }
+.redPacket--type2 { --coin-extra-tilt: 12deg; }
+
+@keyframes packetFall {
+    from { transform: translateY(0) rotate(calc(var(--rotate) + var(--coin-extra-tilt))); }
+    to { transform: translateY(calc(100dvh + 180px)) rotate(calc(var(--rotate) + var(--coin-extra-tilt))); }
+}
+
+
+.redPacket.is-hit { animation: coinCollect 0.22s ease forwards; }
+
+@keyframes coinCollect {
+    from { transform: scale(1) rotate(var(--rotate)); opacity: 1; }
+    to { transform: scale(0.2) rotate(var(--rotate)); opacity: 0; }
+}
+
+.packetOpenEffect::before { inset: auto; left: 50%; top: 50%; width: 160px; height: 160px; transform: translate(-50%, -50%); background: url("../image/halloween/coin-click-sprite.png") 0 0 / 1280px 160px no-repeat; animation: coinClickFrames .667s steps(7, end) forwards, coinClickFade .667s linear forwards; }
+
+@keyframes coinClickFrames {
+    from { background-position: 0 0; }
+    to { background-position: -1120px 0; }
+}
+
+@keyframes coinClickFade {
+    0%, 75% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.packetOpenEffect::after,
+.packetOpenEffect span { display: none; }
+
+
+.packetFeedbackImage { filter: drop-shadow(0 4px 5px rgb(255 201 112 / 72%)) drop-shadow(0 0 10px rgb(168 111 226 / 72%)); }
+.rainTopHeader { transform: scale(1.5); }
+
+
+
+.rainMiniLauncher__circle { border: 0; border-radius: 0; box-shadow: none; background: none; background-image: url('../image/halloween/float-bg.png'); background-size: 100% 100%; }
+.rainMiniLauncher__packet--one { left: -4px; top: 10px; }
+.rainMiniLauncher__packet--two { top: 20px; }
+.rainMiniLauncher__title { margin-top: -36px; }
+
+.rainTimerBar__track { left: 8%; top: 42%; width: 68%; }
+.rainTimerBar__fill { background-image: url('../image/halloween/bar-fill.png'); background-size: auto 100%; }
+.rainTimerBar__text { left: 87.5%; top: 43%; }
+
+.rainLoading__fill { background-image: url('../image/halloween/bar-fill.png'); background-size: auto 100%; background-position: right; }
+
+/* Halloween artwork contrast: cream amount panel, orange table heading. */
+.rainResult__amount,
+.rainResult__card.is-big-win .rainResult__amount { color: #3d185a; text-shadow: 0 1px 1px rgba(255, 255, 255, .45); }
+.rainResult__amountLabel { color: #5c3470; }
+.rainResult__rewardsHead { color: #32134e; text-shadow: none; }
+.rainResult__badge { color: #fff2df; text-shadow: 0 2px 3px rgba(32, 13, 53, .8); }
+.rainResult.is-empty .rainResult__amount,
+.rainResult.is-empty .rainResult__amountLabel { color: #c8c1cf; text-shadow: 0 2px 4px rgba(32, 13, 53, .72); }
