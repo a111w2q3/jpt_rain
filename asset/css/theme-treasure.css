@@ -1,4 +1,4 @@
-﻿/* Treasure Hunt — black gold / deep teal.
+/* Treasure Hunt — black gold / deep teal.
  * Load after style.css. Asset paths and existing layout geometry retained.
  * fireworkBurst is a compatibility name for the floating treasure decoration.
  */
@@ -170,11 +170,6 @@ body { background: #030b0e; }
 
 .rainFloatingItem { filter: drop-shadow(0 10px 14px rgba(20, 58, 61, .24)); }
 
-@keyframes fireworkBurst {
-    0%, 100% { opacity: .82; transform: translateY(0) rotate(-2deg) scale(1); filter: brightness(1) drop-shadow(0 3px 8px rgba(5, 18, 22, .45)); }
-
-    50% { opacity: 1; transform: translateY(-6px) rotate(2deg) scale(1.025); filter: brightness(1.15) drop-shadow(0 0 10px rgba(57, 207, 205, .35)); }
-}
 
 @media (max-width: 420px) {
     .rainEligibility__card { border-radius: 20px; }
